@@ -1,0 +1,28 @@
+type: object
+name: NextImageResponsiveSection
+label: Next Image Responsive
+labelField: title
+thumbnail: https://assets.stackbit.com/components/models/thumbnails/default.png
+extends:
+  - Section
+groups:
+  - sectionComponent
+fields:
+  - type: string
+    name: title
+    label: Title
+    default: Next Image section, Layout Responsive
+  - type: markdown
+    name: text
+    label: Text
+    default: The text content of the section
+  - type: image
+    name: url
+    label: Image
+    description: The URL of the image
+    default: https://assets.stackbit.com/components/images/default/default-image.png
+  - type: string
+    name: altText
+    label: Image alt text
+    description: The alt text of the image
+    default: altText of the image

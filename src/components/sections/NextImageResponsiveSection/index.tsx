@@ -4,9 +4,8 @@ import Markdown from 'markdown-to-jsx';
 import classNames from 'classnames';
 import { getDataAttrs } from '../../../utils/get-data-attrs';
 
-export default function NextImageFillSection(props) {
+export default function NextImageResponsiveSection(props) {
     const cssId = props.elementId || null;
-    const aspectRatio = props.aspectRatio || '4:3';
     return (
         <div id={cssId} {...getDataAttrs(props)} className="sb-component sb-component-section colors-a flex flex-col justify-center mb-12 py-12 px-4">
             <div className="flex w-full justify-center">
@@ -26,28 +25,13 @@ export default function NextImageFillSection(props) {
                         </div>
                         {props.url && (
                             <div className="flex-1 w-full relative">
-                                <div
-                                    className={classNames(
-                                        'h-0',
-                                        'w-full',
-                                        {
-                                            'pt-1/1': aspectRatio === '1:1',
-                                            'pt-3/2': aspectRatio === '2:3',
-                                            'pt-2/3': aspectRatio === '3:2',
-                                            'pt-4/3': aspectRatio === '3:4',
-                                            'pt-3/4': aspectRatio === '4:3',
-                                            'pt-9/16': aspectRatio === '16:9',
-                                            'pt-16/9': aspectRatio === '9:16'
-                                        }
-                                    )}
-                                >
-                                    <Image
-                                        src={props.url}
-                                        alt={props.alt || ''}
-                                        layout="fill"
-                                        objectFit="cover"
-                                    />
-                                </div>
+                                <Image
+                                    src={props.url}
+                                    alt={props.alt || ''}
+                                    width="640"
+                                    height="430"
+                                    layout="responsive"
+                                />
                             </div>
                         )}
                     </div>

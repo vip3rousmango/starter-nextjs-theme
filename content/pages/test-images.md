@@ -15,4 +15,14 @@ sections:
     url: /images/hero-3.jpg
     altText: Image alt text
     aspectRatio: '16:9'
+  - type: NextImageResponsiveSection
+    elementId: image-responsive
+    colors: colors-a
+    title: Next Image section, Layout Responsive
+    text: |-
+      When `responsive`, the image will scale the dimensions down for smaller viewports and scale up for larger viewports.
+
+      Ensure the parent element uses `display: block` in their stylesheet.
+    url: /images/hero-3.jpg
+    altText: Image alt text
 ---
