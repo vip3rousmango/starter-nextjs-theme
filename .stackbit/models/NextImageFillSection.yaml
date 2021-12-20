@@ -1,0 +1,47 @@
+type: object
+name: NextImageFillSection
+label: Next Image Fill
+labelField: title
+thumbnail: https://assets.stackbit.com/components/models/thumbnails/default.png
+extends:
+  - Section
+groups:
+  - sectionComponent
+fields:
+  - type: string
+    name: title
+    label: Title
+    default: Next Image section, Layout Fill
+  - type: markdown
+    name: text
+    label: Text
+    default: The text content of the section
+  - type: image
+    name: url
+    label: Image
+    description: The URL of the image
+    default: https://assets.stackbit.com/components/images/default/default-image.png
+  - type: string
+    name: altText
+    label: Image alt text
+    description: The alt text of the image
+    default: altText of the image
+  - type: enum
+    name: aspectRatio
+    label: Image aspect ratio
+    options:
+      - label: '1:1'
+        value: '1:1'
+      - label: '3:2'
+        value: '3:2'
+      - label: '2:3'
+        value: '2:3'
+      - label: '4:3'
+        value: '4:3'
+      - label: '3:4'
+        value: '3:4'
+      - label: '16:9'
+        value: '16:9'
+      - label: '9:16'
+        value: '9:16'
+    default: '4:3'
