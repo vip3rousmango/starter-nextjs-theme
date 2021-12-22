@@ -115,12 +115,22 @@ function postsVariantA(props) {
         return null;
     }
     return (
-        <div className={classNames('grid', 'gap-x-6', 'gap-y-12', 'md:grid-cols-3', 'lg:gap-x-8', { 'mt-12': props.title || props.subtitle })}>
+        <div
+            className={classNames('grid', 'gap-x-6', 'gap-y-12', 'md:grid-cols-3', 'lg:gap-x-8', { 'mt-12': props.title || props.subtitle })}
+            {...(props.annotatePosts ? { 'data-sb-field-path': '.posts' } : null)}
+        >
             {posts.map((post, index) => (
                 <article key={index} data-sb-object-id={post.__metadata?.id}>
                     {post.featuredImage && (
-                        <Link href={getPageUrlPath(post)} className="block rounded-2xl mb-6 h-0 w-full pt-1/1 relative overflow-hidden lg:mb-10" data-sb-field-path="featuredImage">
-                            <ImageBlock {...post.featuredImage} className="absolute left-0 top-0 h-full w-full object-cover transition-transform duration-500 hover:scale-105" />
+                        <Link
+                            href={getPageUrlPath(post)}
+                            className="block rounded-2xl mb-6 h-0 w-full pt-1/1 relative overflow-hidden lg:mb-10"
+                            data-sb-field-path="featuredImage"
+                        >
+                            <ImageBlock
+                                {...post.featuredImage}
+                                className="absolute left-0 top-0 h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                            />
                         </Link>
                     )}
                     <div>
@@ -135,7 +145,11 @@ function postsVariantA(props) {
                                 {post.excerpt}
                             </p>
                         )}
-                        <PostAttribution showAuthor={props.showAuthor} post={post} className={classNames(props.showExcerpt && post.excerpt ? 'mt-6': 'mt-2')} />
+                        <PostAttribution
+                            showAuthor={props.showAuthor}
+                            post={post}
+                            className={classNames(props.showExcerpt && post.excerpt ? 'mt-6' : 'mt-2')}
+                        />
                     </div>
                 </article>
             ))}
@@ -149,11 +163,14 @@ function postsVariantB(props) {
         return null;
     }
     return (
-        <div className={classNames('grid', 'gap-x-6', 'gap-y-12', 'md:grid-cols-5', 'lg:gap-x-8', { 'mt-12': props.title || props.subtitle })}>
+        <div
+            className={classNames('grid', 'gap-x-6', 'gap-y-12', 'md:grid-cols-5', 'lg:gap-x-8', { 'mt-12': props.title || props.subtitle })}
+            {...(props.annotatePosts ? { 'data-sb-field-path': '.posts' } : null)}
+        >
             {posts.map((post, index) => (
                 <article
                     key={index}
-                    className={classNames( (index % 4 === 0 || (index + 1) % 4 === 0) ? 'md:col-span-3': 'md:col-span-2')}
+                    className={classNames(index % 4 === 0 || (index + 1) % 4 === 0 ? 'md:col-span-3' : 'md:col-span-2')}
                     data-sb-object-id={post.__metadata?.id}
                 >
                     {post.featuredImage && (
@@ -162,7 +179,10 @@ function postsVariantB(props) {
                             className="block rounded-2xl mb-6 h-0 w-full pt-9/16 relative overflow-hidden md:pt-0 md:h-64 lg:h-96 lg:mb-10"
                             data-sb-field-path="featuredImage"
                         >
-                            <ImageBlock {...post.featuredImage} className="absolute left-0 top-0 h-full w-full object-cover transition-transform duration-500 hover:scale-105" />
+                            <ImageBlock
+                                {...post.featuredImage}
+                                className="absolute left-0 top-0 h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                            />
                         </Link>
                     )}
                     <div>
@@ -177,7 +197,11 @@ function postsVariantB(props) {
                                 {post.excerpt}
                             </p>
                         )}
-                        <PostAttribution showAuthor={props.showAuthor} post={post} className={classNames(props.showExcerpt && post.excerpt ? 'mt-6': 'mt-2')} />
+                        <PostAttribution
+                            showAuthor={props.showAuthor}
+                            post={post}
+                            className={classNames(props.showExcerpt && post.excerpt ? 'mt-6' : 'mt-2')}
+                        />
                     </div>
                 </article>
             ))}
@@ -191,14 +215,13 @@ function postsVariantC(props) {
         return null;
     }
     return (
-        <div className={classNames('grid', 'gap-6', 'md:grid-cols-3', 'lg:gap-8', { 'mt-12': props.title || props.subtitle })}>
+        <div
+            className={classNames('grid', 'gap-6', 'md:grid-cols-3', 'lg:gap-8', { 'mt-12': props.title || props.subtitle })}
+            {...(props.annotatePosts ? { 'data-sb-field-path': '.posts' } : null)}
+        >
             {posts.map((post, index) => {
                 return (
-                    <article
-                        key={index}
-                        className="sb-card rounded-2xl overflow-hidden"
-                        data-sb-object-id={post.__metadata.id}
-                    >
+                    <article key={index} className="sb-card rounded-2xl overflow-hidden" data-sb-object-id={post.__metadata.id}>
                         <div className="flex flex-col min-h-full">
                             {post.featuredImage && (
                                 <Link
@@ -206,7 +229,10 @@ function postsVariantC(props) {
                                     className="block h-0 w-full pt-9/16 relative overflow-hidden"
                                     data-sb-field-path="featuredImage"
                                 >
-                                    <ImageBlock {...post.featuredImage} className="absolute left-0 top-0 h-full w-full object-cover transition-transform duration-500 hover:scale-105" />
+                                    <ImageBlock
+                                        {...post.featuredImage}
+                                        className="absolute left-0 top-0 h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                                    />
                                 </Link>
                             )}
                             <div className="flex flex-col flex-grow px-4 pt-6 pb-8 sm:px-6">
@@ -225,10 +251,10 @@ function postsVariantC(props) {
                                     )}
                                 </div>
                                 <div className="mt-3">
-                                <Link href={getPageUrlPath(post)} className="sb-component sb-component-block sb-component-link">
-                                    <span>Read post</span>
-                                    <ArrowRightIcon className="fill-current h-5 w-5 ml-3" />
-                                </Link>
+                                    <Link href={getPageUrlPath(post)} className="sb-component sb-component-block sb-component-link">
+                                        <span>Read post</span>
+                                        <ArrowRightIcon className="fill-current h-5 w-5 ml-3" />
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -239,7 +265,7 @@ function postsVariantC(props) {
     );
 }
 
-function PostDate({ post, className="" }) {
+function PostDate({ post, className = '' }) {
     if (!post.date) {
         return null;
     }
@@ -255,7 +281,7 @@ function PostDate({ post, className="" }) {
     );
 }
 
-function PostAttribution({ showAuthor, post, className="" }) {
+function PostAttribution({ showAuthor, post, className = '' }) {
     const author = showAuthor ? postAuthor(post) : null;
     const category = postCategory(post);
     if (!author && !category) {
