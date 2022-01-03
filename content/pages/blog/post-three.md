@@ -1,6 +1,6 @@
 ---
 title: Surround Yourself With the Right People
-layout: PostLayout
+type: PostLayout
 date: '2021-07-01'
 author: content/data/team/hilary-ouse.json
 excerpt: >-

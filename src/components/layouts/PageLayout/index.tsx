@@ -2,11 +2,17 @@ import * as React from 'react';
 
 import { getBaseLayoutComponent } from '../../../utils/base-layout';
 import { getComponent } from '../../components-registry';
+import type * as types from '.contentlayer/types';
 
-export default function PageLayout(props) {
-    const { page, site } = props;
-    const BaseLayout = getBaseLayoutComponent(page.baseLayout, site.baseLayout);
-    const sections = page.sections || [];
+type Props = {
+  site: types.Config & { baseLayout?: 'TODO REMOVE' };
+  page: any;
+};
+
+export default function PageLayout(props: Props) {
+  const { page, site } = props;
+  const BaseLayout = getBaseLayoutComponent(page.baseLayout, site.baseLayout);
+  const sections = page.sections || [];
 
     return (
         <BaseLayout page={page} site={site}>

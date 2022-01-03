@@ -4,6 +4,7 @@ import { withRemoteDataUpdates } from 'sourcebit-target-next/with-remote-data-up
 import { getComponent } from '../components/components-registry';
 import { resolveStaticProps } from '../utils/static-props-resolvers';
 import { resolveStaticPaths } from '../utils/static-paths-resolvers';
+import { config } from '.contentlayer/data';
 
 function Page(props) {
     const { page, site } = props;
@@ -31,6 +32,8 @@ export async function getStaticProps({ params }) {
     const data = await sourcebitDataClient.getData();
     const urlPath = '/' + (params.slug || []).join('/');
     const props = await resolveStaticProps(urlPath, data);
+    delete props.site;
+    props.site = config;
     return { props };
 }
 

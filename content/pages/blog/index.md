@@ -1,5 +1,5 @@
 ---
-layout: PostFeedLayout
+type: PostFeedLayout
 title: Blog
 numOfPostsPerPage: 10
 postFeed:

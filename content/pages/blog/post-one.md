@@ -1,6 +1,6 @@
 ---
 title: Virtual benefits
-layout: PostLayout
+type: PostLayout
 date: '2021-06-28'
 author: content/data/team/dianne-ameter.json
 excerpt: >-

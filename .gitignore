@@ -39,3 +39,7 @@ yarn-error.log*
 # IDE
 *.code-workspace
 .idea
+
+
+# Contentlayer
+.contentlayer

@@ -5,16 +5,22 @@ import Link from '../../atoms/Link';
 import { getComponent } from '../../components-registry';
 import { getBaseLayoutComponent } from '../../../utils/base-layout';
 import { mapStylesToClassNames as mapStyles } from '../../../utils/map-styles-to-class-names';
+import type * as types from '.contentlayer/types';
 
-export default function PostFeedLayout(props) {
-    const { page, site } = props;
-    const BaseLayout = getBaseLayoutComponent(page.baseLayout, site.baseLayout);
-    const { title, topSections = [], bottomSections = [], pageIndex, baseUrlPath, numOfPages, items, postFeed } = page;
-    const postFeedColors = postFeed?.colors || 'colors-a';
-    const postFeedWidth = postFeed?.styles?.self?.width || 'wide';
-    const postFeedJustifyContent = postFeed?.styles?.self?.justifyContent || 'center';
-    const PostFeedSection = getComponent('PostFeedSection');
-    const pageLinks = PageLinks({ pageIndex, baseUrlPath, numOfPages });
+type Props = {
+  site: types.Config & { baseLayout?: 'TODO REMOVE' };
+  page: types.PostFeedLayout & { baseLayout?: 'TODO REMOVE' };
+};
+
+export default function PostFeedLayout(props: Props) {
+  const { page, site } = props;
+  const BaseLayout = getBaseLayoutComponent(page.baseLayout, site.baseLayout);
+  const { title, topSections = [], bottomSections = [], pageIndex, baseUrlPath, numOfPages, items, postFeed } = page;
+  const postFeedColors = postFeed?.colors || 'colors-a';
+  const postFeedWidth = postFeed?.styles?.self?.width || 'wide';
+  const postFeedJustifyContent = postFeed?.styles?.self?.justifyContent || 'center';
+  const PostFeedSection = getComponent('PostFeedSection');
+  const pageLinks = PageLinks({ pageIndex, baseUrlPath, numOfPages });
 
     return (
         <BaseLayout page={page} site={site}>
@@ -110,19 +116,19 @@ function PageLinks({ pageIndex, baseUrlPath, numOfPages }) {
 }
 
 function PageLink({ pageIndex, buttonLabel, baseUrlPath }) {
-    return (
-        <Link href={urlPathForPageAtIndex(pageIndex, baseUrlPath)} className="sb-component-button sb-component-button-secondary px-4 py-2 mx-2">
-            {buttonLabel}
-        </Link>
-    );
+  return (
+    <Link href={urlPathForPageAtIndex(pageIndex, baseUrlPath)} className="px-4 py-2 mx-2 sb-component-button sb-component-button-secondary">
+      {buttonLabel}
+    </Link>
+  );
 }
 
 function PageLinkDisabled({ buttonLabel }) {
-    return (
-        <span key="next" className="sb-component-button sb-component-button-secondary opacity-25 px-4 py-2 mx-2">
-            {buttonLabel}
-        </span>
-    );
+  return (
+    <span key="next" className="px-4 py-2 mx-2 opacity-25 sb-component-button sb-component-button-secondary">
+      {buttonLabel}
+    </span>
+  );
 }
 
 function Ellipsis() {
