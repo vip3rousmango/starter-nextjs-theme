@@ -1,7 +1,7 @@
 ---
 title: Our Biggest Failure – And How We’ve Overcome It
 date: '2021-10-26'
-author: content/data/team/dianne-ameter.json
+author: data/team/dianne-ameter.json
 excerpt: Ab voluptates quae et voluptas autem ut quod error non nobis earum. Qui tempora corporis sit libero corporis eos aliquam temporibus qui consectetur quia ut itaque iusto eos enim praesentium.
 featuredImage:
   type: ImageBlock

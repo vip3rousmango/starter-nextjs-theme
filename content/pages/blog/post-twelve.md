@@ -1,7 +1,7 @@
 ---
 title: The Elements of Great Workplace Design
 date: '2021-02-12'
-author: content/data/team/desmond-eagle.json
+author: data/team/desmond-eagle.json
 excerpt: Nam voluptate maxime et magni provident aut repudiandae enim sit esse praesentium. Ut tenetur necessitatibus ut neque nemo ut iusto voluptates et veniam error sit vitae architecto aut suscipit sapiente.
 featuredImage:
   type: ImageBlock

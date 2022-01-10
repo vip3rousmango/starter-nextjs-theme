@@ -2,7 +2,7 @@
 title: Virtual benefits
 type: PostLayout
 date: '2021-06-28'
-author: content/data/team/dianne-ameter.json
+author: data/team/dianne-ameter.json
 excerpt: >-
   Praesent dapibus justo non efficitur efficitur. Nullam viverra justo arcu,
   eget egestas tortor pretium id. Sed imperdiet mattis eleifend.

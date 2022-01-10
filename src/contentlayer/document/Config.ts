@@ -11,6 +11,7 @@ export const Config = defineDocumentType(() => ({
     bodyType: 'none',
     isSingleton: true,
     fields: {
+        favicon: { type: 'string', default: 'https://assets.stackbit.com/components/images/default/favicon.svg' },
         header: { type: 'nested', of: Header },
         footer: { type: 'nested', of: Footer }
     },
@@ -19,6 +20,7 @@ export const Config = defineDocumentType(() => ({
             label: 'Site configuration',
             // readOnly: true,
             fields: {
+                favicon: { label: 'Favicon' },
                 header: { label: 'Header configuration' },
                 footer: { label: 'Footer configuration' }
             }

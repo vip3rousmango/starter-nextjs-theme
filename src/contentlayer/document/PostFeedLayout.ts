@@ -2,7 +2,7 @@ import { defineDocumentType } from 'contentlayer/source-files';
 import { Person } from '..';
 import { sectionComponent } from '../common';
 import { ImageBlock } from '../nested/ImageBlock';
-import { PagedPostSection } from '../nested/PagedPostSection';
+import { PagedPostsSection } from '../nested/PagedPostsSection';
 import { Styles } from '../nested/Styles';
 
 export const PostFeedLayout = defineDocumentType(() => ({
@@ -13,7 +13,7 @@ export const PostFeedLayout = defineDocumentType(() => ({
         numOfPostsPerPage: { type: 'number', default: 10, description: 'set to 0 to show all posts on a single page' },
         postFeed: {
             type: 'nested',
-            of: PagedPostSection,
+            of: PagedPostsSection,
             default: {
                 title: null,
                 subtitle: null,

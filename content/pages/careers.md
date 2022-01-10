@@ -1,6 +1,6 @@
 ---
 title: Careers
-layout: PageLayout
+type: PageLayout
 sections:
   - elementId: ''
     colors: colors-h

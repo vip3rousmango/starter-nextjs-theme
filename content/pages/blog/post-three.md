@@ -2,7 +2,7 @@
 title: Surround Yourself With the Right People
 type: PostLayout
 date: '2021-07-01'
-author: content/data/team/hilary-ouse.json
+author: data/team/hilary-ouse.json
 excerpt: >-
   Facilisis dui. Nulla molestie risus in mi dapibus, eget porta lorem semper.
   Donec sed facilisis nibh.

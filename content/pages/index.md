@@ -1,12 +1,13 @@
 ---
 title: Home
-layout: PageLayout
+type: PageLayout
 sections:
   - type: HeroSection
     elementId: homepage-hero-1
     colors: colors-a
     title: 'Love your work. Work loves you.'
     subtitle: 'One platform, one community.'
+    text:
     actions:
       - type: Button
         label: Get Started
@@ -52,6 +53,7 @@ sections:
     colors: colors-f
     backgroundSize: inset
     title: Where did everyone go?
+    subtitle:
     text: >
       Learn how top tech companies have learned working remote using our
       product.
@@ -110,6 +112,7 @@ sections:
           opacity: 100
       type: ImageBlock
   - colors: colors-h
+    title: null
     subtitle: Trusted by
     elementId: ''
     images:
@@ -175,6 +178,7 @@ sections:
     subtitle: >-
       These are all excellent features that will provide exactly the things
       you’re looking for.
+    actions: []
     items:
       - type: FeaturedItem
         title: Faster
