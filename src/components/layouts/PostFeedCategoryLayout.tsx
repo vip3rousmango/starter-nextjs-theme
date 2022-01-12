@@ -1,2 +1,2 @@
 import { PostFeedLayout } from './PostFeedLayout';
-export default PostFeedLayout;
+// export default PostFeedLayout;

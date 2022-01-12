@@ -1,14 +1,14 @@
 import * as React from 'react';
-import Markdown from 'markdown-to-jsx';
+// import Markdown from 'markdown-to-jsx';
 import classNames from 'classnames';
-
-import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
-import { getDataAttrs } from '../../utils/get-data-attrs';
-import ImageBlock from '../blocks/ImageBlock';
 import { FC } from 'react';
 import type * as types from '.contentlayer/types';
 
-type Props = types.TestimonialsSection;
+import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
+import { getDataAttrs } from '../../utils/get-data-attrs';
+import { ImageBlock } from '../blocks/ImageBlock';
+
+export type Props = types.TestimonialsSection;
 
 export const TestimonialsSection: FC<Props> = (props) => {
   const cssId = props.elementId ?? null;
@@ -84,7 +84,7 @@ export const TestimonialsSection: FC<Props> = (props) => {
 };
 
 const TestimonialVariantA: FC<types.Testimonial & { index: number }> = ({ index, ...testimonial }) => {
-  const styles = testimonial.styles ?? {};
+  const styles = testimonial.styles ?? ({} as types.Styles);
   return (
     <blockquote key={index} className="flex flex-col md:items-center md:flex-row" data-sb-field-path={`.${index}`}>
       {testimonial.image && (
@@ -184,7 +184,7 @@ const TestimonialVariantB: FC<types.Testimonial & { index: number }> = ({ index,
 };
 
 const TestimonialVariantC: FC<types.Testimonial & { index: number }> = ({ index, ...testimonial }) => {
-  const styles = testimonial.styles ?? {};
+  const styles = testimonial.styles ?? ({} as types.Styles);
   return (
     <blockquote key={index} className="text-center" data-sb-field-path={`.${index}`}>
       {testimonial.quote && (

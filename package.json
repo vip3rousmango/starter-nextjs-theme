@@ -5,6 +5,7 @@
     "node": ">=14",
     "npm": "~6"
   },
+  "sideEffects": false,
   "scripts": {
     "dev": "next dev",
     "build": "next build && next export",

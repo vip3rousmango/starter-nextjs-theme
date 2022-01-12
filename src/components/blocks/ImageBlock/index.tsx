@@ -1,7 +1,12 @@
 import * as React from 'react';
 import classNames from 'classnames';
+import { FC } from 'react';
+import type * as types from '.contentlayer/types';
+import { StackbitFieldPath } from '../../../utils/types';
 
-export default function ImageBlock(props) {
+export type Props = types.ImageBlock & { className?: string } & Partial<StackbitFieldPath>;
+
+export const ImageBlock: FC<Props> = (props) => {
   const { url, altText } = props;
   if (!url) {
     return null;
@@ -28,4 +33,4 @@ export default function ImageBlock(props) {
       data-sb-field-path={annotations.join(' ').trim()}
     />
   );
-}
+};

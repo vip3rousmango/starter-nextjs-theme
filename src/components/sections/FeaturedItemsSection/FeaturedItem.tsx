@@ -2,8 +2,8 @@ import * as React from 'react';
 import classNames from 'classnames';
 
 import { mapStylesToClassNames as mapStyles } from '../../../utils/map-styles-to-class-names';
-import Action from '../../atoms/Action';
-import ImageBlock from '../../blocks/ImageBlock';
+import { Action } from '../../atoms/Action';
+import { ImageBlock } from '../../blocks/ImageBlock';
 import { FC } from 'react';
 import type * as types from '.contentlayer/types';
 import { StackbitFieldPath } from '../../../utils/types';

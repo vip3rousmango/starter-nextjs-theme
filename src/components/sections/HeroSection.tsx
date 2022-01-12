@@ -1,14 +1,16 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-import { getComponent } from '../components-registry';
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
 import { getDataAttrs } from '../../utils/get-data-attrs';
 import { Action, Badge } from '../atoms';
 import type * as types from '.contentlayer/types';
 import { FC } from 'react';
+import { DynamicComponent } from '../DynamicComponent';
 
-export const HeroSection: FC<types.HeroSection> = (props) => {
+export type Props = types.HeroSection;
+
+export const HeroSection: FC<Props> = (props) => {
   const cssId = props.elementId ?? null;
   const colors = props.colors ?? 'colors-a';
   const sectionStyles = props.styles?.self ?? {};
@@ -57,10 +59,14 @@ export const HeroSection: FC<types.HeroSection> = (props) => {
             )}
           >
             <div className="flex-1 w-full">
-              {heroBody(props)}
-              {heroActions(props)}
+              <HeroBody {...props} />
+              <HeroActions {...props} />
             </div>
-            {props.media && <div className="flex-1 w-full">{heroMedia(props.media)}</div>}
+            {props.media && (
+              <div className="flex-1 w-full">
+                <DynamicComponent {...props.media} data-sb-field-path=".media" />{' '}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -68,19 +74,7 @@ export const HeroSection: FC<types.HeroSection> = (props) => {
   );
 };
 
-function heroMedia(media: types.HeroSection['media']) {
-  const mediaType = media.type;
-  if (!mediaType) {
-    throw new Error(`hero section media does not have the 'type' property`);
-  }
-  const Media = getComponent(mediaType);
-  if (!Media) {
-    throw new Error(`no component matching the hero section media type: ${mediaType}`);
-  }
-  return <Media {...media} data-sb-field-path=".media" />;
-}
-
-function heroBody(props: types.HeroSection) {
+const HeroBody: FC<types.HeroSection> = (props) => {
   const styles = props.styles ?? {};
   return (
     <div>
@@ -123,9 +117,9 @@ function heroBody(props: types.HeroSection) {
       )}
     </div>
   );
-}
+};
 
-function heroActions(props: types.HeroSection) {
+const HeroActions: FC<types.HeroSection> = (props) => {
   const actions = props.actions ?? [];
   if (actions.length === 0) {
     return null;
@@ -153,7 +147,7 @@ function heroActions(props: types.HeroSection) {
       </div>
     </div>
   );
-}
+};
 
 function mapMinHeightStyles(height: string) {
   switch (height) {

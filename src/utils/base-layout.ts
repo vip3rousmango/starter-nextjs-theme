@@ -3,14 +3,14 @@ import { BlankBaseLayout } from '../components/layouts/BlankBaseLayout';
 import { FC } from 'react';
 
 export const getBaseLayoutComponent = (
-    pageBaseLayout: string | undefined,
-    siteConfigBaseLayout: string | undefined
+  pageBaseLayout: string | null,
+  siteConfigBaseLayout: string | null
 ): FC<{ page: any; site: any }> => {
-    const layout = pageBaseLayout ?? siteConfigBaseLayout;
+  const layout = pageBaseLayout ?? siteConfigBaseLayout;
 
-    if (layout === 'BlankBaseLayout') {
-        return BlankBaseLayout;
-    } else {
-        return DefaultBaseLayout;
-    }
+  if (layout === 'BlankBaseLayout') {
+    return BlankBaseLayout;
+  } else {
+    return DefaultBaseLayout;
+  }
 };

@@ -1,15 +1,15 @@
 import * as React from 'react';
-import Markdown from 'markdown-to-jsx';
+// import Markdown from 'markdown-to-jsx';
 import classNames from 'classnames';
 
-import { getComponent } from '../components-registry';
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
 import { getDataAttrs } from '../../utils/get-data-attrs';
 import FormBlock from '../blocks/FormBlock';
 import { FC } from 'react';
 import type * as types from '.contentlayer/types';
+import { DynamicComponent } from '../DynamicComponent';
 
-type Props = types.ContactSection;
+export type Props = types.ContactSection;
 
 export const ContactSection: FC<Props> = (props) => {
   const cssId = props.elementId ?? null;
@@ -89,7 +89,7 @@ export const ContactSection: FC<Props> = (props) => {
               </div>
               {props.media && (
                 <div className="flex-1 w-full">
-                  <div>{ContactMedia(props.media)}</div>
+                  <DynamicComponent {...props.media} data-sb-field-path=".media" />
                 </div>
               )}
             </div>
@@ -98,20 +98,6 @@ export const ContactSection: FC<Props> = (props) => {
       </div>
     </div>
   );
-};
-
-type Media = types.ImageBlock | types.VideoBlock;
-
-const ContactMedia: FC<Media> = (media) => {
-  const mediaType = media.type;
-  if (!mediaType) {
-    throw new Error(`contact section media does not have the 'type' property`);
-  }
-  const Media = getComponent(mediaType);
-  if (!Media) {
-    throw new Error(`no component matching the contact section media type: ${mediaType}`);
-  }
-  return <Media {...media} data-sb-field-path=".media" />;
 };
 
 const ContactBody: FC<Props> = (props) => {

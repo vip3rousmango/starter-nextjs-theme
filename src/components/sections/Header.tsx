@@ -4,15 +4,15 @@ import { useRouter } from 'next/router';
 import classNames from 'classnames';
 
 import { Link, Action } from '../atoms';
-import ImageBlock from '../blocks/ImageBlock';
+import { ImageBlock } from '../blocks/ImageBlock';
 import CloseIcon from '../svgs/close';
 import MenuIcon from '../svgs/menu';
 import type * as types from '.contentlayer/types';
 import { FC } from 'react';
 
-type Props = types.Header & { styles: any; annotationPrefix: string };
+export type Props = types.Header & { styles: any; annotationPrefix: string };
 
-export default function Header(props: Props) {
+export const Header: FC<Props> = (props) => {
   const primaryColors = props.primaryColors ?? 'colors-a';
   const headerStyles = props.styles?.self ?? {};
   const headerWidth = headerStyles.width ?? 'narrow';
@@ -35,78 +35,82 @@ export default function Header(props: Props) {
       </div>
     </header>
   );
-}
+};
 
 const HeaderVariants: FC<Props> = (props) => {
   const headerVariant = props.headerVariant ?? 'variant-a';
   switch (headerVariant) {
     case 'variant-a':
-      return headerVariantA(props);
+      return <HeaderVariantA {...props} />;
     case 'variant-b':
-      return headerVariantB(props);
+      return <HeaderVariantB {...props} />;
     case 'variant-c':
-      return headerVariantC(props);
+      return <HeaderVariantC {...props} />;
     case 'variant-d':
-      return headerVariantD(props);
+      return <HeaderVariantD {...props} />;
     case 'variant-e':
-      return headerVariantE(props);
+      return <HeaderVariantE {...props} />;
   }
 };
 
-function headerVariantA(props) {
+const HeaderVariantA: FC<Props> = (props) => {
   const primaryLinks = props.primaryLinks ?? [];
   const secondaryLinks = props.secondaryLinks ?? [];
   return (
     <div className="relative flex items-center">
-      {(props.logo || (props.title && props.isTitleVisible)) && <div className="mr-8">{siteLogoLink(props)}</div>}
+      {(props.logo || (props.title && props.isTitleVisible)) && (
+        <div className="mr-8">
+          <SiteLogoLink {...props} />
+        </div>
+      )}
       {primaryLinks.length > 0 && (
         <ul className="hidden mr-8 space-x-8 lg:flex lg:items-center" data-sb-field-path=".primaryLinks">
-          {listOfLinks(primaryLinks)}
+          <ListOfLinks links={primaryLinks} />
         </ul>
       )}
       {secondaryLinks.length > 0 && (
         <ul className="hidden ml-auto space-x-8 lg:flex lg:items-center" data-sb-field-path=".secondaryLinks">
-          {listOfLinks(secondaryLinks)}
+          <ListOfLinks links={secondaryLinks} />
         </ul>
       )}
       {(primaryLinks.length > 0 || secondaryLinks.length > 0) && <MobileMenu {...props} />}
     </div>
   );
-}
+};
 
-function headerVariantB(props) {
+const HeaderVariantB: FC<Props> = (props) => {
   const primaryLinks = props.primaryLinks ?? [];
   const secondaryLinks = props.secondaryLinks ?? [];
   return (
     <div className="relative flex items-center">
-      {(props.logo || (props.title && props.isTitleVisible)) && <div className="mr-8">{siteLogoLink(props)}</div>}
+      {(props.logo || (props.title && props.isTitleVisible)) && <div className="mr-8">{SiteLogoLink(props)}</div>}
       {primaryLinks.length > 0 && (
         <ul
           className="absolute hidden w-auto space-x-8 transform -translate-x-1/2 -translate-y-1/2 lg:flex lg:items-center left-1/2 top-1/2"
           data-sb-field-path=".primaryLinks"
         >
-          {listOfLinks(primaryLinks)}
+          <ListOfLinks links={primaryLinks} />
         </ul>
       )}
       {secondaryLinks.length > 0 && (
         <ul className="hidden ml-auto space-x-8 lg:flex lg:items-center" data-sb-field-path=".secondaryLinks">
-          {listOfLinks(secondaryLinks)}
+          <ListOfLinks links={secondaryLinks} />
         </ul>
       )}
       {(primaryLinks.length > 0 || secondaryLinks.length > 0) && <MobileMenu {...props} />}
     </div>
   );
-}
+};
 
-function headerVariantC(props) {
+const HeaderVariantC: FC<Props> = (props) => {
   const primaryLinks = props.primaryLinks ?? [];
   const secondaryLinks = props.secondaryLinks ?? [];
   return (
     <div className="relative flex items-center">
-      {(props.logo || (props.title && props.isTitleVisible)) && <div className="mr-8">{siteLogoLink(props)}</div>}
+      {(props.logo || (props.title && props.isTitleVisible)) && <div className="mr-8">{SiteLogoLink(props)}</div>}
       {primaryLinks.length > 0 && (
         <ul className="hidden ml-auto space-x-8 lg:flex lg:items-center" data-sb-field-path=".primaryLinks">
-          {listOfLinks(primaryLinks)}
+          <ListOfLinks links={primaryLinks} />
         </ul>
       )}
       {secondaryLinks.length > 0 && (
@@ -120,40 +124,40 @@ function headerVariantC(props) {
           )}
           data-sb-field-path=".secondaryLinks"
         >
-          {listOfLinks(secondaryLinks)}
+          <ListOfLinks links={secondaryLinks} />
         </ul>
       )}
       {(primaryLinks.length > 0 || secondaryLinks.length > 0) && <MobileMenu {...props} />}
     </div>
   );
-}
+};
 
-function headerVariantD(props) {
+const HeaderVariantD: FC<Props> = (props) => {
   const primaryLinks = props.primaryLinks ?? [];
   const secondaryLinks = props.secondaryLinks ?? [];
   return (
     <div className="relative flex items-center">
       {(props.logo || (props.title && props.isTitleVisible)) && (
         <div className="mr-8 lg:mr-0 lg:absolute lg:top-1/2 lg:left-1/2 lg:transform lg:-translate-y-1/2 lg:-translate-x-1/2">
-          {siteLogoLink(props)}
+          {SiteLogoLink(props)}
         </div>
       )}
       {primaryLinks.length > 0 && (
         <ul className="hidden space-x-8 lg:flex lg:items-center" data-sb-field-path=".primaryLinks">
-          {listOfLinks(primaryLinks)}
+          <ListOfLinks links={primaryLinks} />
         </ul>
       )}
       {secondaryLinks.length > 0 && (
         <ul className="hidden ml-auto space-x-8 lg:flex lg:items-center" data-sb-field-path=".secondaryLinks">
-          {listOfLinks(secondaryLinks)}
+          <ListOfLinks links={secondaryLinks} />
         </ul>
       )}
       {(primaryLinks.length > 0 || secondaryLinks.length > 0) && <MobileMenu {...props} />}
     </div>
   );
-}
+};
 
-function headerVariantE(props) {
+const HeaderVariantE: FC<Props> = (props) => {
   const primaryLinks = props.primaryLinks ?? [];
   const secondaryLinks = props.secondaryLinks ?? [];
   return (
@@ -161,12 +165,12 @@ function headerVariantE(props) {
       <div className="relative flex items-center">
         {(props.logo || (props.title && props.isTitleVisible)) && (
           <div className="mr-8 lg:mr-0 lg:absolute lg:top-1/2 lg:left-1/2 lg:transform lg:-translate-y-1/2 lg:-translate-x-1/2">
-            {siteLogoLink(props)}
+            {SiteLogoLink(props)}
           </div>
         )}
         {secondaryLinks.length > 0 && (
           <ul className="hidden ml-auto space-x-8 lg:flex lg:items-center" data-sb-field-path=".secondaryLinks">
-            {listOfLinks(secondaryLinks)}
+            {ListOfLinks({ links: secondaryLinks })}
           </ul>
         )}
         {(primaryLinks.length > 0 || secondaryLinks.length > 0) && <MobileMenu {...props} />}
@@ -176,14 +180,14 @@ function headerVariantE(props) {
           className="hidden mt-4 space-x-8 lg:flex lg:items-center lg:justify-center"
           data-sb-field-path=".primaryLinks"
         >
-          {listOfLinks(primaryLinks)}
+          <ListOfLinks links={primaryLinks} />
         </ul>
       )}
     </>
   );
-}
+};
 
-function MobileMenu(props) {
+const MobileMenu: FC<Props> = (props) => {
   const secondaryColors = props.secondaryColors ?? 'colors-a';
   const primaryLinks = props.primaryLinks ?? [];
   const secondaryLinks = props.secondaryLinks ?? [];
@@ -227,7 +231,7 @@ function MobileMenu(props) {
       >
         <div className="flex flex-col min-h-full">
           <div className="flex items-center justify-between mb-10">
-            {(props.logo || (props.title && props.isTitleVisible)) && siteLogoLink(props)}
+            {(props.logo || (props.title && props.isTitleVisible)) && SiteLogoLink(props)}
             <button
               aria-label="Close Menu"
               title="Close Menu"
@@ -239,21 +243,21 @@ function MobileMenu(props) {
           </div>
           {primaryLinks.length > 0 && (
             <ul className="flex-grow mb-10 space-y-6" data-sb-field-path=".primaryLinks">
-              {listOfLinks(primaryLinks, true)}
+              <ListOfLinks links={primaryLinks} inMobileMenu />
             </ul>
           )}
           {secondaryLinks.length > 0 && (
             <ul className="mb-10 space-y-5" data-sb-field-path=".secondaryLinks">
-              {listOfLinks(secondaryLinks, true)}
+              <ListOfLinks links={secondaryLinks} inMobileMenu />
             </ul>
           )}
         </div>
       </div>
     </div>
   );
-}
+};
 
-function siteLogoLink(props: types.Header) {
+const SiteLogoLink: FC<types.Header> = (props) => {
   return (
     <Link
       href="/"
@@ -267,21 +271,27 @@ function siteLogoLink(props: types.Header) {
       {props.title && props.isTitleVisible && <span className="text-2xl tracking-wide">{props.title}</span>}
     </Link>
   );
-}
+};
 
-function listOfLinks(links, inMobileMenu = false) {
-  return links.map((link, index) => (
-    <li key={index}>
-      <Action
-        {...link}
-        className={classNames(inMobileMenu && link.type === 'Button' ? 'w-full' : '')}
-        data-sb-field-path={`.${index}`}
-      />
-    </li>
-  ));
-}
+type Action = types.Button | types.Link;
 
-function mapMaxWidthStyles(width) {
+const ListOfLinks: FC<{ links: Action[]; inMobileMenu?: boolean }> = ({ links, inMobileMenu = false }) => {
+  return (
+    <>
+      {links.map((link, index) => (
+        <li key={index}>
+          <Action
+            {...link}
+            className={classNames(inMobileMenu && link.type === 'Button' ? 'w-full' : '')}
+            data-sb-field-path={`.${index}`}
+          />
+        </li>
+      ))}
+    </>
+  );
+};
+
+function mapMaxWidthStyles(width: string) {
   switch (width) {
     case 'narrow':
       return 'max-w-screen-xl';

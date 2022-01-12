@@ -1,8 +1,13 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import { mapStylesToClassNames as mapStyles } from '../../../utils/map-styles-to-class-names';
+import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
+import { FC } from 'react';
+import type * as types from '.contentlayer/types';
+import { StackbitFieldPath } from '../../utils/types';
 
-export default function Badge(props) {
+export type Props = types.Badge & { className?: string } & StackbitFieldPath;
+
+export const Badge: FC<Props> = (props) => {
   const { label } = props;
   if (!label) {
     return null;
@@ -27,4 +32,4 @@ export default function Badge(props) {
       <span data-sb-field-path=".label">{label}</span>
     </div>
   );
-}
+};

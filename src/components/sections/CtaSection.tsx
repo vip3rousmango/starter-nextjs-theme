@@ -4,11 +4,11 @@ import classNames from 'classnames';
 
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
 import { getDataAttrs } from '../../utils/get-data-attrs';
-import Action from '../atoms/Action';
+import { Action } from '../atoms/Action';
 import { FC } from 'react';
 import type * as types from '.contentlayer/types';
 
-type Props = types.CtaSection;
+export type Props = types.CtaSection;
 
 export const CtaSection: FC<Props> = (props) => {
   const cssId = props.elementId ?? null;
@@ -50,10 +50,10 @@ export const CtaSection: FC<Props> = (props) => {
           sectionStyles.boxShadow ? mapStyles({ boxShadow: sectionStyles.boxShadow }) : null
         )}
         style={{
-          borderWidth: sectionStyles.borderWidth ? `${sectionStyles.borderWidth}px` : null
+          borderWidth: sectionStyles.borderWidth ? `${sectionStyles.borderWidth}px` : undefined
         }}
       >
-        {props.backgroundImage && ctaBackgroundImage(props.backgroundImage)}
+        {props.backgroundImage && CtaBackgroundImage(props.backgroundImage)}
         <div
           className={classNames(
             'relative',
@@ -74,8 +74,8 @@ export const CtaSection: FC<Props> = (props) => {
                 }
               )}
             >
-              {ctaBody(props)}
-              {ctaActions(props)}
+              {CtaBody(props)}
+              {CtaActions(props)}
             </div>
           </div>
         </div>
@@ -84,7 +84,7 @@ export const CtaSection: FC<Props> = (props) => {
   );
 };
 
-function ctaBackgroundImage(image) {
+const CtaBackgroundImage: FC<types.ImageBlock> = (image) => {
   const imageUrl = image.url;
   if (!imageUrl) {
     return null;
@@ -100,9 +100,9 @@ function ctaBackgroundImage(image) {
       }}
     />
   );
-}
+};
 
-function ctaBody(props) {
+const CtaBody: FC<Props> = (props) => {
   if (!props.title && !props.text) {
     return null;
   }
@@ -134,9 +134,9 @@ function ctaBody(props) {
       )}
     </div>
   );
-}
+};
 
-function ctaActions(props) {
+const CtaActions: FC<Props> = (props) => {
   const actions = props.actions ?? [];
   if (actions.length === 0) {
     return null;
@@ -168,9 +168,9 @@ function ctaActions(props) {
       </div>
     </div>
   );
-}
+};
 
-function mapMinHeightStyles(height) {
+function mapMinHeightStyles(height: string) {
   switch (height) {
     case 'screen':
       return 'min-h-screen';
@@ -178,7 +178,7 @@ function mapMinHeightStyles(height) {
   return null;
 }
 
-function mapMaxWidthStyles(width) {
+function mapMaxWidthStyles(width: string) {
   switch (width) {
     case 'narrow':
       return 'max-w-screen-md';
@@ -190,7 +190,7 @@ function mapMaxWidthStyles(width) {
   return null;
 }
 
-function mapFlexDirectionStyles(flexDirection) {
+function mapFlexDirectionStyles(flexDirection: string) {
   switch (flexDirection) {
     case 'row':
       return ['flex-col', 'lg:flex-row', 'lg:justify-between'];

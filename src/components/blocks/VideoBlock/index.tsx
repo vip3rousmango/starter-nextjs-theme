@@ -1,8 +1,13 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import getVideoData from '../../../utils/get-video-data';
+import { FC } from 'react';
+import type * as types from '.contentlayer/types';
+import { StackbitFieldPath } from '../../../utils/types';
 
-export default function VideoBlock(props) {
+export type Props = types.VideoBlock & { className?: string } & StackbitFieldPath;
+
+export const VideoBlock: FC<Props> = (props) => {
   if (!props.url) {
     return null;
   }
@@ -33,14 +38,14 @@ export default function VideoBlock(props) {
       {videoEmbed(props)}
     </div>
   );
-}
+};
 
 function videoEmbed(props) {
   const { url, autoplay, loop, muted, controls = true } = props;
   const videoData = getVideoData(url);
   if (!videoData.id || !videoData.service) {
     return (
-      <p className="absolute italic left-0 text-center top-1/2 transform -translate-y-1/2 w-full">
+      <p className="absolute left-0 w-full italic text-center transform -translate-y-1/2 top-1/2">
         Video URL is not supported.
       </p>
     );
@@ -53,7 +58,7 @@ function videoEmbed(props) {
         {...(muted && { muted: true })}
         {...(controls && { controls: true })}
         playsInline
-        className="absolute left-0 top-0 h-full w-full"
+        className="absolute top-0 left-0 w-full h-full"
       >
         <source src={videoData.id} type="video/mp4" data-sb-field-path=".url#@src" />
       </video>
@@ -79,7 +84,7 @@ function videoEmbed(props) {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
           data-sb-field-path=".url#@src"
-          className="absolute left-0 top-0 h-full w-full"
+          className="absolute top-0 left-0 w-full h-full"
         ></iframe>
       );
     } else if (videoData.service === 'vimeo') {
@@ -90,7 +95,7 @@ function videoEmbed(props) {
           frameBorder="0"
           allowFullScreen
           data-sb-field-path=".url#@src"
-          className="absolute left-0 top-0 h-full w-full"
+          className="absolute top-0 left-0 w-full h-full"
         ></iframe>
       );
     } else {

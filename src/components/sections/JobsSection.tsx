@@ -1,12 +1,17 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import Markdown from 'markdown-to-jsx';
+// import Markdown from 'markdown-to-jsx';
 
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
 import { getDataAttrs } from '../../utils/get-data-attrs';
-import Action from '../atoms/Action';
+import { Action } from '../atoms/Action';
+import type * as types from '.contentlayer/types';
+import { FC } from 'react';
+import { StackbitFieldPath } from '../../utils/types';
 
-export default function JobsSection(props) {
+export type Props = types.JobsSection;
+
+export const JobsSection: React.FC<Props> = (props) => {
   const cssId = props.elementId ?? null;
   const colors = props.colors ?? 'colors-a';
   const styles = props.styles ?? {};
@@ -68,9 +73,9 @@ export default function JobsSection(props) {
       </div>
     </div>
   );
-}
+};
 
-function JobList(props) {
+const JobList: FC<types.JobList & StackbitFieldPath> = (props) => {
   const jobItems = props.items ?? [];
   return (
     <div className="pb-12 border-b border-current lg:pb-20" data-sb-field-path={props['data-sb-field-path']}>
@@ -88,9 +93,9 @@ function JobList(props) {
       )}
     </div>
   );
-}
+};
 
-function JobListItem(props) {
+const JobListItem: FC<types.JobListItem & StackbitFieldPath> = (props) => {
   const actions = props.actions ?? [];
   return (
     <div className="max-w-screen-sm" data-sb-field-path={props['data-sb-field-path']}>
@@ -105,15 +110,22 @@ function JobListItem(props) {
         </p>
       )}
       {props.text && (
-        <Markdown
-          options={{ forceBlock: true, forceWrapper: true }}
+        <div
+          dangerouslySetInnerHTML={{ __html: props.text.html }}
           className={classNames('sb-markdown', {
             'mt-10 lg:mt-12': props.title || props.location
           })}
           data-sb-field-path=".text"
-        >
-          {props.text}
-        </Markdown>
+        />
+        // <Markdown
+        //   options={{ forceBlock: true, forceWrapper: true }}
+        //   className={classNames('sb-markdown', {
+        //     'mt-10 lg:mt-12': props.title || props.location
+        //   })}
+        //   data-sb-field-path=".text"
+        // >
+        //   {props.text}
+        // </Markdown>
       )}
       {actions.length > 0 && (
         <div
@@ -133,9 +145,9 @@ function JobListItem(props) {
       )}
     </div>
   );
-}
+};
 
-function mapMinHeightStyles(height) {
+function mapMinHeightStyles(height: string) {
   switch (height) {
     case 'screen':
       return 'min-h-screen';
@@ -143,7 +155,7 @@ function mapMinHeightStyles(height) {
   return null;
 }
 
-function mapMaxWidthStyles(width) {
+function mapMaxWidthStyles(width: string) {
   switch (width) {
     case 'narrow':
       return 'max-w-screen-md';

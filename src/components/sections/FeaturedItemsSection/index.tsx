@@ -3,12 +3,14 @@ import classNames from 'classnames';
 
 import { mapStylesToClassNames as mapStyles } from '../../../utils/map-styles-to-class-names';
 import { getDataAttrs } from '../../../utils/get-data-attrs';
-import Action from '../../atoms/Action';
+import { Action } from '../../atoms/Action';
 import { FeaturedItem } from './FeaturedItem';
 import { FC } from 'react';
 import type * as types from '.contentlayer/types';
 
-export const FeaturedItemsSection: FC<types.FeaturedItemsSection> = (props) => {
+export type Props = types.FeaturedItemsSection;
+
+export const FeaturedItemsSection: FC<Props> = (props) => {
   const cssId = props.elementId ?? null;
   const colors = props.colors ?? 'colors-a';
   const styles = props.styles ?? {};

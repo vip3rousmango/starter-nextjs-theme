@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
 import { getDataAttrs } from '../../utils/get-data-attrs';
-import ImageBlock from '../blocks/ImageBlock';
+import { ImageBlock } from '../blocks/ImageBlock';
 import { FC } from 'react';
 import type * as types from '.contentlayer/types';
 
@@ -34,7 +34,7 @@ type MediaGalleryStyle = {
   };
 };
 
-type Props = types.MediaGallerySection & { styles: BaseSectionStyle & MediaGalleryStyle };
+export type Props = types.MediaGallerySection & { styles: BaseSectionStyle & MediaGalleryStyle };
 
 export const MediaGallerySection: FC<Props> = (props) => {
   const cssId = props.elementId ?? null;

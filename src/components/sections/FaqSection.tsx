@@ -5,13 +5,13 @@ import classNames from 'classnames';
 
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
 import { getDataAttrs } from '../../utils/get-data-attrs';
-import Action from '../atoms/Action';
+import { Action } from '../atoms/Action';
 import ChevronIcon from '../svgs/chevron-right';
 import { FC } from 'react';
 import type * as types from '.contentlayer/types';
 import { StackbitFieldPath } from '../../utils/types';
 
-type Props = types.FaqSection & StackbitFieldPath;
+export type Props = types.FaqSection & StackbitFieldPath;
 
 export const FaqSection: FC<Props> = (props) => {
   const cssId = props.elementId ?? null;

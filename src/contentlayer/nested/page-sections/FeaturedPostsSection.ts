@@ -9,7 +9,7 @@ export const FeaturedPostsSection = defineNestedType(() => ({
   fields: {
     ...makeCommonPostsSectionFields(),
     colors,
-    posts: { type: 'list', of: { ...PostLayout, embedDocument: true }, default: defaultPosts },
+    posts: { type: 'list', of: { ...PostLayout /* embedDocument: true */ }, default: defaultPosts },
     styles: {
       type: 'nested',
       of: Styles,

@@ -112,8 +112,8 @@ sections:
     variant: variant-b
     colors: colors-a
     posts:
-      - content/pages/blog/post-four.md
-      - content/pages/blog/post-three.md
+      - pages/blog/post-four.md
+      - pages/blog/post-three.md
     styles:
       self:
         height: auto

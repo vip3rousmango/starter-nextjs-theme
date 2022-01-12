@@ -1,25 +1,20 @@
 import * as React from 'react';
+import { FC } from 'react';
+import * as types from '.contentlayer/types';
 import dayjs from 'dayjs';
 
 import { getBaseLayoutComponent } from '../../utils/base-layout';
-import { getComponent } from '../components-registry';
 import getPageUrlPath from '../../utils/get-page-url-path';
-import Link from '../atoms/Link';
-import { FC } from 'react';
-import type * as types from '.contentlayer/types';
-import { TMPBaseLayout } from '../../tmp';
-import { PostFeedSection } from '../sections/PostFeedSection';
+import { Link } from '../atoms/Link';
+import { resolveProps as resolvePropsForFeaturedPostsSection } from '../sections/FeaturedPostsSection';
+import { resolveProps as resolvePropsForRecentPostsSection } from '../sections/RecentPostsSection';
+import { DynamicComponent } from '../DynamicComponent';
+import { mapSections } from '../sections/mapSection';
 
-export type Props = {
-  page: types.PostLayout & TMPBaseLayout;
-  site: types.Config & TMPBaseLayout;
-  recentPosts: types.PostLayout[];
-};
+export type Props = ReturnType<typeof resolveProps>;
 
-export const PostLayout: FC<Props> = (props) => {
-  const { page, site } = props;
+export const PostLayout: FC<Props> = ({ page, site }) => {
   const BaseLayout = getBaseLayoutComponent(page.baseLayout, site.baseLayout);
-  const sections = page.bottomSections ?? [];
   const dateTimeAttr = dayjs(page.date).format('YYYY-MM-DD HH:mm:ss');
   const formattedDate = dayjs(page.date).format('MMMM D, YYYY');
 
@@ -46,30 +41,11 @@ export const PostLayout: FC<Props> = (props) => {
             )}
           </div>
         </article>
-        {sections.length > 0 && (
+        {page.bottomSections && page.bottomSections.length > 0 && (
           <div data-sb-field-path="bottomSections">
-            {sections.map((section, index) => {
-              switch (section.type) {
-                case 'RecentPostsSection':
-                  return (
-                    <PostFeedSection
-                      key={index}
-                      {...section}
-                      posts={props.recentPosts}
-                      data-sb-field-path={`bottomSections.${index}`}
-                    />
-                  );
-                default:
-                  throw new Error(`no component matching the page section's type: ${section.type}`);
-              }
-              // console.log({ section });
-
-              // const Component = getComponent(section.type);
-              // if (!Component) {
-              //   throw new Error(`no component matching the page section's type: ${section.type}`);
-              // }
-              // return <Component key={index} {...section} data-sb-field-path={`bottomSections.${index}`} />;
-            })}
+            {page.bottomSections.map((section, index) => (
+              <DynamicComponent key={index} {...section} data-sb-field-path={`bottomSections.${index}`} />
+            ))}
           </div>
         )}
       </main>
@@ -77,7 +53,18 @@ export const PostLayout: FC<Props> = (props) => {
   );
 };
 
-const PostAttribution: FC<{ post: types.PostLayout }> = ({ post }) => {
+export const resolveProps = (post: types.PostLayout, allDocuments: types.DocumentTypes[]) => {
+  const config = allDocuments.filter(types.isType('Config'))[0]!;
+  const bottomSections = mapSections(post.bottomSections ?? [], allDocuments);
+
+  return {
+    type: 'PostLayout' as const,
+    site: { ...config, baseLayout: null },
+    page: { ...post, bottomSections, baseLayout: null }
+  };
+};
+
+const PostAttribution: FC<{ post: Props['page'] }> = ({ post }) => {
   if (!post.author && !post.category) {
     return null;
   }

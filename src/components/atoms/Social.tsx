@@ -1,14 +1,17 @@
 import * as React from 'react';
+import { FC } from 'react';
+import type * as types from '.contentlayer/types';
 import classNames from 'classnames';
-import Link from '../Link';
-import Facebook from '../../svgs/facebook';
-import GitHub from '../../svgs/github';
-import Instagram from '../../svgs/instagram';
-import LinkedIn from '../../svgs/linkedin';
-import Reddit from '../../svgs/reddit';
-import Twitter from '../../svgs/twitter';
-import Vimeo from '../../svgs/vimeo';
-import YouTube from '../../svgs/youtube';
+import { Link } from './Link';
+import Facebook from '../svgs/facebook';
+import GitHub from '../svgs/github';
+import Instagram from '../svgs/instagram';
+import LinkedIn from '../svgs/linkedin';
+import Reddit from '../svgs/reddit';
+import Twitter from '../svgs/twitter';
+import Vimeo from '../svgs/vimeo';
+import YouTube from '../svgs/youtube';
+import { StackbitFieldPath } from '../../utils/types';
 
 const iconMap = {
   facebook: Facebook,
@@ -21,7 +24,9 @@ const iconMap = {
   youtube: YouTube
 };
 
-export default function Social(props) {
+export type Props = types.Social & { className?: string } & StackbitFieldPath;
+
+export const Social: FC<Props> = (props) => {
   const { label, altText, url } = props;
   const icon = props.icon ?? 'facebook';
   const IconComponent = iconMap[icon];
@@ -50,7 +55,7 @@ export default function Social(props) {
       data-sb-field-path={annotations.join(' ').trim()}
     >
       {label && <span className="sr-only">{label}</span>}
-      {IconComponent && <IconComponent className="fill-current h-5 w-5" />}
+      {IconComponent && <IconComponent className="w-5 h-5 fill-current" />}
     </Link>
   );
-}
+};

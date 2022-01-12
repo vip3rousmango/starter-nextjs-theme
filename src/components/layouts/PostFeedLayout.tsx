@@ -1,31 +1,21 @@
 import * as React from 'react';
 import classNames from 'classnames';
+import * as types from '.contentlayer/types';
+import { FC } from 'react';
 
-import Link from '../atoms/Link';
-import { getComponent } from '../components-registry';
+import { Link } from '../atoms/Link';
 import { getBaseLayoutComponent } from '../../utils/base-layout';
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
-import type * as types from '.contentlayer/types';
 import { PostFeedSection } from '../sections/PostFeedSection';
-import { FC } from 'react';
-import { TMPBaseLayout } from '../../tmp';
+import { DynamicComponent } from '../DynamicComponent';
+import { sortPostsByDateDesc } from '../../utils/types';
+import { mapSections } from '../sections/mapSection';
 
-type Section = types.RecentPostsSection;
-
-export type Props = {
-  site: types.Config & TMPBaseLayout;
-  posts: types.PostLayout[];
-  page: types.PostFeedLayout &
-    TMPBaseLayout & {
-      pageIndex: number;
-      baseUrlPath: string;
-      numOfPages: number;
-    };
-};
+export type Props = ReturnType<typeof resolveProps>;
 
 export const PostFeedLayout: FC<Props> = ({ page, site, posts }) => {
-  const BaseLayout = getBaseLayoutComponent(page.baseLayout, site.baseLayout);
-  const { title, topSections = [], bottomSections = [], pageIndex, baseUrlPath, numOfPages, postFeed } = page;
+  const BaseLayout = getBaseLayoutComponent(page.baseLayout!, site.baseLayout!);
+  const { title, topSections, bottomSections, pageIndex, baseUrlPath, numOfPages, postFeed } = page;
   const postFeedColors = postFeed?.colors ?? 'colors-a';
   const postFeedWidth = postFeed?.styles?.self?.width ?? 'wide';
   const postFeedJustifyContent = postFeed?.styles?.self?.justifyContent ?? 'center';
@@ -57,30 +47,70 @@ export const PostFeedLayout: FC<Props> = ({ page, site, posts }) => {
             </h1>
           </div>
         )}
-        {renderSections(topSections, 'topSections')}
+        {topSections && topSections.length > 0 && (
+          <div data-sb-field-path="topSections">
+            {topSections.map((section, index) => (
+              <DynamicComponent key={index} {...section} data-sb-field-path={`topSections.${index}`} />
+            ))}
+          </div>
+        )}
         <PostFeedSection {...postFeed} posts={posts} pageLinks={pageLinks} data-sb-field-path="postFeed" />
-        {renderSections(bottomSections, 'bottomSections')}
+        {bottomSections && bottomSections.length > 0 && (
+          <div data-sb-field-path="bottomSections">
+            {bottomSections.map((section, index) => (
+              <DynamicComponent key={index} {...section} data-sb-field-path={`bottomSections.${index}`} />
+            ))}
+          </div>
+        )}
       </main>
     </BaseLayout>
   );
 };
 
-const renderSections = (sections: Section[], fieldName: string) => {
-  if (sections.length === 0) {
-    return null;
-  }
+const POSTS_PER_PAGE = 10;
+const baseUrlPath = '/blog';
 
-  return (
-    <div data-sb-field-path={fieldName}>
-      {sections.map((section, index) => {
-        const Component = getComponent(section.type);
-        if (!Component) {
-          throw new Error(`no component matching the page section's type: ${section.type}`);
-        }
-        return <Component key={index} {...section} data-sb-field-path={`${fieldName}.${index}`} />;
-      })}
-    </div>
-  );
+export const resolveProps = (slug: string, allDocuments: types.DocumentTypes[]) => {
+  const { filterByAuthorSlug, pageIndex } = pageInfoFromSlug(slug);
+  const allPostLayouts = allDocuments.filter(types.isType('PostLayout'));
+  const { bottomSections, topSections, ...postFeedLayout } = allDocuments.filter(types.isType('PostFeedLayout'))[0]!;
+  const config = allDocuments.filter(types.isType('Config'))[0]!;
+
+  const filteredPosts =
+    filterByAuthorSlug === null
+      ? allPostLayouts
+      : allPostLayouts.filter(({ author }) => author?.slug === filterByAuthorSlug);
+  const numOfPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
+
+  const posts = filteredPosts
+    .slice(pageIndex * POSTS_PER_PAGE, (pageIndex + 1) * POSTS_PER_PAGE)
+    .sort(sortPostsByDateDesc);
+
+  return {
+    type: 'PostFeedLayout' as const,
+    site: { ...config, baseLayout: null },
+    page: {
+      ...postFeedLayout,
+      bottomSections: mapSections(bottomSections ?? [], allDocuments),
+      topSections: mapSections(topSections ?? [], allDocuments),
+      numOfPages,
+      baseUrlPath,
+      pageIndex,
+      baseLayout: null
+    },
+    posts
+  };
+};
+
+const pageInfoFromSlug = (slug: string) => {
+  // https://regex101.com/r/bzQKL1/1
+  const regex = /(author\/(?<authorName>[a-zA-Z-_]+)\/?)?(page\/(?<pageIndex>\d+))?/;
+  const match = slug.match(regex);
+
+  const pageIndex = match?.groups?.pageIndex ? parseInt(match.groups.pageIndex) - 1 : 0;
+  const filterByAuthorSlug = match?.groups?.authorName ?? null;
+
+  return { pageIndex, filterByAuthorSlug };
 };
 
 const PageLinks: FC<{ pageIndex: number; baseUrlPath: string; numOfPages: number }> = ({

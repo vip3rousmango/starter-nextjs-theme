@@ -1,12 +1,15 @@
 import * as React from 'react';
-import Markdown from 'markdown-to-jsx';
+// import Markdown from 'markdown-to-jsx';
 import classNames from 'classnames';
 
 import { Social, Action, Link } from '../atoms';
-import ImageBlock from '../blocks/ImageBlock';
+import { ImageBlock } from '../blocks/ImageBlock';
 import type * as types from '.contentlayer/types';
+import { FC } from 'react';
 
-export default function Footer(props: types.Footer & { styles: any; annotationPrefix: string }) {
+type Props = types.Footer & { annotationPrefix: string };
+
+export const Footer: FC<Props> = (props) => {
   const colors = props.colors ?? 'colors-a';
   const footerStyles = props.styles?.self ?? {};
   const footerWidth = footerStyles.width ?? 'narrow';
@@ -30,13 +33,18 @@ export default function Footer(props: types.Footer & { styles: any; annotationPr
               {props.title && <span className="text-2xl tracking-wide">{props.title}</span>}
             </Link>
             {props.text && (
-              <Markdown
-                options={{ forceBlock: true, forceWrapper: true }}
+              <div
+                dangerouslySetInnerHTML={{ __html: props.text.html }}
                 className={classNames('sb-markdown', 'max-w-xl', { 'mt-8': props.title || props.logo })}
                 data-sb-field-path=".text"
-              >
-                {props.text.raw}
-              </Markdown>
+              />
+              // <Markdown
+              //   options={{ forceBlock: true, forceWrapper: true }}
+              //   className={classNames('sb-markdown', 'max-w-xl', { 'mt-8': props.title || props.logo })}
+              //   data-sb-field-path=".text"
+              // >
+              //   {props.text.raw}
+              // </Markdown>
             )}
           </div>
         )}
@@ -90,9 +98,9 @@ export default function Footer(props: types.Footer & { styles: any; annotationPr
       </div>
     </footer>
   );
-}
+};
 
-function Contacts(props) {
+const Contacts: FC<types.ContactBlock> = (props) => {
   return (
     <div className="mb-6 space-y-4 text-lg" data-sb-field-path=".contacts">
       {props.phoneNumber && (
@@ -135,9 +143,9 @@ function Contacts(props) {
       )}
     </div>
   );
-}
+};
 
-function mapMaxWidthStyles(width) {
+function mapMaxWidthStyles(width: string) {
   switch (width) {
     case 'narrow':
       return 'max-w-screen-xl';

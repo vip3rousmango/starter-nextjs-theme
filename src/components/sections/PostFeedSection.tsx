@@ -5,14 +5,16 @@ import dayjs from 'dayjs';
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
 import { getDataAttrs } from '../../utils/get-data-attrs';
 import { Link, Action } from '../atoms';
-import ImageBlock from '../blocks/ImageBlock';
+import { ImageBlock } from '../blocks/ImageBlock';
 import ArrowRightIcon from '../svgs/arrow-right';
 import getPageUrlPath from '../../utils/get-page-url-path';
 import type * as types from '.contentlayer/types';
 import { FC } from 'react';
+import type { Props as FeaturedPostsSectionProps } from './FeaturedPostsSection';
+import type { Props as PagedPostsSectionProps } from './PagedPostsSection';
 
-type PostFeedSection = types.PagedPostsSection | types.RecentPostsSection | types.FeaturedPostsSection;
-type Props = PostFeedSection & {
+type PostFeedSection = types.RecentPostsSection | FeaturedPostsSectionProps | PagedPostsSectionProps;
+export type Props = PostFeedSection & {
   posts: types.PostLayout[];
   elementId?: string; // TODO REMOVE
   pageLinks?: React.ReactNode;

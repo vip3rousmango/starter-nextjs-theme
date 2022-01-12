@@ -1,17 +1,17 @@
 import * as React from 'react';
-import Markdown from 'markdown-to-jsx';
+// import Markdown from 'markdown-to-jsx';
 import classNames from 'classnames';
 
-import { getComponent } from '../components-registry';
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
 import { getDataAttrs } from '../../utils/get-data-attrs';
 import { Action, Badge } from '../atoms';
 import type * as types from '.contentlayer/types';
 import { FC } from 'react';
+import { DynamicComponent } from '../DynamicComponent';
 
-type Media = types.ImageBlock | types.VideoBlock;
+export type Props = types.FeatureHighlightSection;
 
-export const FeatureHighlightSection: FC<types.FeatureHighlightSection> = (props) => {
+export const FeatureHighlightSection: FC<Props> = (props) => {
   const cssId = props.elementId ?? null;
   const colors = props.colors ?? 'colors-a';
   const bgSize = props.backgroundSize ?? 'full';
@@ -82,11 +82,15 @@ export const FeatureHighlightSection: FC<types.FeatureHighlightSection> = (props
                     'lg:pl-1/4': props.media && sectionFlexDirection === 'row-reverse'
                   })}
                 >
-                  {featureHighlightBody(props)}
-                  {featureHighlightActions(props)}
+                  <FeatureHighlightBody {...props} />
+                  <FeatureHighlightActions {...props} />
                 </div>
               </div>
-              {props.media && <div className="flex-1 w-full">{featureHighlightMedia(props.media)}</div>}
+              {props.media && (
+                <div className="flex-1 w-full">
+                  <DynamicComponent {...props.media} data-sb-field-path=".media" />
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -95,19 +99,7 @@ export const FeatureHighlightSection: FC<types.FeatureHighlightSection> = (props
   );
 };
 
-function featureHighlightMedia(media: Media) {
-  const mediaType = media.type;
-  if (!mediaType) {
-    throw new Error(`hero section media does not have the 'type' property`);
-  }
-  const Media = getComponent(mediaType);
-  if (!Media) {
-    throw new Error(`no component matching the hero section media type: ${mediaType}`);
-  }
-  return <Media {...media} data-sb-field-path=".media" />;
-}
-
-function featureHighlightBody(props: types.FeatureHighlightSection) {
+const FeatureHighlightBody: FC<types.FeatureHighlightSection> = (props) => {
   const styles = props.styles ?? {};
   return (
     <>
@@ -150,9 +142,9 @@ function featureHighlightBody(props: types.FeatureHighlightSection) {
       )}
     </>
   );
-}
+};
 
-function featureHighlightActions(props: types.FeatureHighlightSection) {
+const FeatureHighlightActions: FC<types.FeatureHighlightSection> = (props) => {
   const actions = props.actions ?? [];
   if (actions.length === 0) {
     return null;
@@ -180,7 +172,7 @@ function featureHighlightActions(props: types.FeatureHighlightSection) {
       </div>
     </div>
   );
-}
+};
 
 function mapMinHeightStyles(height: string) {
   switch (height) {

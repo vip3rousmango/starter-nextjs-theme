@@ -1,11 +1,15 @@
 import { PostFeedSection } from './PostFeedSection';
 import * as types from '.contentlayer/types';
-export default PostFeedSection;
+import { sortPostsByDateDesc } from '../../utils/types';
+import { FC } from 'react';
 
-export type RecentPostsSection_Output = ReturnType<typeof mapData>;
+export const RecentPostsSection: FC<Props> = (props) => <PostFeedSection {...props} />;
 
-export const mapData = (section: types.RecentPostsSection, allDocuments: types.DocumentTypes[]) => {
-  const posts = allDocuments.filter(types.isType('PostLayout'));
+export type Props = ReturnType<typeof resolveProps>;
 
-  return { ...section, posts };
+export const resolveProps = (section: types.RecentPostsSection, allDocuments: types.DocumentTypes[]) => {
+  const allPosts = allDocuments.filter(types.isType('PostLayout'));
+  const recentPosts = allPosts.sort(sortPostsByDateDesc).slice(0, section.recentCount);
+
+  return { ...section, posts: recentPosts };
 };

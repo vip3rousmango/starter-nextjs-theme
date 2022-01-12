@@ -1,11 +1,11 @@
-const sourcebit = require('sourcebit');
+// const sourcebit = require('sourcebit');
 const { withContentlayer } = require('next-contentlayer');
-const sourcebitConfig = require('./sourcebit.js');
+// const sourcebitConfig = require('./sourcebit.js');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true'
 });
 
-sourcebit.fetch(sourcebitConfig);
+// sourcebit.fetch(sourcebitConfig);
 
 module.exports = withContentlayer()(
   withBundleAnalyzer({
@@ -24,7 +24,7 @@ module.exports = withContentlayer()(
       // Instead, the src/pages/[...slug].js uses the "withRemoteDataUpdates"
       // function to update the content on the page without refreshing the
       // whole page
-      config.plugins.push(new webpack.WatchIgnorePlugin({ paths: [/\/content\//] }));
+      // config.plugins.push(new webpack.WatchIgnorePlugin({ paths: [/\/content\//] }));
       if (dev) {
         // enable tree shaking for development mode, on production it is on by default
         // config.optimization.usedExports = true;

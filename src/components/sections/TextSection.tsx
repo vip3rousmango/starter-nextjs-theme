@@ -1,11 +1,16 @@
 import * as React from 'react';
-import Markdown from 'markdown-to-jsx';
+// import Markdown from 'markdown-to-jsx';
 import classNames from 'classnames';
+import { FC } from 'react';
+import type * as types from '.contentlayer/types';
 
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
 import { getDataAttrs } from '../../utils/get-data-attrs';
 
-export default function TextSection(props) {
+// TODO
+export type Props = any;
+
+export const TextSection: FC<Props> = (props) => {
   const cssId = props.elementId ?? null;
   const colors = props.colors ?? 'colors-a';
   const sectionStyles = props.styles?.self ?? {};
@@ -36,13 +41,13 @@ export default function TextSection(props) {
       }}
     >
       <div className={classNames('flex', 'w-full', mapStyles({ justifyContent: sectionJustifyContent }))}>
-        <div className={classNames('w-full', mapMaxWidthStyles(sectionWidth))}>{textBody(props)}</div>
+        <div className={classNames('w-full', mapMaxWidthStyles(sectionWidth))}>{TextBody(props)}</div>
       </div>
     </div>
   );
-}
+};
 
-function textBody(props) {
+const TextBody: FC<Props> = (props) => {
   const styles = props.styles ?? {};
   return (
     <div>
@@ -62,21 +67,28 @@ function textBody(props) {
         </p>
       )}
       {props.text && (
-        <Markdown
-          options={{ forceBlock: true, forceWrapper: true }}
+        <div
+          dangerouslySetInnerHTML={{ __html: props.text.html }}
           className={classNames('sb-markdown', 'sm:text-lg', styles.text ? mapStyles(styles.text) : null, {
             'mt-6': props.title || props.subtitle
           })}
           data-sb-field-path=".text"
-        >
-          {props.text}
-        </Markdown>
+        />
+        // <Markdown
+        //   options={{ forceBlock: true, forceWrapper: true }}
+        //   className={classNames('sb-markdown', 'sm:text-lg', styles.text ? mapStyles(styles.text) : null, {
+        //     'mt-6': props.title || props.subtitle
+        //   })}
+        //   data-sb-field-path=".text"
+        // >
+        //   {props.text}
+        // </Markdown>
       )}
     </div>
   );
-}
+};
 
-function mapMinHeightStyles(height) {
+function mapMinHeightStyles(height: string) {
   switch (height) {
     case 'screen':
       return 'min-h-screen';
@@ -84,7 +96,7 @@ function mapMinHeightStyles(height) {
   return null;
 }
 
-function mapMaxWidthStyles(width) {
+function mapMaxWidthStyles(width: string) {
   switch (width) {
     case 'narrow':
       return 'max-w-screen-md';

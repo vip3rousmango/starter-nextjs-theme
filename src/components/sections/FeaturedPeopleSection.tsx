@@ -1,14 +1,17 @@
 import * as React from 'react';
+import { FC } from 'react';
+import * as types from '.contentlayer/types';
 import classNames from 'classnames';
-import Markdown from 'markdown-to-jsx';
+// import Markdown from 'markdown-to-jsx';
 
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
 import { getDataAttrs } from '../../utils/get-data-attrs';
-import Action from '../atoms/Action';
-import ImageBlock from '../blocks/ImageBlock';
-import { FC } from 'react';
+import { Action } from '../atoms/Action';
+import { ImageBlock } from '../blocks/ImageBlock';
 
-export const FeaturedPeopleSection: FC<any> = (props) => {
+export type Props = ReturnType<typeof resolveProps>;
+
+export const FeaturedPeopleSection: FC<Props> = (props) => {
   const cssId = props.elementId ?? null;
   const colors = props.colors ?? 'colors-a';
   const styles = props.styles ?? {};
@@ -55,15 +58,20 @@ export const FeaturedPeopleSection: FC<any> = (props) => {
               {props.subtitle}
             </p>
           )}
-          {featuredPeopleVariants(props)}
-          {featuredPeopleActions(props)}
+          {FeaturedPeopleVariants(props)}
+          {FeaturedPeopleActions(props)}
         </div>
       </div>
     </div>
   );
 };
 
-function featuredPeopleActions(props) {
+export const resolveProps = (props: types.FeaturedPeopleSection, allDocuments: types.DocumentTypes[]) => {
+  const people = allDocuments.filter(types.isType('Person')).filter((_) => props.people?.includes(_._id));
+  return { ...props, people };
+};
+
+const FeaturedPeopleActions: FC<Props> = (props) => {
   const actions = props.actions ?? [];
   if (actions.length === 0) {
     return null;
@@ -81,28 +89,27 @@ function featuredPeopleActions(props) {
         )}
         data-sb-field-path=".actions"
       >
-        {props.actions.map((action, index) => (
+        {props.actions?.map((action, index) => (
           <Action key={index} {...action} className="mx-2 mb-3 lg:whitespace-nowrap" data-sb-field-path={`.${index}`} />
         ))}
       </div>
     </div>
   );
-}
+};
 
-function featuredPeopleVariants(props) {
+const FeaturedPeopleVariants: FC<Props> = (props) => {
   const variant = props.variant ?? 'variant-a';
   switch (variant) {
     case 'variant-a':
-      return peopleVariantA(props);
+      return PeopleVariantA(props);
     case 'variant-b':
-      return peopleVariantB(props);
+      return PeopleVariantB(props);
     case 'variant-c':
-      return peopleVariantC(props);
+      return PeopleVariantC(props);
   }
-  return null;
-}
+};
 
-function peopleVariantA(props) {
+const PeopleVariantA: FC<Props> = (props) => {
   const people = props.people ?? [];
   if (people.length === 0) {
     return null;
@@ -138,9 +145,9 @@ function peopleVariantA(props) {
       ))}
     </div>
   );
-}
+};
 
-function peopleVariantB(props) {
+const PeopleVariantB: FC<Props> = (props) => {
   const people = props.people ?? [];
   if (people.length === 0) {
     return null;
@@ -174,24 +181,31 @@ function peopleVariantB(props) {
             )}
             {person.role && <p data-sb-field-path=".role">{person.role}</p>}
             {person.bio && (
-              <Markdown
-                options={{ forceBlock: true, forceWrapper: true }}
+              <div
+                dangerouslySetInnerHTML={{ __html: person.bio.html }}
                 className={classNames({
                   'mt-4': person.firstName || person.lastName || person.role
                 })}
                 data-sb-field-path=".bio"
-              >
-                {person.bio}
-              </Markdown>
+              />
+              // <Markdown
+              //   options={{ forceBlock: true, forceWrapper: true }}
+              //   className={classNames({
+              //     'mt-4': person.firstName || person.lastName || person.role
+              //   })}
+              //   data-sb-field-path=".bio"
+              // >
+              //   {person.bio}
+              // </Markdown>
             )}
           </div>
         </article>
       ))}
     </div>
   );
-}
+};
 
-function peopleVariantC(props) {
+const PeopleVariantC: FC<Props> = (props) => {
   const people = props.people ?? [];
   if (people.length === 0) {
     return null;
@@ -206,48 +220,69 @@ function peopleVariantC(props) {
       })}
       data-sb-field-path=".people"
     >
-      {peopleLeft.length > 0 && <div className="sm:mt-32">{peopleListVariantC(peopleLeft)}</div>}
-      {peopleRight.length > 0 && <div>{peopleListVariantC(peopleRight, middleIndex)}</div>}
-    </div>
-  );
-}
-
-function peopleListVariantC(people, annotIndexStart = 0) {
-  return people.map((person, index, arr) => (
-    <article
-      key={index}
-      className={classNames(arr.length - 1 === index ? null : 'mb-12')}
-      data-sb-field-path={`.${annotIndexStart + index}`}
-    >
-      {person.image && (
-        <div data-sb-field-path=".image">
-          <ImageBlock {...person.image} className="w-full" />
+      {peopleLeft.length > 0 && (
+        <div className="sm:mt-32">
+          <PeopleListVariantC people={peopleLeft} />
         </div>
       )}
-      <div className={classNames({ 'mt-4': person.image })}>
-        {(person.firstName || person.lastName || person.role) && (
-          <h3 className={classNames({ 'mb-3': person.bio })}>
-            {person.firstName && <span data-sb-field-path=".firstName">{person.firstName}</span>}{' '}
-            {person.lastName && <span data-sb-field-path=".lastName">{person.lastName}</span>}{' '}
-            {(person.firstName || person.lastName) && person.role && <span className="mx-1">|</span>}{' '}
-            {person.role && <span data-sb-field-path=".role">{person.role}</span>}
-          </h3>
-        )}
-        {person.bio && (
-          <Markdown
-            options={{ forceBlock: true, forceWrapper: true }}
-            className="sb-markdown"
-            data-sb-field-path=".bio"
-          >
-            {person.bio}
-          </Markdown>
-        )}
-      </div>
-    </article>
-  ));
-}
+      {peopleRight.length > 0 && (
+        <div>
+          <PeopleListVariantC people={peopleRight} annotIndexStart={middleIndex} />
+        </div>
+      )}
+    </div>
+  );
+};
 
-function mapMinHeightStyles(height) {
+const PeopleListVariantC: FC<{ people: Props['people']; annotIndexStart?: number }> = ({
+  people,
+  annotIndexStart = 0
+}) => {
+  return (
+    <>
+      {people.map((person, index, arr) => (
+        <article
+          key={index}
+          className={classNames(arr.length - 1 === index ? null : 'mb-12')}
+          data-sb-field-path={`.${annotIndexStart + index}`}
+        >
+          {person.image && (
+            <div data-sb-field-path=".image">
+              <ImageBlock {...person.image} className="w-full" />
+            </div>
+          )}
+          <div className={classNames({ 'mt-4': person.image })}>
+            {(person.firstName || person.lastName || person.role) && (
+              <h3 className={classNames({ 'mb-3': person.bio })}>
+                {person.firstName && <span data-sb-field-path=".firstName">{person.firstName}</span>}{' '}
+                {person.lastName && <span data-sb-field-path=".lastName">{person.lastName}</span>}{' '}
+                {(person.firstName || person.lastName) && person.role && <span className="mx-1">|</span>}{' '}
+                {person.role && <span data-sb-field-path=".role">{person.role}</span>}
+              </h3>
+            )}
+            {person.bio && (
+              <div
+                dangerouslySetInnerHTML={{ __html: person.bio.html }}
+                className="sb-markdown"
+                data-sb-field-path=".bio"
+              />
+              // <Markdown
+              //   options={{ forceBlock: true, forceWrapper: true }}
+              //   className="sb-markdown"
+              //   data-sb-field-path=".bio"
+              // >
+              //   {person.bio}
+              // </Markdown>
+            )}
+          </div>
+        </article>
+      ))}
+      ;
+    </>
+  );
+};
+
+function mapMinHeightStyles(height: string) {
   switch (height) {
     case 'auto':
       return 'min-h-0';
@@ -257,7 +292,7 @@ function mapMinHeightStyles(height) {
   return null;
 }
 
-function mapMaxWidthStyles(width) {
+function mapMaxWidthStyles(width: string) {
   switch (width) {
     case 'narrow':
       return 'max-w-screen-md';

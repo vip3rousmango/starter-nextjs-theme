@@ -1,28 +1,30 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import Link from '../Link';
-import Apple from '../../svgs/apple';
-import ArrowLeft from '../../svgs/arrow-left';
-import ArrowLeftCircle from '../../svgs/arrow-left-circle';
-import ArrowRight from '../../svgs/arrow-right';
-import ArrowRightCircle from '../../svgs/arrow-right-circle';
-import Cart from '../../svgs/cart';
-import ChevronLeft from '../../svgs/chevron-left';
-import ChevronRight from '../../svgs/chevron-right';
-import Facebook from '../../svgs/facebook';
-import GitHub from '../../svgs/github';
-import GooglePlay from '../../svgs/google-play';
-import Instagram from '../../svgs/instagram';
-import LinkedIn from '../../svgs/linkedin';
-import Mail from '../../svgs/mail';
-import Play from '../../svgs/play';
-import PlayCircle from '../../svgs/play-circle';
-import Reddit from '../../svgs/reddit';
-import Send from '../../svgs/send';
-import Twitter from '../../svgs/twitter';
-import Vimeo from '../../svgs/vimeo';
-import YouTube from '../../svgs/youtube';
+import { Link } from './Link';
+import Apple from '../svgs/apple';
+import ArrowLeft from '../svgs/arrow-left';
+import ArrowLeftCircle from '../svgs/arrow-left-circle';
+import ArrowRight from '../svgs/arrow-right';
+import ArrowRightCircle from '../svgs/arrow-right-circle';
+import Cart from '../svgs/cart';
+import ChevronLeft from '../svgs/chevron-left';
+import ChevronRight from '../svgs/chevron-right';
+import Facebook from '../svgs/facebook';
+import GitHub from '../svgs/github';
+import GooglePlay from '../svgs/google-play';
+import Instagram from '../svgs/instagram';
+import LinkedIn from '../svgs/linkedin';
+import Mail from '../svgs/mail';
+import Play from '../svgs/play';
+import PlayCircle from '../svgs/play-circle';
+import Reddit from '../svgs/reddit';
+import Send from '../svgs/send';
+import Twitter from '../svgs/twitter';
+import Vimeo from '../svgs/vimeo';
+import YouTube from '../svgs/youtube';
 import type * as types from '.contentlayer/types';
+import { FC } from 'react';
+import { StackbitFieldPath } from '../../utils/types';
 
 const iconMap = {
   apple: Apple,
@@ -48,9 +50,9 @@ const iconMap = {
   youtube: YouTube
 };
 
-type Props = (types.Link | types.Button) & { className: string };
+export type Props = (types.Link | types.Button) & StackbitFieldPath & { className?: string };
 
-export default function Action(props: Props) {
+export const Action: FC<Props> = (props) => {
   const { type, label, altText, url, showIcon } = props;
   const icon = props.icon ?? 'arrowLeft';
   const iconPosition = props.iconPosition ?? 'right';
@@ -65,7 +67,7 @@ export default function Action(props: Props) {
     `${annotationPrefix}.icon#svg[1]`
   ];
   const defaultStyle = type === 'Link' ? 'link' : 'secondary';
-  const style = props.style || defaultStyle;
+  const style = type === 'Button' ? props.style ?? defaultStyle : defaultStyle;
   const cssClasses = props.className ?? null;
   const cssId = props.elementId ?? null;
 
@@ -98,4 +100,4 @@ export default function Action(props: Props) {
       )}
     </Link>
   );
-}
+};
