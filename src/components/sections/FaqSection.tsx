@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
 import classNames from 'classnames';
-// import Markdown from 'markdown-to-jsx';
 
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
 import { getDataAttrs } from '../../utils/get-data-attrs';
@@ -10,6 +9,7 @@ import ChevronIcon from '../svgs/chevron-right';
 import { FC } from 'react';
 import type * as types from '.contentlayer/types';
 import { StackbitFieldPath } from '../../utils/stackbit';
+import { Markdown } from '../Markdown';
 
 export type Props = types.FaqSection & StackbitFieldPath;
 
@@ -148,16 +148,17 @@ const FaqItem: FC<types.FaqItem & StackbitFieldPath> = (props) => {
                 </h3>
             )}
             {props.answer && (
-                <div
-                    dangerouslySetInnerHTML={{ __html: props.answer.html }}
-                    className={classNames(
-                        'sb-markdown',
-                        'mt-6',
-                        props?.styles?.answer ? mapStyles(props?.styles?.answer) : null,
-                        !isActive ? 'hidden' : null
-                    )}
-                    data-sb-field-path=".answer"
-                />
+                <Markdown />
+                // <div
+                //     dangerouslySetInnerHTML={{ __html: props.answer.html }}
+                //     className={classNames(
+                //         'sb-markdown',
+                //         'mt-6',
+                //         props?.styles?.answer ? mapStyles(props?.styles?.answer) : null,
+                //         !isActive ? 'hidden' : null
+                //     )}
+                //     data-sb-field-path=".answer"
+                // />
                 // <Markdown
                 //   options={{ forceBlock: true, forceWrapper: true }}
                 //   className={classNames(

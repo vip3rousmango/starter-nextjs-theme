@@ -8,6 +8,7 @@ import { getPageUrlPath } from '../../utils/get-page-url-path';
 import { Link } from '../atoms/Link';
 import { DynamicComponent } from '../DynamicComponent';
 import { mapSections } from '../sections/mapSection';
+import { Markdown } from '../Markdown';
 
 export type Props = ReturnType<typeof resolveProps>;
 
@@ -30,11 +31,11 @@ export const PostLayout: FC<Props> = ({ page, site }) => {
                             {page.title && <h1 data-sb-field-path="title">{page.title}</h1>}
                             <PostAttribution post={page} />
                         </header>
-                        {page.body.html && (
-                            <div
+                        {page.markdown_content && (
+                            <Markdown
                                 className="max-w-screen-md mx-auto sb-markdown"
-                                data-sb-field-path="markdown_content"
-                                dangerouslySetInnerHTML={{ __html: page.body.html }}
+                                fieldName="markdown_content"
+                                text={page.markdown_content}
                             />
                         )}
                     </div>
