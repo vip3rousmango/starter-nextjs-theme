@@ -1,32 +1,32 @@
 ---
 title: Top 20 Ways to Save Time at Work This Year
 date: '2021-01-05'
-author: data/team/dianne-ameter.json
+author: content/data/team/dianne-ameter.json
 excerpt: Quo facilis culpa ut illo dolor quo placeat consequatur. A consequatur facilis aut voluptas dolores qui aperiam laborum ut ullam consequatur ut quia consequatur cum inventore voluptas sed impedit asperiores!
 featuredImage:
-  type: ImageBlock
-  url: /images/post-9.jpg
-  altText: Function of design image
+    type: ImageBlock
+    url: /images/post-9.jpg
+    altText: Function of design image
 bottomSections:
-  - elementId: ''
-    variant: variant-c
-    colors: colors-a
-    title: Read next
-    recentCount: 3
-    styles:
-      self:
-        height: auto
-        width: wide
-        margin: ['mt-0', 'mb-0', 'ml-0', 'mr-0']
-        padding: ['pt-12', 'pb-56', 'pr-4', 'pl-4']
-        justifyContent: center
-      title:
-        textAlign: center
-      subtitle:
-        textAlign: center
-      actions:
-        justifyContent: center
-    type: RecentPostsSection
+    - elementId: ''
+      variant: variant-c
+      colors: colors-a
+      title: Read next
+      recentCount: 3
+      styles:
+          self:
+              height: auto
+              width: wide
+              margin: ['mt-0', 'mb-0', 'ml-0', 'mr-0']
+              padding: ['pt-12', 'pb-56', 'pr-4', 'pl-4']
+              justifyContent: center
+          title:
+              textAlign: center
+          subtitle:
+              textAlign: center
+          actions:
+              justifyContent: center
+      type: RecentPostsSection
 type: PostLayout
 ---
 

@@ -2,34 +2,34 @@
 title: A Work Bubbles
 type: PostLayout
 date: '2021-07-01'
-author: data/team/hugh-saturation.json
+author: content/data/team/hugh-saturation.json
 excerpt: >-
-  Sed in facilisis dui. Nulla molestie risus in mi dapibus, eget porta lorem
-  semper. Donec sed facilisis nibh.
+    Sed in facilisis dui. Nulla molestie risus in mi dapibus, eget porta lorem
+    semper. Donec sed facilisis nibh.
 featuredImage:
-  type: ImageBlock
-  url: /images/post-2.jpg
-  altText: Post Image
+    type: ImageBlock
+    url: /images/post-2.jpg
+    altText: Post Image
 bottomSections:
-  - elementId: ''
-    variant: variant-c
-    colors: colors-a
-    title: Read next
-    recentCount: 3
-    styles:
-      self:
-        height: auto
-        width: wide
-        margin: ['mt-0', 'mb-0', 'ml-0', 'mr-0']
-        padding: ['pt-12', 'pb-56', 'pr-4', 'pl-4']
-        justifyContent: center
-      title:
-        textAlign: center
-      subtitle:
-        textAlign: center
-      actions:
-        justifyContent: center
-    type: RecentPostsSection
+    - elementId: ''
+      variant: variant-c
+      colors: colors-a
+      title: Read next
+      recentCount: 3
+      styles:
+          self:
+              height: auto
+              width: wide
+              margin: ['mt-0', 'mb-0', 'ml-0', 'mr-0']
+              padding: ['pt-12', 'pb-56', 'pr-4', 'pl-4']
+              justifyContent: center
+          title:
+              textAlign: center
+          subtitle:
+              textAlign: center
+          actions:
+              justifyContent: center
+      type: RecentPostsSection
 ---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ante lorem, tincidunt ac leo efficitur, feugiat tempor odio. Curabitur at auctor sapien. Etiam at cursus enim. Suspendisse sed augue tortor. Nunc eu magna vitae lorem pellentesque fermentum. Sed in facilisis dui. Nulla molestie risus in mi dapibus, eget porta lorem semper. Donec sed facilisis nibh. Curabitur eget dui in libero euismod commodo nec sit amet est. Etiam id ipsum aliquam, vehicula erat sit amet, consequat tortor.

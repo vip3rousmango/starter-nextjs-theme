@@ -1,32 +1,32 @@
 ---
 title: The Top Ten Lessons We’ve Learned Since Our Initial Launch
 date: '2021-01-15'
-author: data/team/hilary-ouse.json
+author: content/data/team/hilary-ouse.json
 excerpt: Sit ratione eligendi et quis distinctio et maiores accusantium aut accusamus facere sit repellat quidem qui alias nostrum et earum enim. Cum quis sint eos dolor quas ad odit ipsum qui quia eius.
 featuredImage:
-  type: ImageBlock
-  url: /images/post-11.jpg
-  altText: Function of design image
+    type: ImageBlock
+    url: /images/post-11.jpg
+    altText: Function of design image
 bottomSections:
-  - elementId: ''
-    variant: variant-c
-    colors: colors-a
-    title: Read next
-    recentCount: 3
-    styles:
-      self:
-        height: auto
-        width: wide
-        margin: ['mt-0', 'mb-0', 'ml-0', 'mr-0']
-        padding: ['pt-12', 'pb-56', 'pr-4', 'pl-4']
-        justifyContent: center
-      title:
-        textAlign: center
-      subtitle:
-        textAlign: center
-      actions:
-        justifyContent: center
-    type: RecentPostsSection
+    - elementId: ''
+      variant: variant-c
+      colors: colors-a
+      title: Read next
+      recentCount: 3
+      styles:
+          self:
+              height: auto
+              width: wide
+              margin: ['mt-0', 'mb-0', 'ml-0', 'mr-0']
+              padding: ['pt-12', 'pb-56', 'pr-4', 'pl-4']
+              justifyContent: center
+          title:
+              textAlign: center
+          subtitle:
+              textAlign: center
+          actions:
+              justifyContent: center
+      type: RecentPostsSection
 type: PostLayout
 ---
 

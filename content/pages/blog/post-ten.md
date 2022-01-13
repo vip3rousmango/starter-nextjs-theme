@@ -1,32 +1,32 @@
 ---
 title: The Most Creative Ways Our Customers Use Our Products
 date: '2020-12-20'
-author: data/team/hugh-saturation.json
+author: content/data/team/hugh-saturation.json
 excerpt: Et libero doloribus qui consequatur ratione cum rerum dolor sit dolor laborum aut dignissimos tempora aut molestiae beatae in voluptatem neque. Et illo aspernatur.
 featuredImage:
-  type: ImageBlock
-  url: /images/post-10.jpg
-  altText: Function of design image
+    type: ImageBlock
+    url: /images/post-10.jpg
+    altText: Function of design image
 bottomSections:
-  - elementId: ''
-    variant: variant-c
-    colors: colors-a
-    title: Read next
-    recentCount: 3
-    styles:
-      self:
-        height: auto
-        width: wide
-        margin: ['mt-0', 'mb-0', 'ml-0', 'mr-0']
-        padding: ['pt-12', 'pb-56', 'pr-4', 'pl-4']
-        justifyContent: center
-      title:
-        textAlign: center
-      subtitle:
-        textAlign: center
-      actions:
-        justifyContent: center
-    type: RecentPostsSection
+    - elementId: ''
+      variant: variant-c
+      colors: colors-a
+      title: Read next
+      recentCount: 3
+      styles:
+          self:
+              height: auto
+              width: wide
+              margin: ['mt-0', 'mb-0', 'ml-0', 'mr-0']
+              padding: ['pt-12', 'pb-56', 'pr-4', 'pl-4']
+              justifyContent: center
+          title:
+              textAlign: center
+          subtitle:
+              textAlign: center
+          actions:
+              justifyContent: center
+      type: RecentPostsSection
 type: PostLayout
 ---
 

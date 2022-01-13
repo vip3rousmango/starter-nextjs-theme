@@ -1,32 +1,32 @@
 ---
 title: The Elements of Great Workplace Design
 date: '2021-02-12'
-author: data/team/desmond-eagle.json
+author: content/data/team/desmond-eagle.json
 excerpt: Nam voluptate maxime et magni provident aut repudiandae enim sit esse praesentium. Ut tenetur necessitatibus ut neque nemo ut iusto voluptates et veniam error sit vitae architecto aut suscipit sapiente.
 featuredImage:
-  type: ImageBlock
-  url: /images/post-12.jpg
-  altText: Function of design image
+    type: ImageBlock
+    url: /images/post-12.jpg
+    altText: Function of design image
 bottomSections:
-  - elementId: ''
-    variant: variant-c
-    colors: colors-a
-    title: Read next
-    recentCount: 3
-    styles:
-      self:
-        height: auto
-        width: wide
-        margin: ['mt-0', 'mb-0', 'ml-0', 'mr-0']
-        padding: ['pt-12', 'pb-56', 'pr-4', 'pl-4']
-        justifyContent: center
-      title:
-        textAlign: center
-      subtitle:
-        textAlign: center
-      actions:
-        justifyContent: center
-    type: RecentPostsSection
+    - elementId: ''
+      variant: variant-c
+      colors: colors-a
+      title: Read next
+      recentCount: 3
+      styles:
+          self:
+              height: auto
+              width: wide
+              margin: ['mt-0', 'mb-0', 'ml-0', 'mr-0']
+              padding: ['pt-12', 'pb-56', 'pr-4', 'pl-4']
+              justifyContent: center
+          title:
+              textAlign: center
+          subtitle:
+              textAlign: center
+          actions:
+              justifyContent: center
+      type: RecentPostsSection
 type: PostLayout
 ---
 

@@ -16,7 +16,7 @@ export type Props = {
 export const DefaultBaseLayout: FC<Props> = (props) => {
     const { page, site } = props;
     const pageMeta = page?.__metadata ?? {};
-    const siteId = `${contentDirPath}/${site._id}`;
+    const siteId = `${site._id}`;
 
     return (
         <div className={classNames('sb-page', pageMeta.pageCssClasses)} {...objectIdDataAttr(page)}>

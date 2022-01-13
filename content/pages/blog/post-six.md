@@ -1,32 +1,32 @@
 ---
 title: Smart Strategies for Growing Your Business
 date: '2021-10-26'
-author: data/team/hugh-saturation.json
+author: content/data/team/hugh-saturation.json
 excerpt: Sed alias dicta et ducimus aperiam ab fugit nostrum. In temporibus odio ut eius dolor ut voluptates voluptatibus qui doloremque eveniet quo eveniet optio eius illum et itaque deleniti.
 featuredImage:
-  type: ImageBlock
-  url: /images/post-6.jpg
-  altText: Post thumbnail image
+    type: ImageBlock
+    url: /images/post-6.jpg
+    altText: Post thumbnail image
 bottomSections:
-  - elementId: ''
-    variant: variant-c
-    colors: colors-a
-    title: Read next
-    recentCount: 3
-    styles:
-      self:
-        height: auto
-        width: wide
-        margin: ['mt-0', 'mb-0', 'ml-0', 'mr-0']
-        padding: ['pt-12', 'pb-56', 'pr-4', 'pl-4']
-        justifyContent: center
-      title:
-        textAlign: center
-      subtitle:
-        textAlign: center
-      actions:
-        justifyContent: center
-    type: RecentPostsSection
+    - elementId: ''
+      variant: variant-c
+      colors: colors-a
+      title: Read next
+      recentCount: 3
+      styles:
+          self:
+              height: auto
+              width: wide
+              margin: ['mt-0', 'mb-0', 'ml-0', 'mr-0']
+              padding: ['pt-12', 'pb-56', 'pr-4', 'pl-4']
+              justifyContent: center
+          title:
+              textAlign: center
+          subtitle:
+              textAlign: center
+          actions:
+              justifyContent: center
+      type: RecentPostsSection
 type: PostLayout
 ---
 
