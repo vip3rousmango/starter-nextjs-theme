@@ -3,7 +3,8 @@ import classNames from 'classnames';
 
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
 import { getDataAttrs } from '../../utils/get-data-attrs';
-import { Action, Badge } from '../atoms';
+import { Action } from '../atoms/Action';
+import { Badge } from '../atoms/Badge';
 import type * as types from '.contentlayer/types';
 import { FC } from 'react';
 import { DynamicComponent } from '../DynamicComponent';

@@ -2,8 +2,10 @@ import * as React from 'react';
 // import Markdown from 'markdown-to-jsx';
 import classNames from 'classnames';
 
-import { Social, Action, Link } from '../atoms';
 import { ImageBlock } from '../blocks/ImageBlock';
+import { Action } from '../atoms/Action';
+import { Social } from '../atoms/Social';
+import { Link } from '../atoms/Link';
 import type * as types from '.contentlayer/types';
 import { FC } from 'react';
 

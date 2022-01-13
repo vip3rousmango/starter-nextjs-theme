@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import classNames from 'classnames';
 
-import { Link, Action } from '../atoms';
+import { Action } from '../atoms/Action';
+import { Link } from '../atoms/Link';
 import { ImageBlock } from '../blocks/ImageBlock';
 import CloseIcon from '../svgs/close';
 import MenuIcon from '../svgs/menu';
