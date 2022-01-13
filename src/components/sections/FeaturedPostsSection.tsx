@@ -10,7 +10,7 @@ export const FeaturedPostsSection: FC<Props> = (props) => {
 
 export const resolveProps = (section: types.FeaturedPostsSection, allDocuments: types.DocumentTypes[]) => {
     const allPosts = allDocuments.filter(types.isType('PostLayout'));
-    const posts = section.posts.map((postId) => allPosts.find((post) => post._id === postId)!);
+    const posts = section.posts.map((postId) => allPosts.find((post) => post.__metadata.id === postId)!);
 
     return { ...section, posts };
 };

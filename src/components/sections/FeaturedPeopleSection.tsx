@@ -75,7 +75,7 @@ export const FeaturedPeopleSection: FC<Props> = (props) => {
 };
 
 export const resolveProps = (props: types.FeaturedPeopleSection, allDocuments: types.DocumentTypes[]) => {
-    const people = allDocuments.filter(types.isType('Person')).filter((_) => props.people?.includes(_._id));
+    const people = allDocuments.filter(types.isType('Person')).filter((_) => props.people?.includes(_.__metadata.id));
     return { ...props, people };
 };
 

@@ -10,16 +10,16 @@ import { objectIdDataAttr, contentDirPath } from '../../utils/stackbit';
 
 export type Props = {
     site: types.Config;
-    page: { _id: string } & Record<string, any>;
+    page: { __metadata: types.Metadata } & Record<string, any>;
 };
 
 export const DefaultBaseLayout: FC<Props> = (props) => {
     const { page, site } = props;
     const pageMeta = page?.__metadata ?? {};
-    const siteId = `${site._id}`;
+    const siteId = `${site.__metadata.id}`;
 
     return (
-        <div className={classNames('sb-page', pageMeta.pageCssClasses)} {...objectIdDataAttr(page)}>
+        <div className={classNames('sb-page', pageMeta.pageCssClasses)} {...objectIdDataAttr(page.__metadata)}>
             <div className="sb-base sb-default-base-layout">
                 <Head>
                     <title>{page.title}</title>

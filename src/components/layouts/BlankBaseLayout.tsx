@@ -15,7 +15,7 @@ export const BlankBaseLayout: FC<Props> = (props) => {
     const pageMeta = page?.__metadata ?? {};
 
     return (
-        <div className={classNames('sb-page', pageMeta.pageCssClasses)} {...objectIdDataAttr(page)}>
+        <div className={classNames('sb-page', pageMeta.pageCssClasses)} {...objectIdDataAttr(page.__metadata)}>
             <Head>
                 <title>{page.title}</title>
                 <meta name="description" content="Stackbit Components Library" />

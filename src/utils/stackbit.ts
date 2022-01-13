@@ -1,5 +1,5 @@
 export const contentDirPath = '';
 
-export const objectIdDataAttr = (page: { _id: string }) => ({ 'data-sb-object-id': `${page._id}` });
+export const objectIdDataAttr = ({ id }: { id: string }) => ({ 'data-sb-object-id': `${id}` });
 
 export type StackbitFieldPath = { 'data-sb-field-path': string };

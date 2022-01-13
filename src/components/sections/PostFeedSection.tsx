@@ -156,7 +156,7 @@ const PostsVariantA: FC<Props> = (props) => {
             {...(props.annotatePosts ? { 'data-sb-field-path': '.posts' } : null)}
         >
             {posts.map((post, index) => (
-                <article key={index} {...objectIdDataAttr(post)}>
+                <article key={index} {...objectIdDataAttr(post.__metadata)}>
                     {post.featuredImage && (
                         <Link
                             href={getPageUrlPath(post)}
@@ -210,7 +210,7 @@ const PostsVariantB: FC<Props> = (props) => {
                 <article
                     key={index}
                     className={classNames(index % 4 === 0 || (index + 1) % 4 === 0 ? 'md:col-span-3' : 'md:col-span-2')}
-                    {...objectIdDataAttr(post)}
+                    {...objectIdDataAttr(post.__metadata)}
                 >
                     {post.featuredImage && (
                         <Link
@@ -262,7 +262,11 @@ const PostsVariantC: FC<Props> = (props) => {
         >
             {posts.map((post, index) => {
                 return (
-                    <article key={index} className="overflow-hidden sb-card rounded-2xl" {...objectIdDataAttr(post)}>
+                    <article
+                        key={index}
+                        className="overflow-hidden sb-card rounded-2xl"
+                        {...objectIdDataAttr(post.__metadata)}
+                    >
                         <div className="flex flex-col min-h-full">
                             {post.featuredImage && (
                                 <Link
