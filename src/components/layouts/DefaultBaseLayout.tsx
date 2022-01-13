@@ -6,18 +6,19 @@ import { Header } from '../sections/Header';
 import { Footer } from '../sections/Footer';
 import type * as types from '.contentlayer/types';
 import { FC } from 'react';
+import { objectIdDataAttr } from '../../utils/stackbit';
 
 type Props = {
   site: types.Config;
-  page: any;
-  children: React.ReactNode;
+  page: { _id: string } & any;
 };
 
 export const DefaultBaseLayout: FC<Props> = (props) => {
   const { page, site } = props;
   const pageMeta = page?.__metadata ?? {};
+
   return (
-    <div className={classNames('sb-page', pageMeta.pageCssClasses)} data-sb-object-id={pageMeta.id}>
+    <div className={classNames('sb-page', pageMeta.pageCssClasses)} {...objectIdDataAttr(page)}>
       <div className="sb-base sb-default-base-layout">
         <Head>
           <title>{page.title}</title>

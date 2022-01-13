@@ -1,9 +1,9 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import getVideoData from '../../../utils/get-video-data';
+import getVideoData from '../../utils/get-video-data';
 import { FC } from 'react';
 import type * as types from '.contentlayer/types';
-import { StackbitFieldPath } from '../../../utils/types';
+import { StackbitFieldPath } from '../../utils/stackbit';
 
 export type Props = types.VideoBlock & { className?: string } & StackbitFieldPath;
 
@@ -35,14 +35,14 @@ export const VideoBlock: FC<Props> = (props) => {
       )}
       data-sb-field-path={annotations.join(' ').trim()}
     >
-      {videoEmbed(props)}
+      {VideoEmbed(props)}
     </div>
   );
 };
 
-function videoEmbed(props) {
+const VideoEmbed: FC<Props> = (props) => {
   const { url, autoplay, loop, muted, controls = true } = props;
-  const videoData = getVideoData(url);
+  const videoData = getVideoData(url!);
   if (!videoData.id || !videoData.service) {
     return (
       <p className="absolute left-0 w-full italic text-center transform -translate-y-1/2 top-1/2">
@@ -102,4 +102,4 @@ function videoEmbed(props) {
       return null;
     }
   }
-}
+};

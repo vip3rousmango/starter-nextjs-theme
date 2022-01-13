@@ -4,9 +4,9 @@ import { FC } from 'react';
 import type * as types from '.contentlayer/types';
 import { StackbitFieldPath } from '../../../utils/stackbit';
 
-export type Props = types.CheckboxFormControl & StackbitFieldPath;
+export type Props = types.EmailFormControl & StackbitFieldPath;
 
-export const CheckboxFormControl: FC<Props> = (props) => {
+export const EmailFormControl: FC<Props> = (props) => {
   const width = props.width ?? 'full';
   const labelId = `${props.name}-label`;
   const attr: any = {};
@@ -18,24 +18,30 @@ export const CheckboxFormControl: FC<Props> = (props) => {
   }
   return (
     <div
-      className={classNames('sb-form-control', 'flex', 'items-center', {
+      className={classNames('sb-form-control', {
         'sm:col-span-2': width === 'full'
       })}
       data-sb-field-path={props['data-sb-field-path']}
     >
-      <input
-        id={props.name}
-        className="sb-checkbox"
-        type="checkbox"
-        name={props.name}
-        {...attr}
-        data-sb-field-path=".name#@id .name#@name"
-      />
       {props.label && (
-        <label id={labelId} className="sb-label" htmlFor={props.name} data-sb-field-path=".label .name#@for">
+        <label
+          id={labelId}
+          className={classNames('sb-label', { 'sr-only': props.hideLabel })}
+          htmlFor={props.name}
+          data-sb-field-path=".label .name#@for"
+        >
           {props.label}
         </label>
       )}
+      <input
+        id={props.name}
+        className="sb-input"
+        type="email"
+        name={props.name}
+        {...(props.placeholder ? { placeholder: props.placeholder } : null)}
+        {...attr}
+        data-sb-field-path=".name#@id .name#@name .placeholder#@placeholder"
+      />
     </div>
   );
 };

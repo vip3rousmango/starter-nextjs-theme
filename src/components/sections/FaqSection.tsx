@@ -9,7 +9,7 @@ import { Action } from '../atoms/Action';
 import ChevronIcon from '../svgs/chevron-right';
 import { FC } from 'react';
 import type * as types from '.contentlayer/types';
-import { StackbitFieldPath } from '../../utils/types';
+import { StackbitFieldPath } from '../../utils/stackbit';
 
 export type Props = types.FaqSection & StackbitFieldPath;
 

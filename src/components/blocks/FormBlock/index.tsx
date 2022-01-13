@@ -5,11 +5,13 @@ import type * as types from '.contentlayer/types';
 
 import { mapStylesToClassNames as mapStyles } from '../../../utils/map-styles-to-class-names';
 import { DynamicComponent } from '../../DynamicComponent';
+import { StackbitFieldPath } from '../../../utils/stackbit';
 
-export type Props = types.FormBlock & { className?: string };
+export type Props = types.FormBlock & { className?: string } & StackbitFieldPath;
+type State = any;
 
 // TODO rewrite as functional component
-export default class FormBlock extends React.Component<Props> {
+export class FormBlock extends React.Component<Props, State> {
   state = {
     submitted: false,
     error: false
@@ -17,7 +19,7 @@ export default class FormBlock extends React.Component<Props> {
 
   formRef = React.createRef<HTMLFormElement>();
 
-  formHandler(data, url) {
+  formHandler(data: any, url: string) {
     return axios({
       method: 'post',
       url,
@@ -25,7 +27,7 @@ export default class FormBlock extends React.Component<Props> {
     });
   }
 
-  handleSubmit(event, formAction) {
+  handleSubmit(event: any, formAction: any) {
     event.preventDefault();
 
     const data = new FormData(this.formRef.current!);
@@ -50,7 +52,7 @@ export default class FormBlock extends React.Component<Props> {
       });
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps: Props, prevState: State) {
     if (!prevState.submitted && this.state.submitted) {
       setTimeout(() => {
         this.setState({
@@ -69,7 +71,7 @@ export default class FormBlock extends React.Component<Props> {
       destination,
       submitLabel,
       className,
-      styles = {},
+      styles = {} as types.Styles,
       'data-sb-field-path': annotation
     } = this.props;
     if (fields.length === 0) {

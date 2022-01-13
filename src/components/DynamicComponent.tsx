@@ -20,6 +20,10 @@ import type { Props as CtaSectionProps } from './sections/CtaSection';
 import type { Props as ContactSectionProps } from './sections/ContactSection';
 import type { Props as JobsSectionProps } from './sections/JobsSection';
 import type { Props as EmailFormControlProps } from './blocks/FormBlock/EmailFormControl';
+import type { Props as CheckboxFormControlProps } from './blocks/FormBlock/CheckboxFormControl';
+import type { Props as SelectFormControlProps } from './blocks/FormBlock/SelectFormControl';
+import type { Props as TextFormControlProps } from './blocks/FormBlock/TextFormControl';
+import type { Props as TextareaFormControlProps } from './blocks/FormBlock/TextareaFormControl';
 
 export type Props =
   | PostLayoutProps
@@ -41,7 +45,11 @@ export type Props =
   | CtaSectionProps
   | ContactSectionProps
   | JobsSectionProps
-  | EmailFormControlProps;
+  | EmailFormControlProps
+  | CheckboxFormControlProps
+  | SelectFormControlProps
+  | TextFormControlProps
+  | TextareaFormControlProps;
 
 export const DynamicComponent: FC<Props> = (props) => {
   switch (props.type) {
@@ -60,7 +68,7 @@ export const DynamicComponent: FC<Props> = (props) => {
       const VideoBlock = dynamic(() => namedComponent(import('./blocks/VideoBlock'), 'VideoBlock'));
       return <VideoBlock {...props} />;
     case 'FormBlock':
-      const FormBlock = dynamic(() => namedComponent(import('./blocks/FormBlock'), 'default'));
+      const FormBlock = dynamic(() => namedComponent(import('./blocks/FormBlock'), 'FormBlock'));
       return <FormBlock {...props} />;
     // sections
     case 'HeroSection':
@@ -123,8 +131,30 @@ export const DynamicComponent: FC<Props> = (props) => {
       return <JobsSection {...props} />;
     // form control
     case 'EmailFormControl':
-      const EmailFormControl = dynamic(() => namedComponent(import('./blocks/FormBlock/EmailFormControl'), 'default'));
+      const EmailFormControl = dynamic(() =>
+        namedComponent(import('./blocks/FormBlock/EmailFormControl'), 'EmailFormControl')
+      );
       return <EmailFormControl {...props} />;
+    case 'CheckboxFormControl':
+      const CheckboxFormControl = dynamic(() =>
+        namedComponent(import('./blocks/FormBlock/CheckboxFormControl'), 'CheckboxFormControl')
+      );
+      return <CheckboxFormControl {...props} />;
+    case 'SelectFormControl':
+      const SelectFormControl = dynamic(() =>
+        namedComponent(import('./blocks/FormBlock/SelectFormControl'), 'SelectFormControl')
+      );
+      return <SelectFormControl {...props} />;
+    case 'TextFormControl':
+      const TextFormControl = dynamic(() =>
+        namedComponent(import('./blocks/FormBlock/TextFormControl'), 'TextFormControl')
+      );
+      return <TextFormControl {...props} />;
+    case 'TextareaFormControl':
+      const TextareaFormControl = dynamic(() =>
+        namedComponent(import('./blocks/FormBlock/TextareaFormControl'), 'TextareaFormControl')
+      );
+      return <TextareaFormControl {...props} />;
     default:
       throw new Error(`No component found for ${JSON.stringify(props, null, 2)}`);
   }

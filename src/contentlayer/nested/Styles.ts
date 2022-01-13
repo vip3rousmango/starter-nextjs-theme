@@ -11,6 +11,7 @@ export const Styles = defineNestedType(() => ({
     quote: { type: 'json' },
     name: { type: 'json' },
     answer: { type: 'json' },
+    submitLabel: { type: 'json' },
     question: { type: 'json' }
   }
 }));

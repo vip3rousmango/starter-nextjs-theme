@@ -6,9 +6,9 @@ import { Action } from '../../atoms/Action';
 import { ImageBlock } from '../../blocks/ImageBlock';
 import { FC } from 'react';
 import type * as types from '.contentlayer/types';
-import { StackbitFieldPath } from '../../../utils/types';
+import { StackbitFieldPath } from '../../../utils/stackbit';
 
-type Props = types.FeaturedItem & StackbitFieldPath;
+export type Props = types.FeaturedItem & StackbitFieldPath;
 
 export const FeaturedItem: FC<Props> = (props) => {
   const cssId = props.elementId ?? null;

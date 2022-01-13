@@ -1,6 +1,6 @@
 import type * as types from '.contentlayer/types';
 
-export default function getPageUrlPath(page: types.PostLayout | types.PageLayout | any) {
+export const getPageUrlPath = (page: types.PostLayout | types.PageLayout | any) => {
   if (page._raw?.flattenedPath) {
     return page._raw.flattenedPath.replace(/^pages/, '');
   }
@@ -15,4 +15,4 @@ export default function getPageUrlPath(page: types.PostLayout | types.PageLayout
     }
   }
   return '/' + parts.join('/').toLowerCase();
-}
+};

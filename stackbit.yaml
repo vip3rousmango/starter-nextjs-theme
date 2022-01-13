@@ -9,7 +9,7 @@ assets:
   publicPath: /
 dataDir: content/data
 pagesDir: content/pages
-pageLayoutKey: layout
+pageLayoutKey: type
 objectTypeKey: type
 styleObjectModelName: ThemeStyle
 contentModels:

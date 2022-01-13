@@ -11,7 +11,7 @@ import Reddit from '../svgs/reddit';
 import Twitter from '../svgs/twitter';
 import Vimeo from '../svgs/vimeo';
 import YouTube from '../svgs/youtube';
-import { StackbitFieldPath } from '../../utils/types';
+import { StackbitFieldPath } from '../../utils/stackbit';
 
 const iconMap = {
   facebook: Facebook,

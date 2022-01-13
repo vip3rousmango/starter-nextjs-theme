@@ -4,14 +4,16 @@ import dayjs from 'dayjs';
 
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
 import { getDataAttrs } from '../../utils/get-data-attrs';
-import { Link, Action } from '../atoms';
+import { Link } from '../atoms/Link';
+import { Action } from '../atoms/Action';
 import { ImageBlock } from '../blocks/ImageBlock';
 import ArrowRightIcon from '../svgs/arrow-right';
-import getPageUrlPath from '../../utils/get-page-url-path';
+import { getPageUrlPath } from '../../utils/get-page-url-path';
 import type * as types from '.contentlayer/types';
 import { FC } from 'react';
 import type { Props as FeaturedPostsSectionProps } from './FeaturedPostsSection';
 import type { Props as PagedPostsSectionProps } from './PagedPostsSection';
+import { objectIdDataAttr } from '../../utils/stackbit';
 
 type PostFeedSection = types.RecentPostsSection | FeaturedPostsSectionProps | PagedPostsSectionProps;
 export type Props = PostFeedSection & {
@@ -144,7 +146,7 @@ const PostsVariantA: FC<Props> = (props) => {
       {...(props.annotatePosts ? { 'data-sb-field-path': '.posts' } : null)}
     >
       {posts.map((post, index) => (
-        <article key={index} data-sb-object-id={post._id}>
+        <article key={index} {...objectIdDataAttr(post)}>
           {post.featuredImage && (
             <Link
               href={getPageUrlPath(post)}
@@ -186,6 +188,7 @@ const PostsVariantB: FC<Props> = (props) => {
   if (posts.length === 0) {
     return null;
   }
+
   return (
     <div
       className={classNames('grid', 'gap-x-6', 'gap-y-12', 'md:grid-cols-5', 'lg:gap-x-8', {
@@ -197,7 +200,7 @@ const PostsVariantB: FC<Props> = (props) => {
         <article
           key={index}
           className={classNames(index % 4 === 0 || (index + 1) % 4 === 0 ? 'md:col-span-3' : 'md:col-span-2')}
-          data-sb-object-id={post._id}
+          {...objectIdDataAttr(post)}
         >
           {post.featuredImage && (
             <Link
@@ -247,7 +250,7 @@ const PostsVariantC: FC<Props> = (props) => {
     >
       {posts.map((post, index) => {
         return (
-          <article key={index} className="overflow-hidden sb-card rounded-2xl" data-sb-object-id={post._id}>
+          <article key={index} className="overflow-hidden sb-card rounded-2xl" {...objectIdDataAttr(post)}>
             <div className="flex flex-col min-h-full">
               {post.featuredImage && (
                 <Link

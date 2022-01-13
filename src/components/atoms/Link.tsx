@@ -3,7 +3,7 @@ import NextLink from 'next/link';
 
 import type * as types from '.contentlayer/types';
 import { FC } from 'react';
-import { StackbitFieldPath } from '../../utils/types';
+import { StackbitFieldPath } from '../../utils/stackbit';
 
 type AnchorProps = React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>;
 

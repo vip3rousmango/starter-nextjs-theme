@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
 import { FC } from 'react';
 import type * as types from '.contentlayer/types';
-import { StackbitFieldPath } from '../../utils/types';
+import { StackbitFieldPath } from '../../utils/stackbit';
 
 export type Props = types.Badge & { className?: string } & StackbitFieldPath;
 

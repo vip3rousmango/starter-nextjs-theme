@@ -1,11 +1,12 @@
 import * as React from 'react';
 import classNames from 'classnames';
+import { FC } from 'react';
+import type * as types from '.contentlayer/types';
+import { StackbitFieldPath } from '../../../utils/stackbit';
 
-export type Props = {
-  type: 'EmailFormControl';
-};
+export type Props = types.TextFormControl & StackbitFieldPath;
 
-export default function EmailFormControl(props) {
+export const TextFormControl: FC<Props> = (props) => {
   const width = props.width ?? 'full';
   const labelId = `${props.name}-label`;
   const attr: any = {};
@@ -33,9 +34,9 @@ export default function EmailFormControl(props) {
         </label>
       )}
       <input
+        type={'text'}
         id={props.name}
-        className="sb-input"
-        type="email"
+        className="sb-text"
         name={props.name}
         {...(props.placeholder ? { placeholder: props.placeholder } : null)}
         {...attr}
@@ -43,4 +44,4 @@ export default function EmailFormControl(props) {
       />
     </div>
   );
-}
+};

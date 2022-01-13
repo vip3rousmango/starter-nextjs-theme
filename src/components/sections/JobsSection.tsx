@@ -1,13 +1,13 @@
 import * as React from 'react';
 import classNames from 'classnames';
+import type * as types from '.contentlayer/types';
+import { FC } from 'react';
 // import Markdown from 'markdown-to-jsx';
 
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
 import { getDataAttrs } from '../../utils/get-data-attrs';
 import { Action } from '../atoms/Action';
-import type * as types from '.contentlayer/types';
-import { FC } from 'react';
-import { StackbitFieldPath } from '../../utils/types';
+import { StackbitFieldPath } from '../../utils/stackbit';
 
 export type Props = types.JobsSection;
 

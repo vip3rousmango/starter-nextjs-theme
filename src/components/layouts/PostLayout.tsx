@@ -4,10 +4,8 @@ import * as types from '.contentlayer/types';
 import dayjs from 'dayjs';
 
 import { getBaseLayoutComponent } from '../../utils/base-layout';
-import getPageUrlPath from '../../utils/get-page-url-path';
+import { getPageUrlPath } from '../../utils/get-page-url-path';
 import { Link } from '../atoms/Link';
-import { resolveProps as resolvePropsForFeaturedPostsSection } from '../sections/FeaturedPostsSection';
-import { resolveProps as resolvePropsForRecentPostsSection } from '../sections/RecentPostsSection';
 import { DynamicComponent } from '../DynamicComponent';
 import { mapSections } from '../sections/mapSection';
 

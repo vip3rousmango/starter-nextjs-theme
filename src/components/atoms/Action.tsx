@@ -24,7 +24,7 @@ import Vimeo from '../svgs/vimeo';
 import YouTube from '../svgs/youtube';
 import type * as types from '.contentlayer/types';
 import { FC } from 'react';
-import { StackbitFieldPath } from '../../utils/types';
+import { StackbitFieldPath } from '../../utils/stackbit';
 
 const iconMap = {
   apple: Apple,

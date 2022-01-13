@@ -8,7 +8,7 @@ import { getBaseLayoutComponent } from '../../utils/base-layout';
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
 import { PostFeedSection } from '../sections/PostFeedSection';
 import { DynamicComponent } from '../DynamicComponent';
-import { sortPostsByDateDesc } from '../../utils/types';
+import { sortPostsByDateDesc } from '../../utils/data-helpers';
 import { mapSections } from '../sections/mapSection';
 
 export type Props = ReturnType<typeof resolveProps>;

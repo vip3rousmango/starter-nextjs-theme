@@ -2,7 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import { FC } from 'react';
 import type * as types from '.contentlayer/types';
-import { StackbitFieldPath } from '../../../utils/types';
+import { StackbitFieldPath } from '../../utils/stackbit';
 
 export type Props = types.ImageBlock & { className?: string } & Partial<StackbitFieldPath>;
 

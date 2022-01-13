@@ -1,8 +1,8 @@
 import * as React from 'react';
-
-import { getBaseLayoutComponent } from '../../utils/base-layout';
 import * as types from '.contentlayer/types';
 import { FC } from 'react';
+
+import { getBaseLayoutComponent } from '../../utils/base-layout';
 import { DynamicComponent } from '../DynamicComponent';
 import { mapSections } from '../sections/mapSection';
 

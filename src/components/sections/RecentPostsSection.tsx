@@ -1,6 +1,6 @@
 import { PostFeedSection } from './PostFeedSection';
 import * as types from '.contentlayer/types';
-import { sortPostsByDateDesc } from '../../utils/types';
+import { sortPostsByDateDesc } from '../../utils/data-helpers';
 import { FC } from 'react';
 
 export const RecentPostsSection: FC<Props> = (props) => <PostFeedSection {...props} />;
