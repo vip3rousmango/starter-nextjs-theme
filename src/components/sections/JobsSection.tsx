@@ -2,12 +2,12 @@ import * as React from 'react';
 import classNames from 'classnames';
 import type * as types from '.contentlayer/types';
 import { FC } from 'react';
-// import Markdown from 'markdown-to-jsx';
 
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
 import { getDataAttrs } from '../../utils/get-data-attrs';
 import { Action } from '../atoms/Action';
 import { StackbitFieldPath } from '../../utils/stackbit';
+import { Markdown } from '../Markdown';
 
 export type Props = types.JobsSection;
 
@@ -123,22 +123,13 @@ const JobListItem: FC<types.JobListItem & StackbitFieldPath> = (props) => {
                 </p>
             )}
             {props.text && (
-                <div
-                    dangerouslySetInnerHTML={{ __html: props.text.html }}
+                <Markdown
+                    text={props.text}
                     className={classNames('sb-markdown', {
                         'mt-10 lg:mt-12': props.title || props.location
                     })}
-                    data-sb-field-path=".text"
+                    fieldName="text"
                 />
-                // <Markdown
-                //   options={{ forceBlock: true, forceWrapper: true }}
-                //   className={classNames('sb-markdown', {
-                //     'mt-10 lg:mt-12': props.title || props.location
-                //   })}
-                //   data-sb-field-path=".text"
-                // >
-                //   {props.text}
-                // </Markdown>
             )}
             {actions.length > 0 && (
                 <div

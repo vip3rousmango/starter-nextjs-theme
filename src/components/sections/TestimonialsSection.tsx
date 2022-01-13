@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import Markdown from 'markdown-to-jsx';
 import classNames from 'classnames';
 import { FC } from 'react';
 import type * as types from '.contentlayer/types';
@@ -7,6 +6,7 @@ import type * as types from '.contentlayer/types';
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
 import { getDataAttrs } from '../../utils/get-data-attrs';
 import { ImageBlock } from '../blocks/ImageBlock';
+import { Markdown } from '../Markdown';
 
 export type Props = types.TestimonialsSection;
 
@@ -102,18 +102,11 @@ const TestimonialVariantA: FC<types.Testimonial & { index: number }> = ({ index,
             )}
             <div className="flex-grow">
                 {testimonial.quote && (
-                    <div
-                        dangerouslySetInnerHTML={{ __html: testimonial.quote.html }}
+                    <Markdown
+                        text={testimonial.quote}
                         className="text-3xl sb-markdown sm:text-4xl sm:leading-tight lg:text-5xl lg:leading-tight"
-                        data-sb-field-path=".quote"
+                        fieldName="quote"
                     />
-                    // <Markdown
-                    //   options={{ forceBlock: true, forceWrapper: true }}
-                    //   className="text-3xl sb-markdown sm:text-4xl sm:leading-tight lg:text-5xl lg:leading-tight"
-                    //   data-sb-field-path=".quote"
-                    // >
-                    //   {testimonial.quote}
-                    // </Markdown>
                 )}
                 {(testimonial.name || testimonial.title) && (
                     <footer className="mt-8 md:mt-12">
@@ -151,18 +144,11 @@ const TestimonialVariantB: FC<types.Testimonial & { index: number }> = ({ index,
     return (
         <blockquote key={index} data-sb-field-path={`.${index}`}>
             {testimonial.quote && (
-                <div
-                    dangerouslySetInnerHTML={{ __html: testimonial.quote.html }}
+                <Markdown
+                    text={testimonial.quote}
                     className="text-3xl sb-markdown sm:text-4xl sm:leading-tight lg:text-5xl lg:leading-tight"
-                    data-sb-field-path=".quote"
+                    fieldName="quote"
                 />
-                // <Markdown
-                //   options={{ forceBlock: true, forceWrapper: true }}
-                //   className="text-3xl sb-markdown sm:text-4xl sm:leading-tight lg:text-5xl lg:leading-tight"
-                //   data-sb-field-path=".quote"
-                // >
-                //   {testimonial.quote}
-                // </Markdown>
             )}
             {(testimonial.name || testimonial.title || testimonial.image) && (
                 <footer className="flex items-center mt-12 md:mt-16">
@@ -208,18 +194,11 @@ const TestimonialVariantC: FC<types.Testimonial & { index: number }> = ({ index,
     return (
         <blockquote key={index} className="text-center" data-sb-field-path={`.${index}`}>
             {testimonial.quote && (
-                <div
-                    dangerouslySetInnerHTML={{ __html: testimonial.quote.html }}
+                <Markdown
+                    text={testimonial.quote}
                     className="text-3xl sb-markdown sm:text-4xl sm:leading-tight lg:text-5xl lg:leading-tight"
-                    data-sb-field-path=".quote"
+                    fieldName="quote"
                 />
-                // <Markdown
-                //   options={{ forceBlock: true, forceWrapper: true }}
-                //   className="text-3xl sb-markdown sm:text-4xl sm:leading-tight lg:text-5xl lg:leading-tight"
-                //   data-sb-field-path=".quote"
-                // >
-                //   {testimonial.quote}
-                // </Markdown>
             )}
             {(testimonial.name || testimonial.title || testimonial.image) && (
                 <footer className="mt-12 md:mt-16">

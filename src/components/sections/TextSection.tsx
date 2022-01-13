@@ -1,11 +1,11 @@
 import * as React from 'react';
-// import Markdown from 'markdown-to-jsx';
 import classNames from 'classnames';
 import { FC } from 'react';
 import type * as types from '.contentlayer/types';
 
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
 import { getDataAttrs } from '../../utils/get-data-attrs';
+import { Markdown } from '../Markdown';
 
 // TODO
 export type Props = any;
@@ -72,22 +72,13 @@ const TextBody: FC<Props> = (props) => {
                 </p>
             )}
             {props.text && (
-                <div
-                    dangerouslySetInnerHTML={{ __html: props.text.html }}
+                <Markdown
+                    text={props.text}
                     className={classNames('sb-markdown', 'sm:text-lg', styles.text ? mapStyles(styles.text) : null, {
                         'mt-6': props.title || props.subtitle
                     })}
-                    data-sb-field-path=".text"
+                    fieldName="text"
                 />
-                // <Markdown
-                //   options={{ forceBlock: true, forceWrapper: true }}
-                //   className={classNames('sb-markdown', 'sm:text-lg', styles.text ? mapStyles(styles.text) : null, {
-                //     'mt-6': props.title || props.subtitle
-                //   })}
-                //   data-sb-field-path=".text"
-                // >
-                //   {props.text}
-                // </Markdown>
             )}
         </div>
     );

@@ -2,12 +2,12 @@ import * as React from 'react';
 import { FC } from 'react';
 import * as types from '.contentlayer/types';
 import classNames from 'classnames';
-// import Markdown from 'markdown-to-jsx';
 
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
 import { getDataAttrs } from '../../utils/get-data-attrs';
 import { Action } from '../atoms/Action';
 import { ImageBlock } from '../blocks/ImageBlock';
+import { Markdown } from '../Markdown';
 
 export type Props = ReturnType<typeof resolveProps>;
 
@@ -200,22 +200,13 @@ const PeopleVariantB: FC<Props> = (props) => {
                         )}
                         {person.role && <p data-sb-field-path=".role">{person.role}</p>}
                         {person.bio && (
-                            <div
-                                dangerouslySetInnerHTML={{ __html: person.bio.html }}
+                            <Markdown
+                                text={person.bio}
                                 className={classNames({
                                     'mt-4': person.firstName || person.lastName || person.role
                                 })}
-                                data-sb-field-path=".bio"
+                                fieldName="bio"
                             />
-                            // <Markdown
-                            //   options={{ forceBlock: true, forceWrapper: true }}
-                            //   className={classNames({
-                            //     'mt-4': person.firstName || person.lastName || person.role
-                            //   })}
-                            //   data-sb-field-path=".bio"
-                            // >
-                            //   {person.bio}
-                            // </Markdown>
                         )}
                     </div>
                 </article>
@@ -281,20 +272,7 @@ const PeopleListVariantC: FC<{ people: Props['people']; annotIndexStart?: number
                                 {person.role && <span data-sb-field-path=".role">{person.role}</span>}
                             </h3>
                         )}
-                        {person.bio && (
-                            <div
-                                dangerouslySetInnerHTML={{ __html: person.bio.html }}
-                                className="sb-markdown"
-                                data-sb-field-path=".bio"
-                            />
-                            // <Markdown
-                            //   options={{ forceBlock: true, forceWrapper: true }}
-                            //   className="sb-markdown"
-                            //   data-sb-field-path=".bio"
-                            // >
-                            //   {person.bio}
-                            // </Markdown>
-                        )}
+                        {person.bio && <Markdown text={person.bio} className="sb-markdown" fieldName="bio" />}
                     </div>
                 </article>
             ))}

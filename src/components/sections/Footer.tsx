@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import Markdown from 'markdown-to-jsx';
 import classNames from 'classnames';
 
 import { ImageBlock } from '../blocks/ImageBlock';
@@ -8,6 +7,7 @@ import { Social } from '../atoms/Social';
 import { Link } from '../atoms/Link';
 import type * as types from '.contentlayer/types';
 import { FC } from 'react';
+import { Markdown } from '../Markdown';
 
 type Props = types.Footer & { annotationPrefix: string };
 
@@ -40,18 +40,11 @@ export const Footer: FC<Props> = (props) => {
                             {props.title && <span className="text-2xl tracking-wide">{props.title}</span>}
                         </Link>
                         {props.text && (
-                            <div
-                                dangerouslySetInnerHTML={{ __html: props.text.html }}
+                            <Markdown
+                                text={props.text}
                                 className={classNames('sb-markdown', 'max-w-xl', { 'mt-8': props.title || props.logo })}
-                                data-sb-field-path=".text"
+                                fieldName="text"
                             />
-                            // <Markdown
-                            //   options={{ forceBlock: true, forceWrapper: true }}
-                            //   className={classNames('sb-markdown', 'max-w-xl', { 'mt-8': props.title || props.logo })}
-                            //   data-sb-field-path=".text"
-                            // >
-                            //   {props.text.raw}
-                            // </Markdown>
                         )}
                     </div>
                 )}
@@ -89,12 +82,7 @@ export const Footer: FC<Props> = (props) => {
                 )}
                 <div className="sb-divider" />
                 <div className="flex flex-col-reverse justify-between pt-6 lg:flex-row">
-                    {props.copyrightText && (
-                        <p
-                            data-sb-field-path=".copyrightText"
-                            dangerouslySetInnerHTML={{ __html: props.copyrightText.html }}
-                        ></p>
-                    )}
+                    {props.copyrightText && <Markdown text={props.copyrightText} fieldName="copyrightText" />}
                     {legalLinks.length > 0 && (
                         <ul
                             className="flex flex-col mb-6 space-y-2 lg:mb-0 sm:space-y-0 sm:space-x-5 sm:flex-row"
