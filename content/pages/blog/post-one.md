@@ -4,32 +4,32 @@ type: PostLayout
 date: '2021-06-28'
 author: content/data/team/dianne-ameter.json
 excerpt: >-
-    Praesent dapibus justo non efficitur efficitur. Nullam viverra justo arcu,
-    eget egestas tortor pretium id. Sed imperdiet mattis eleifend.
+  Praesent dapibus justo non efficitur efficitur. Nullam viverra justo arcu,
+  eget egestas tortor pretium id. Sed imperdiet mattis eleifend.
 featuredImage:
-    type: ImageBlock
-    url: /images/post-1.jpg
-    altText: Post Image
+  type: ImageBlock
+  url: /images/post-1.jpg
+  altText: Post Image
 bottomSections:
-    - elementId: ''
-      variant: variant-c
-      colors: colors-a
-      title: Read next
-      recentCount: 3
-      styles:
-          self:
-              height: auto
-              width: wide
-              margin: ['mt-0', 'mb-0', 'ml-0', 'mr-0']
-              padding: ['pt-12', 'pb-56', 'pr-4', 'pl-4']
-              justifyContent: center
-          title:
-              textAlign: center
-          subtitle:
-              textAlign: center
-          actions:
-              justifyContent: center
-      type: RecentPostsSection
+  - elementId: ''
+    variant: variant-c
+    colors: colors-a
+    title: Read next
+    recentCount: 3
+    styles:
+      self:
+        height: auto
+        width: wide
+        margin: ['mt-0', 'mb-0', 'ml-0', 'mr-0']
+        padding: ['pt-12', 'pb-56', 'pr-4', 'pl-4']
+        justifyContent: center
+      title:
+        textAlign: center
+      subtitle:
+        textAlign: center
+      actions:
+        justifyContent: center
+    type: RecentPostsSection
 ---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ante lorem, tincidunt ac leo efficitur, feugiat tempor odio. Curabitur at auctor sapien. Etiam at cursus enim. Suspendisse sed augue tortor. Nunc eu magna vitae lorem pellentesque fermentum. Sed in facilisis dui. Nulla molestie risus in mi dapibus, eget porta lorem semper. Donec sed facilisis nibh. Curabitur eget dui in libero euismod commodo nec sit amet est. Etiam id ipsum aliquam, vehicula erat sit amet, consequat tortor.

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { allPostLayouts, allPeople, allDocuments } from '.contentlayer/data';
+// import { allPostLayouts, allPeople, allDocuments } from '.contentlayer/data';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import {
     resolveProps as resolvePropsForPostLayout,
