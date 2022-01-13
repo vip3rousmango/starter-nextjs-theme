@@ -13,29 +13,29 @@ import { TestimonialsSection } from './nested/page-sections/TestimonialsSection'
 import { CtaSection } from './nested/page-sections/CtaSection';
 
 export const elementId = {
-  type: 'string',
-  description: 'The unique ID for an HTML element, must not contain whitespace',
-  default: ''
+    type: 'string',
+    description: 'The unique ID for an HTML element, must not contain whitespace',
+    default: ''
 } as const;
 
 export const colors = {
-  type: 'enum',
-  options: ['colors-a', 'colors-b', 'colors-c', 'colors-d', 'colors-e', 'colors-f', 'colors-g', 'colors-h'],
-  default: 'colors-a'
+    type: 'enum',
+    options: ['colors-a', 'colors-b', 'colors-c', 'colors-d', 'colors-e', 'colors-f', 'colors-g', 'colors-h'],
+    default: 'colors-a'
 } as const;
 
 export const sectionComponent = [
-  RecentPostsSection,
-  FeaturedPeopleSection,
-  HeroSection,
-  CtaSection,
-  QuoteSection,
-  FaqSection,
-  MediaGallerySection,
-  JobsSection,
-  ContactSection,
-  FeaturedPostsSection,
-  FeatureHighlightSection,
-  FeaturedItemsSection,
-  TestimonialsSection
+    RecentPostsSection,
+    FeaturedPeopleSection,
+    HeroSection,
+    CtaSection,
+    QuoteSection,
+    FaqSection,
+    MediaGallerySection,
+    JobsSection,
+    ContactSection,
+    FeaturedPostsSection,
+    FeatureHighlightSection,
+    FeaturedItemsSection,
+    TestimonialsSection
 ];

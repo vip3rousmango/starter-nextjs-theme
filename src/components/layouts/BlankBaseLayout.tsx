@@ -6,22 +6,22 @@ import type * as types from '.contentlayer/types';
 import { objectIdDataAttr } from '../../utils/stackbit';
 
 type Props = {
-  site: types.Config;
-  page: any;
+    site: types.Config;
+    page: any;
 };
 
 export const BlankBaseLayout: FC<Props> = (props) => {
-  const { page, site } = props;
-  const pageMeta = page?.__metadata ?? {};
+    const { page, site } = props;
+    const pageMeta = page?.__metadata ?? {};
 
-  return (
-    <div className={classNames('sb-page', pageMeta.pageCssClasses)} {...objectIdDataAttr(page)}>
-      <Head>
-        <title>{page.title}</title>
-        <meta name="description" content="Stackbit Components Library" />
-        {site.favicon && <link rel="icon" href={site.favicon} />}
-      </Head>
-      {props.children}
-    </div>
-  );
+    return (
+        <div className={classNames('sb-page', pageMeta.pageCssClasses)} {...objectIdDataAttr(page)}>
+            <Head>
+                <title>{page.title}</title>
+                <meta name="description" content="Stackbit Components Library" />
+                {site.favicon && <link rel="icon" href={site.favicon} />}
+            </Head>
+            {props.children}
+        </div>
+    );
 };

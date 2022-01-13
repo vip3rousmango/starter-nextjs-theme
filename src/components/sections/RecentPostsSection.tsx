@@ -8,8 +8,8 @@ export const RecentPostsSection: FC<Props> = (props) => <PostFeedSection {...pro
 export type Props = ReturnType<typeof resolveProps>;
 
 export const resolveProps = (section: types.RecentPostsSection, allDocuments: types.DocumentTypes[]) => {
-  const allPosts = allDocuments.filter(types.isType('PostLayout'));
-  const recentPosts = allPosts.sort(sortPostsByDateDesc).slice(0, section.recentCount);
+    const allPosts = allDocuments.filter(types.isType('PostLayout'));
+    const recentPosts = allPosts.sort(sortPostsByDateDesc).slice(0, section.recentCount);
 
-  return { ...section, posts: recentPosts };
+    return { ...section, posts: recentPosts };
 };

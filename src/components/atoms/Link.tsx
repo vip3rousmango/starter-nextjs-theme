@@ -10,19 +10,19 @@ type AnchorProps = React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchor
 export type Props = { href: string } & AnchorProps & Partial<StackbitFieldPath>;
 
 export const Link: FC<Props> = ({ children, href, ...other }) => {
-  // Pass Any internal link to Next.js Link, for anything else, use <a> tag
-  const internal = /^\/(?!\/)/.test(href);
-  if (internal) {
-    return (
-      <NextLink href={href}>
-        <a {...other}>{children}</a>
-      </NextLink>
-    );
-  }
+    // Pass Any internal link to Next.js Link, for anything else, use <a> tag
+    const internal = /^\/(?!\/)/.test(href);
+    if (internal) {
+        return (
+            <NextLink href={href}>
+                <a {...other}>{children}</a>
+            </NextLink>
+        );
+    }
 
-  return (
-    <a href={href} {...other}>
-      {children}
-    </a>
-  );
+    return (
+        <a href={href} {...other}>
+            {children}
+        </a>
+    );
 };

@@ -26,141 +26,141 @@ import type { Props as TextFormControlProps } from './blocks/FormBlock/TextFormC
 import type { Props as TextareaFormControlProps } from './blocks/FormBlock/TextareaFormControl';
 
 export type Props =
-  | PostLayoutProps
-  | PostFeedLayoutProps
-  | ImageBlockProps
-  | VideoBlockProps
-  | FormBlockProps
-  | HeroSectionProps
-  | FeatureHighlightSectionProps
-  | FeaturedItemsSectionProps
-  | FeaturedPostsSectionProps
-  | PagedPostsSectionProps
-  | FeaturedPeopleSectionProps
-  | RecentPostsSectionProps
-  | MediaGallerySectionProps
-  | FaqSectionProps
-  | QuoteSectionProps
-  | TestimonialsSectionProps
-  | CtaSectionProps
-  | ContactSectionProps
-  | JobsSectionProps
-  | EmailFormControlProps
-  | CheckboxFormControlProps
-  | SelectFormControlProps
-  | TextFormControlProps
-  | TextareaFormControlProps;
+    | PostLayoutProps
+    | PostFeedLayoutProps
+    | ImageBlockProps
+    | VideoBlockProps
+    | FormBlockProps
+    | HeroSectionProps
+    | FeatureHighlightSectionProps
+    | FeaturedItemsSectionProps
+    | FeaturedPostsSectionProps
+    | PagedPostsSectionProps
+    | FeaturedPeopleSectionProps
+    | RecentPostsSectionProps
+    | MediaGallerySectionProps
+    | FaqSectionProps
+    | QuoteSectionProps
+    | TestimonialsSectionProps
+    | CtaSectionProps
+    | ContactSectionProps
+    | JobsSectionProps
+    | EmailFormControlProps
+    | CheckboxFormControlProps
+    | SelectFormControlProps
+    | TextFormControlProps
+    | TextareaFormControlProps;
 
 export const DynamicComponent: FC<Props> = (props) => {
-  switch (props.type) {
-    // blog layouts
-    case 'PostLayout':
-      const PostLayout = dynamic(() => namedComponent(import('./layouts/PostLayout'), 'PostLayout'));
-      return <PostLayout {...props} />;
-    case 'PostFeedLayout':
-      const PostFeedLayout = dynamic(() => namedComponent(import('./layouts/PostFeedLayout'), 'PostFeedLayout'));
-      return <PostFeedLayout {...props} />;
-    // blocks
-    case 'ImageBlock':
-      const ImageBlock = dynamic(() => namedComponent(import('./blocks/ImageBlock'), 'ImageBlock'));
-      return <ImageBlock {...props} />;
-    case 'VideoBlock':
-      const VideoBlock = dynamic(() => namedComponent(import('./blocks/VideoBlock'), 'VideoBlock'));
-      return <VideoBlock {...props} />;
-    case 'FormBlock':
-      const FormBlock = dynamic(() => namedComponent(import('./blocks/FormBlock'), 'FormBlock'));
-      return <FormBlock {...props} />;
-    // sections
-    case 'HeroSection':
-      const HeroSection = dynamic(() => namedComponent(import('./sections/HeroSection'), 'HeroSection'));
-      return <HeroSection {...props} />;
-    case 'FeatureHighlightSection':
-      const FeatureHighlightSection = dynamic(() =>
-        namedComponent(import('./sections/FeatureHighlightSection'), 'FeatureHighlightSection')
-      );
-      return <FeatureHighlightSection {...props} />;
-    case 'FeaturedItemsSection':
-      const FeaturedItemsSection = dynamic(() =>
-        namedComponent(import('./sections/FeaturedItemsSection'), 'FeaturedItemsSection')
-      );
-      return <FeaturedItemsSection {...props} />;
-    case 'FeaturedPostsSection':
-      const FeaturedPostsSection = dynamic(() =>
-        namedComponent(import('./sections/FeaturedPostsSection'), 'FeaturedPostsSection')
-      );
-      return <FeaturedPostsSection {...props} />;
-    case 'PagedPostsSection':
-      const PagedPostsSection = dynamic(() =>
-        namedComponent(import('./sections/PagedPostsSection'), 'PagedPostsSection')
-      );
-      return <PagedPostsSection {...props} />;
-    case 'FeaturedPeopleSection':
-      const FeaturedPeopleSection = dynamic(() =>
-        namedComponent(import('./sections/FeaturedPeopleSection'), 'FeaturedPeopleSection')
-      );
-      return <FeaturedPeopleSection {...props} />;
-    case 'RecentPostsSection':
-      const RecentPostsSection = dynamic(() =>
-        namedComponent(import('./sections/RecentPostsSection'), 'RecentPostsSection')
-      );
-      return <RecentPostsSection {...props} />;
-    case 'MediaGallerySection':
-      const MediaGallerySection = dynamic(() =>
-        namedComponent(import('./sections/MediaGallerySection'), 'MediaGallerySection')
-      );
-      return <MediaGallerySection {...props} />;
-    case 'FaqSection':
-      const FaqSection = dynamic(() => namedComponent(import('./sections/FaqSection'), 'FaqSection'));
-      return <FaqSection {...props} />;
-    case 'QuoteSection':
-      const QuoteSection = dynamic(() => namedComponent(import('./sections/QuoteSection'), 'QuoteSection'));
-      return <QuoteSection {...props} />;
-    case 'TestimonialsSection':
-      const TestimonialsSection = dynamic(() =>
-        namedComponent(import('./sections/TestimonialsSection'), 'TestimonialsSection')
-      );
-      return <TestimonialsSection {...props} />;
-    case 'CtaSection':
-      const CtaSection = dynamic(() => namedComponent(import('./sections/CtaSection'), 'CtaSection'));
-      return <CtaSection {...props} />;
-    case 'ContactSection':
-      const ContactSection = dynamic(() => namedComponent(import('./sections/ContactSection'), 'ContactSection'));
-      return <ContactSection {...props} />;
-    case 'JobsSection':
-      const JobsSection = dynamic(() => namedComponent(import('./sections/JobsSection'), 'JobsSection'));
-      return <JobsSection {...props} />;
-    // form control
-    case 'EmailFormControl':
-      const EmailFormControl = dynamic(() =>
-        namedComponent(import('./blocks/FormBlock/EmailFormControl'), 'EmailFormControl')
-      );
-      return <EmailFormControl {...props} />;
-    case 'CheckboxFormControl':
-      const CheckboxFormControl = dynamic(() =>
-        namedComponent(import('./blocks/FormBlock/CheckboxFormControl'), 'CheckboxFormControl')
-      );
-      return <CheckboxFormControl {...props} />;
-    case 'SelectFormControl':
-      const SelectFormControl = dynamic(() =>
-        namedComponent(import('./blocks/FormBlock/SelectFormControl'), 'SelectFormControl')
-      );
-      return <SelectFormControl {...props} />;
-    case 'TextFormControl':
-      const TextFormControl = dynamic(() =>
-        namedComponent(import('./blocks/FormBlock/TextFormControl'), 'TextFormControl')
-      );
-      return <TextFormControl {...props} />;
-    case 'TextareaFormControl':
-      const TextareaFormControl = dynamic(() =>
-        namedComponent(import('./blocks/FormBlock/TextareaFormControl'), 'TextareaFormControl')
-      );
-      return <TextareaFormControl {...props} />;
-    default:
-      throw new Error(`No component found for ${JSON.stringify(props, null, 2)}`);
-  }
+    switch (props.type) {
+        // blog layouts
+        case 'PostLayout':
+            const PostLayout = dynamic(() => namedComponent(import('./layouts/PostLayout'), 'PostLayout'));
+            return <PostLayout {...props} />;
+        case 'PostFeedLayout':
+            const PostFeedLayout = dynamic(() => namedComponent(import('./layouts/PostFeedLayout'), 'PostFeedLayout'));
+            return <PostFeedLayout {...props} />;
+        // blocks
+        case 'ImageBlock':
+            const ImageBlock = dynamic(() => namedComponent(import('./blocks/ImageBlock'), 'ImageBlock'));
+            return <ImageBlock {...props} />;
+        case 'VideoBlock':
+            const VideoBlock = dynamic(() => namedComponent(import('./blocks/VideoBlock'), 'VideoBlock'));
+            return <VideoBlock {...props} />;
+        case 'FormBlock':
+            const FormBlock = dynamic(() => namedComponent(import('./blocks/FormBlock'), 'FormBlock'));
+            return <FormBlock {...props} />;
+        // sections
+        case 'HeroSection':
+            const HeroSection = dynamic(() => namedComponent(import('./sections/HeroSection'), 'HeroSection'));
+            return <HeroSection {...props} />;
+        case 'FeatureHighlightSection':
+            const FeatureHighlightSection = dynamic(() =>
+                namedComponent(import('./sections/FeatureHighlightSection'), 'FeatureHighlightSection')
+            );
+            return <FeatureHighlightSection {...props} />;
+        case 'FeaturedItemsSection':
+            const FeaturedItemsSection = dynamic(() =>
+                namedComponent(import('./sections/FeaturedItemsSection'), 'FeaturedItemsSection')
+            );
+            return <FeaturedItemsSection {...props} />;
+        case 'FeaturedPostsSection':
+            const FeaturedPostsSection = dynamic(() =>
+                namedComponent(import('./sections/FeaturedPostsSection'), 'FeaturedPostsSection')
+            );
+            return <FeaturedPostsSection {...props} />;
+        case 'PagedPostsSection':
+            const PagedPostsSection = dynamic(() =>
+                namedComponent(import('./sections/PagedPostsSection'), 'PagedPostsSection')
+            );
+            return <PagedPostsSection {...props} />;
+        case 'FeaturedPeopleSection':
+            const FeaturedPeopleSection = dynamic(() =>
+                namedComponent(import('./sections/FeaturedPeopleSection'), 'FeaturedPeopleSection')
+            );
+            return <FeaturedPeopleSection {...props} />;
+        case 'RecentPostsSection':
+            const RecentPostsSection = dynamic(() =>
+                namedComponent(import('./sections/RecentPostsSection'), 'RecentPostsSection')
+            );
+            return <RecentPostsSection {...props} />;
+        case 'MediaGallerySection':
+            const MediaGallerySection = dynamic(() =>
+                namedComponent(import('./sections/MediaGallerySection'), 'MediaGallerySection')
+            );
+            return <MediaGallerySection {...props} />;
+        case 'FaqSection':
+            const FaqSection = dynamic(() => namedComponent(import('./sections/FaqSection'), 'FaqSection'));
+            return <FaqSection {...props} />;
+        case 'QuoteSection':
+            const QuoteSection = dynamic(() => namedComponent(import('./sections/QuoteSection'), 'QuoteSection'));
+            return <QuoteSection {...props} />;
+        case 'TestimonialsSection':
+            const TestimonialsSection = dynamic(() =>
+                namedComponent(import('./sections/TestimonialsSection'), 'TestimonialsSection')
+            );
+            return <TestimonialsSection {...props} />;
+        case 'CtaSection':
+            const CtaSection = dynamic(() => namedComponent(import('./sections/CtaSection'), 'CtaSection'));
+            return <CtaSection {...props} />;
+        case 'ContactSection':
+            const ContactSection = dynamic(() => namedComponent(import('./sections/ContactSection'), 'ContactSection'));
+            return <ContactSection {...props} />;
+        case 'JobsSection':
+            const JobsSection = dynamic(() => namedComponent(import('./sections/JobsSection'), 'JobsSection'));
+            return <JobsSection {...props} />;
+        // form control
+        case 'EmailFormControl':
+            const EmailFormControl = dynamic(() =>
+                namedComponent(import('./blocks/FormBlock/EmailFormControl'), 'EmailFormControl')
+            );
+            return <EmailFormControl {...props} />;
+        case 'CheckboxFormControl':
+            const CheckboxFormControl = dynamic(() =>
+                namedComponent(import('./blocks/FormBlock/CheckboxFormControl'), 'CheckboxFormControl')
+            );
+            return <CheckboxFormControl {...props} />;
+        case 'SelectFormControl':
+            const SelectFormControl = dynamic(() =>
+                namedComponent(import('./blocks/FormBlock/SelectFormControl'), 'SelectFormControl')
+            );
+            return <SelectFormControl {...props} />;
+        case 'TextFormControl':
+            const TextFormControl = dynamic(() =>
+                namedComponent(import('./blocks/FormBlock/TextFormControl'), 'TextFormControl')
+            );
+            return <TextFormControl {...props} />;
+        case 'TextareaFormControl':
+            const TextareaFormControl = dynamic(() =>
+                namedComponent(import('./blocks/FormBlock/TextareaFormControl'), 'TextareaFormControl')
+            );
+            return <TextareaFormControl {...props} />;
+        default:
+            throw new Error(`No component found for ${JSON.stringify(props, null, 2)}`);
+    }
 };
 
 const namedComponent = async <T, N extends keyof T>(modPromise: Promise<T>, exportName: N) => {
-  const mod = await modPromise;
-  return mod[exportName];
+    const mod = await modPromise;
+    return mod[exportName];
 };

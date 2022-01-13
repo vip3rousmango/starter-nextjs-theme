@@ -5,12 +5,12 @@ import * as types from '.contentlayer/types';
 export type Props = ReturnType<typeof resolveProps>;
 
 export const FeaturedPostsSection: FC<Props> = (props) => {
-  return <PostFeedSection {...props} annotatePosts={true} />;
+    return <PostFeedSection {...props} annotatePosts={true} />;
 };
 
 export const resolveProps = (section: types.FeaturedPostsSection, allDocuments: types.DocumentTypes[]) => {
-  const allPosts = allDocuments.filter(types.isType('PostLayout'));
-  const posts = section.posts.map((postId) => allPosts.find((post) => post._id === postId)!);
+    const allPosts = allDocuments.filter(types.isType('PostLayout'));
+    const posts = section.posts.map((postId) => allPosts.find((post) => post._id === postId)!);
 
-  return { ...section, posts };
+    return { ...section, posts };
 };

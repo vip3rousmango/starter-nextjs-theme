@@ -3,13 +3,13 @@ import { elementId } from '../common';
 import { Styles } from './Styles';
 
 export const Badge = defineNestedType(() => ({
-  name: 'Badge',
-  fields: {
-    label: { type: 'string' },
-    elementId,
-    styles: {
-      type: 'nested',
-      of: Styles
+    name: 'Badge',
+    fields: {
+        label: { type: 'string' },
+        elementId,
+        styles: {
+            type: 'nested',
+            of: Styles
+        }
     }
-  }
 }));

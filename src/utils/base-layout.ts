@@ -4,19 +4,19 @@ import { FC } from 'react';
 import * as types from '.contentlayer/types';
 
 type Props = {
-  site: types.Config;
-  page: any;
+    site: types.Config;
+    page: any;
 };
 
 export const getBaseLayoutComponent = (
-  pageBaseLayout: string | null,
-  siteConfigBaseLayout: string | null
+    pageBaseLayout: string | null,
+    siteConfigBaseLayout: string | null
 ): FC<Props> => {
-  const layout = pageBaseLayout ?? siteConfigBaseLayout;
+    const layout = pageBaseLayout ?? siteConfigBaseLayout;
 
-  if (layout === 'BlankBaseLayout') {
-    return BlankBaseLayout;
-  } else {
-    return DefaultBaseLayout;
-  }
+    if (layout === 'BlankBaseLayout') {
+        return BlankBaseLayout;
+    } else {
+        return DefaultBaseLayout;
+    }
 };
