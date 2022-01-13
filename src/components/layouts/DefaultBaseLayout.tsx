@@ -6,16 +6,17 @@ import { Header } from '../sections/Header';
 import { Footer } from '../sections/Footer';
 import type * as types from '.contentlayer/types';
 import { FC } from 'react';
-import { objectIdDataAttr } from '../../utils/stackbit';
+import { objectIdDataAttr, contentDirPath } from '../../utils/stackbit';
 
-type Props = {
+export type Props = {
   site: types.Config;
-  page: { _id: string } & any;
+  page: { _id: string } & Record<string, any>;
 };
 
 export const DefaultBaseLayout: FC<Props> = (props) => {
   const { page, site } = props;
   const pageMeta = page?.__metadata ?? {};
+  const siteId = `${contentDirPath}/${site._id}`;
 
   return (
     <div className={classNames('sb-page', pageMeta.pageCssClasses)} {...objectIdDataAttr(page)}>
@@ -26,9 +27,9 @@ export const DefaultBaseLayout: FC<Props> = (props) => {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" href={site.favicon} />
         </Head>
-        {site.header && <Header {...site.header} annotationPrefix={site._id} />}
+        {site.header && <Header {...site.header} annotationPrefix={siteId} />}
         {props.children}
-        {site.footer && <Footer {...site.footer} annotationPrefix={site._id} />}
+        {site.footer && <Footer {...site.footer} annotationPrefix={siteId} />}
       </div>
     </div>
   );

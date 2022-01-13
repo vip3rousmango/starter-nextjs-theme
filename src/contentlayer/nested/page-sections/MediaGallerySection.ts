@@ -8,8 +8,8 @@ export const MediaGallerySection = defineNestedType(() => ({
   fields: {
     elementId,
     colors,
-    title: { type: 'string', default: 'This Is A Big Hero Headline' },
-    subtitle: { type: 'string', default: 'The section subtitle' },
+    title: { type: 'string' },
+    subtitle: { type: 'string' },
     images: { type: 'list', of: ImageBlock },
     spacing: { type: 'number', default: 1 },
     columns: { type: 'number', default: 4 },
