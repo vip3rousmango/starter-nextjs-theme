@@ -18,8 +18,8 @@ const POSTS_PER_PAGE = 10;
 export const getStaticPaths: GetStaticPaths = async () => {
     const data = await sourcebitDataClient.getData();
 
-    const allPostLayouts = data.pages.filter((page) => types.isType('PostLayout'));
-    const postLayoutSlugs = allPostLayouts.map((_) => `/blog/${_.__metadata.urlPath}`);
+    const allPostLayouts = data.pages.filter(types.isType('PostLayout'));
+    const postLayoutSlugs = allPostLayouts.map((_) => _.__metadata.urlPath);
 
     // TODO author pagination
     // const authorPaths = allPeople.map((author) => `/blog/author/${author.slug}`);
@@ -32,7 +32,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
         if (numOfPostsPerPage > 0) {
             const allPosts = data.pages.filter(types.isType('PostLayout'));
             const numOfPages = Math.ceil(allPosts.length / numOfPostsPerPage) || 1;
-            const paginationPaths = Array.from(new Array(numOfPages), (_, i) => `/blog/page/${i + 1}`);
+            paginationPaths = Array.from(new Array(numOfPages), (_, i) => `/blog/page/${i + 1}`);
         }
     }
 

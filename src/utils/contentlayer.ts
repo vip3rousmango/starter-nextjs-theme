@@ -16,7 +16,7 @@ declare global {
     interface ContentlayerGen extends ContentlayerGenTypes {}
 }
 
-export type Metadata = { id: string; pageCssClasses: string };
+export type Metadata = { id: string; pageCssClasses: string; urlPath: string };
 
 export type DocumentTypeMap = {
     Config: Config;
