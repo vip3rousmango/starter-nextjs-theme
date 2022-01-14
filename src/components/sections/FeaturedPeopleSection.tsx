@@ -44,23 +44,15 @@ export const FeaturedPeopleSection: FC<Props> = (props) => {
             <div className={classNames('flex', 'w-full', mapStyles({ justifyContent: sectionJustifyContent }))}>
                 <div className={classNames('w-full', mapMaxWidthStyles(sectionWidth))}>
                     {props.title && (
-                        <h2
-                            className={classNames(styles.title ? mapStyles(styles.title) : null)}
-                            data-sb-field-path=".title"
-                        >
+                        <h2 className={classNames(styles.title ? mapStyles(styles.title) : null)} data-sb-field-path=".title">
                             {props.title}
                         </h2>
                     )}
                     {props.subtitle && (
                         <p
-                            className={classNames(
-                                'text-lg',
-                                'sm:text-xl',
-                                styles.subtitle ? mapStyles(styles.subtitle) : null,
-                                {
-                                    'mt-6': props.title
-                                }
-                            )}
+                            className={classNames('text-lg', 'sm:text-xl', styles.subtitle ? mapStyles(styles.subtitle) : null, {
+                                'mt-6': props.title
+                            })}
                             data-sb-field-path=".subtitle"
                         >
                             {props.subtitle}
@@ -88,22 +80,11 @@ const FeaturedPeopleActions: FC<Props> = (props) => {
     return (
         <div className="mt-12 overflow-x-hidden">
             <div
-                className={classNames(
-                    'flex',
-                    'flex-wrap',
-                    'items-center',
-                    '-mx-2',
-                    styles.actions ? mapStyles(styles.actions) : null
-                )}
+                className={classNames('flex', 'flex-wrap', 'items-center', '-mx-2', styles.actions ? mapStyles(styles.actions) : null)}
                 data-sb-field-path=".actions"
             >
                 {props.actions?.map((action, index) => (
-                    <Action
-                        key={index}
-                        {...action}
-                        className="mx-2 mb-3 lg:whitespace-nowrap"
-                        data-sb-field-path={`.${index}`}
-                    />
+                    <Action key={index} {...action} className="mx-2 mb-3 lg:whitespace-nowrap" data-sb-field-path={`.${index}`} />
                 ))}
             </div>
         </div>
@@ -138,10 +119,7 @@ const PeopleVariantA: FC<Props> = (props) => {
                 <article key={index} data-sb-field-path={`.${index}`}>
                     {person.image && (
                         <div className="relative w-full h-0 pt-1/1" data-sb-field-path=".image">
-                            <ImageBlock
-                                {...person.image}
-                                className="absolute top-0 left-0 object-cover w-full h-full"
-                            />
+                            <ImageBlock {...person.image} className="absolute top-0 left-0 object-cover w-full h-full" />
                         </div>
                     )}
                     <div
@@ -180,10 +158,7 @@ const PeopleVariantB: FC<Props> = (props) => {
                     {person.image && (
                         <div className="w-full sm:flex-shrink-0 sm:h-full sm:w-1/3">
                             <div className="relative block w-full h-0 pt-1/1" data-sb-field-path=".image">
-                                <ImageBlock
-                                    {...person.image}
-                                    className="absolute top-0 left-0 object-cover w-full h-full"
-                                />
+                                <ImageBlock {...person.image} className="absolute top-0 left-0 object-cover w-full h-full" />
                             </div>
                         </div>
                     )}
@@ -244,18 +219,11 @@ const PeopleVariantC: FC<Props> = (props) => {
     );
 };
 
-const PeopleListVariantC: FC<{ people: Props['people']; annotIndexStart?: number }> = ({
-    people,
-    annotIndexStart = 0
-}) => {
+const PeopleListVariantC: FC<{ people: Props['people']; annotIndexStart?: number }> = ({ people, annotIndexStart = 0 }) => {
     return (
         <>
             {people.map((person, index, arr) => (
-                <article
-                    key={index}
-                    className={classNames(arr.length - 1 === index ? null : 'mb-12')}
-                    data-sb-field-path={`.${annotIndexStart + index}`}
-                >
+                <article key={index} className={classNames(arr.length - 1 === index ? null : 'mb-12')} data-sb-field-path={`.${annotIndexStart + index}`}>
                     {person.image && (
                         <div data-sb-field-path=".image">
                             <ImageBlock {...person.image} className="w-full" />
@@ -266,9 +234,7 @@ const PeopleListVariantC: FC<{ people: Props['people']; annotIndexStart?: number
                             <h3 className={classNames({ 'mb-3': person.bio })}>
                                 {person.firstName && <span data-sb-field-path=".firstName">{person.firstName}</span>}{' '}
                                 {person.lastName && <span data-sb-field-path=".lastName">{person.lastName}</span>}{' '}
-                                {(person.firstName || person.lastName) && person.role && (
-                                    <span className="mx-1">|</span>
-                                )}{' '}
+                                {(person.firstName || person.lastName) && person.role && <span className="mx-1">|</span>}{' '}
                                 {person.role && <span data-sb-field-path=".role">{person.role}</span>}
                             </h3>
                         )}

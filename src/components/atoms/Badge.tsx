@@ -20,13 +20,7 @@ export const Badge: FC<Props> = (props) => {
     return (
         <div
             id={cssId}
-            className={classNames(
-                'sb-component',
-                'sb-component-block',
-                'sb-component-badge',
-                cssClasses,
-                styles ? mapStyles(styles) : null
-            )}
+            className={classNames('sb-component', 'sb-component-block', 'sb-component-badge', cssClasses, styles ? mapStyles(styles) : null)}
             data-sb-field-path={annotations.join(' ').trim()}
         >
             <span data-sb-field-path=".label">{label}</span>

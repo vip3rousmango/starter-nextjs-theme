@@ -19,13 +19,7 @@ export const Header: FC<Props> = (props) => {
     const headerWidth = headerStyles.width ?? 'narrow';
     return (
         <header
-            className={classNames(
-                'sb-component',
-                'sb-component-header',
-                primaryColors,
-                'relative',
-                headerStyles.padding ?? 'py-5 px-4'
-            )}
+            className={classNames('sb-component', 'sb-component-header', primaryColors, 'relative', headerStyles.padding ?? 'py-5 px-4')}
             data-sb-field-path={`${props.annotationPrefix}:header`}
         >
             <div className={classNames('mx-auto', mapMaxWidthStyles(headerWidth))}>
@@ -116,13 +110,7 @@ const HeaderVariantC: FC<Props> = (props) => {
             )}
             {secondaryLinks.length > 0 && (
                 <ul
-                    className={classNames(
-                        'hidden',
-                        'lg:flex',
-                        'lg:items-center',
-                        'space-x-8',
-                        primaryLinks.length > 0 ? 'ml-8' : 'ml-auto'
-                    )}
+                    className={classNames('hidden', 'lg:flex', 'lg:items-center', 'space-x-8', primaryLinks.length > 0 ? 'ml-8' : 'ml-auto')}
                     data-sb-field-path=".secondaryLinks"
                 >
                     <ListOfLinks links={secondaryLinks} />
@@ -170,20 +158,14 @@ const HeaderVariantE: FC<Props> = (props) => {
                     </div>
                 )}
                 {secondaryLinks.length > 0 && (
-                    <ul
-                        className="hidden ml-auto space-x-8 lg:flex lg:items-center"
-                        data-sb-field-path=".secondaryLinks"
-                    >
+                    <ul className="hidden ml-auto space-x-8 lg:flex lg:items-center" data-sb-field-path=".secondaryLinks">
                         {ListOfLinks({ links: secondaryLinks })}
                     </ul>
                 )}
                 {(primaryLinks.length > 0 || secondaryLinks.length > 0) && <MobileMenu {...props} />}
             </div>
             {primaryLinks.length > 0 && (
-                <ul
-                    className="hidden mt-4 space-x-8 lg:flex lg:items-center lg:justify-center"
-                    data-sb-field-path=".primaryLinks"
-                >
+                <ul className="hidden mt-4 space-x-8 lg:flex lg:items-center lg:justify-center" data-sb-field-path=".primaryLinks">
                     <ListOfLinks links={primaryLinks} />
                 </ul>
             )}
@@ -211,12 +193,7 @@ const MobileMenu: FC<Props> = (props) => {
 
     return (
         <div className="ml-auto lg:hidden">
-            <button
-                aria-label="Open Menu"
-                title="Open Menu"
-                className="p-2 -mr-1 focus:outline-none"
-                onClick={() => setIsMenuOpen(true)}
-            >
+            <button aria-label="Open Menu" title="Open Menu" className="p-2 -mr-1 focus:outline-none" onClick={() => setIsMenuOpen(true)}>
                 <span className="sr-only">Open Menu</span>
                 <MenuIcon className="w-6 h-6 fill-current" />
             </button>
@@ -236,12 +213,7 @@ const MobileMenu: FC<Props> = (props) => {
                 <div className="flex flex-col min-h-full">
                     <div className="flex items-center justify-between mb-10">
                         {(props.logo || (props.title && props.isTitleVisible)) && SiteLogoLink(props)}
-                        <button
-                            aria-label="Close Menu"
-                            title="Close Menu"
-                            className="p-2 -mr-1 focus:outline-none"
-                            onClick={() => setIsMenuOpen(false)}
-                        >
+                        <button aria-label="Close Menu" title="Close Menu" className="p-2 -mr-1 focus:outline-none" onClick={() => setIsMenuOpen(false)}>
                             <CloseIcon className="w-6 h-6 fill-current" />
                         </button>
                     </div>
@@ -263,15 +235,8 @@ const MobileMenu: FC<Props> = (props) => {
 
 const SiteLogoLink: FC<types.Header> = (props) => {
     return (
-        <Link
-            href="/"
-            aria-label={props.title}
-            className="flex items-center sb-header-logo"
-            data-sb-field-path=".title#span[1] .logo#img[1]"
-        >
-            {props.logo && (
-                <ImageBlock {...props.logo} className={classNames('max-h-12', { 'mr-2': props.isTitleVisible })} />
-            )}
+        <Link href="/" aria-label={props.title} className="flex items-center sb-header-logo" data-sb-field-path=".title#span[1] .logo#img[1]">
+            {props.logo && <ImageBlock {...props.logo} className={classNames('max-h-12', { 'mr-2': props.isTitleVisible })} />}
             {props.title && props.isTitleVisible && <span className="text-2xl tracking-wide">{props.title}</span>}
         </Link>
     );
@@ -284,11 +249,7 @@ const ListOfLinks: FC<{ links: Action[]; inMobileMenu?: boolean }> = ({ links, i
         <>
             {links.map((link, index) => (
                 <li key={index}>
-                    <Action
-                        {...link}
-                        className={classNames(inMobileMenu && link.type === 'Button' ? 'w-full' : '')}
-                        data-sb-field-path={`.${index}`}
-                    />
+                    <Action {...link} className={classNames(inMobileMenu && link.type === 'Button' ? 'w-full' : '')} data-sb-field-path={`.${index}`} />
                 </li>
             ))}
         </>

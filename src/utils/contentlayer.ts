@@ -508,9 +508,7 @@ export type FormBlock = {
     __metadata: Metadata;
     type: 'FormBlock';
     variant: 'variant-a' | 'variant-b';
-    fields:
-        | (TextFormControl | EmailFormControl | CheckboxFormControl | SelectFormControl | TextareaFormControl)[]
-        | undefined;
+    fields: (TextFormControl | EmailFormControl | CheckboxFormControl | SelectFormControl | TextareaFormControl)[] | undefined;
     submitLabel: string | undefined;
     /** The unique ID for an HTML element, must not contain whitespace */
     elementId: string;
@@ -524,24 +522,8 @@ export type Header = {
     __metadata: Metadata;
     type: 'Header';
     headerVariant: 'variant-a' | 'variant-b' | 'variant-c' | 'variant-d' | 'variant-e';
-    primaryColors:
-        | 'colors-a'
-        | 'colors-b'
-        | 'colors-c'
-        | 'colors-d'
-        | 'colors-e'
-        | 'colors-f'
-        | 'colors-g'
-        | 'colors-h';
-    secondaryColors:
-        | 'colors-a'
-        | 'colors-b'
-        | 'colors-c'
-        | 'colors-d'
-        | 'colors-e'
-        | 'colors-f'
-        | 'colors-g'
-        | 'colors-h';
+    primaryColors: 'colors-a' | 'colors-b' | 'colors-c' | 'colors-d' | 'colors-e' | 'colors-f' | 'colors-g' | 'colors-h';
+    secondaryColors: 'colors-a' | 'colors-b' | 'colors-c' | 'colors-d' | 'colors-e' | 'colors-f' | 'colors-g' | 'colors-h';
     title: string;
     isTitleVisible: boolean;
     logo: ImageBlock;

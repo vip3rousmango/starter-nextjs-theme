@@ -26,17 +26,8 @@ export const Footer: FC<Props> = (props) => {
             <div className={classNames('mx-auto', mapMaxWidthStyles(footerWidth))}>
                 {(props.logo || props.title || props.text) && (
                     <div className="mb-12">
-                        <Link
-                            href="/"
-                            className="flex items-center sb-footer-logo"
-                            data-sb-field-path=".title#span[1] .logo#img[1]"
-                        >
-                            {props.logo && (
-                                <ImageBlock
-                                    {...props.logo}
-                                    className={classNames('max-h-12', { 'mr-2': props.title })}
-                                />
-                            )}
+                        <Link href="/" className="flex items-center sb-footer-logo" data-sb-field-path=".title#span[1] .logo#img[1]">
+                            {props.logo && <ImageBlock {...props.logo} className={classNames('max-h-12', { 'mr-2': props.title })} />}
                             {props.title && <span className="text-2xl tracking-wide">{props.title}</span>}
                         </Link>
                         {props.text && (
@@ -52,10 +43,7 @@ export const Footer: FC<Props> = (props) => {
                     <div className="sm:flex sm:justify-between sm:items-end">
                         {primaryLinks.length > 0 && (
                             <div className="mb-6">
-                                <ul
-                                    className="flex flex-col items-start mb-6 space-y-6 text-lg"
-                                    data-sb-field-path=".primaryLinks"
-                                >
+                                <ul className="flex flex-col items-start mb-6 space-y-6 text-lg" data-sb-field-path=".primaryLinks">
                                     {primaryLinks.map((link, index) => (
                                         <li key={index}>
                                             <Action {...link} data-sb-field-path={`.${index}`} />
@@ -84,10 +72,7 @@ export const Footer: FC<Props> = (props) => {
                 <div className="flex flex-col-reverse justify-between pt-6 lg:flex-row">
                     {props.copyrightText && <Markdown text={props.copyrightText} fieldName="copyrightText" />}
                     {legalLinks.length > 0 && (
-                        <ul
-                            className="flex flex-col mb-6 space-y-2 lg:mb-0 sm:space-y-0 sm:space-x-5 sm:flex-row"
-                            data-sb-field-path=".legalLinks"
-                        >
+                        <ul className="flex flex-col mb-6 space-y-2 lg:mb-0 sm:space-y-0 sm:space-x-5 sm:flex-row" data-sb-field-path=".legalLinks">
                             {legalLinks.map((link, index) => (
                                 <li key={index}>
                                     <Action {...link} data-sb-field-path={`.${index}`} />

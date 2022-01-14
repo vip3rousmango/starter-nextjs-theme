@@ -1,10 +1,5 @@
 const path = require('path');
-const {
-    flattenMarkdownData,
-    cssClassesFromFilePath,
-    cssClassesFromUrlPath,
-    urlPathFromFilePath
-} = require('./sourcebit-utils');
+const { flattenMarkdownData, cssClassesFromFilePath, cssClassesFromUrlPath, urlPathFromFilePath } = require('./sourcebit-utils');
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -52,9 +47,7 @@ module.exports = {
                     return { site };
                 },
                 pages: (objects) => {
-                    const personObjects = objects.filter(
-                        (object) => object.__metadata.relProjectPath?.startsWith('content/data/team/') && !!object.slug
-                    );
+                    const personObjects = objects.filter((object) => object.__metadata.relProjectPath?.startsWith('content/data/team/') && !!object.slug);
                     const personPages = personObjects.map((person) => {
                         const { __metadata, ...restProps } = person;
                         const urlPath = `/blog/author/${person.slug}`;

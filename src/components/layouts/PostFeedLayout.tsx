@@ -25,22 +25,9 @@ export const PostFeedLayout: FC<Props> = ({ page, site, posts }) => {
         <BaseLayout page={page} site={site}>
             <main id="main" className="layout page-layout">
                 {title && (
-                    <div
-                        className={classNames(
-                            'flex',
-                            'py-12',
-                            'lg:py-14',
-                            'px-4',
-                            postFeedColors,
-                            mapStyles({ justifyContent: postFeedJustifyContent })
-                        )}
-                    >
+                    <div className={classNames('flex', 'py-12', 'lg:py-14', 'px-4', postFeedColors, mapStyles({ justifyContent: postFeedJustifyContent }))}>
                         <h1
-                            className={classNames(
-                                'w-full',
-                                mapMaxWidthStyles(postFeedWidth),
-                                page?.styles?.title ? mapStyles(page?.styles?.title) : null
-                            )}
+                            className={classNames('w-full', mapMaxWidthStyles(postFeedWidth), page?.styles?.title ? mapStyles(page?.styles?.title) : null)}
                             data-sb-field-path="title"
                         >
                             {title}
@@ -76,15 +63,10 @@ export const resolveProps = (slug: string, allDocuments: types.DocumentTypes[]) 
     const { bottomSections, topSections, ...postFeedLayout } = allDocuments.filter(types.isType('PostFeedLayout'))[0]!;
     const config = allDocuments.filter(types.isType('Config'))[0]!;
 
-    const filteredPosts =
-        filterByAuthorSlug === null
-            ? allPostLayouts
-            : allPostLayouts.filter(({ author }) => author?.slug === filterByAuthorSlug);
+    const filteredPosts = filterByAuthorSlug === null ? allPostLayouts : allPostLayouts.filter(({ author }) => author?.slug === filterByAuthorSlug);
     const numOfPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
 
-    const posts = filteredPosts
-        .slice(pageIndex * POSTS_PER_PAGE, (pageIndex + 1) * POSTS_PER_PAGE)
-        .sort(sortPostsByDateDesc);
+    const posts = filteredPosts.slice(pageIndex * POSTS_PER_PAGE, (pageIndex + 1) * POSTS_PER_PAGE).sort(sortPostsByDateDesc);
 
     return {
         type: 'PostFeedLayout' as const,
@@ -113,11 +95,7 @@ const pageInfoFromSlug = (slug: string) => {
     return { pageIndex, filterByAuthorSlug };
 };
 
-const PageLinks: FC<{ pageIndex: number; baseUrlPath: string; numOfPages: number }> = ({
-    pageIndex,
-    baseUrlPath,
-    numOfPages
-}) => {
+const PageLinks: FC<{ pageIndex: number; baseUrlPath: string; numOfPages: number }> = ({ pageIndex, baseUrlPath, numOfPages }) => {
     if (numOfPages < 2) {
         return null;
     }
@@ -162,14 +140,7 @@ const PageLinks: FC<{ pageIndex: number; baseUrlPath: string; numOfPages: number
         if (endIndex < numOfPages - 2) {
             pageLinks.push(<Ellipsis key="afterEllipsis" />);
         }
-        pageLinks.push(
-            <PageLink
-                key={numOfPages - 1}
-                pageIndex={numOfPages - 1}
-                buttonLabel={numOfPages}
-                baseUrlPath={baseUrlPath}
-            />
-        );
+        pageLinks.push(<PageLink key={numOfPages - 1} pageIndex={numOfPages - 1} buttonLabel={numOfPages} baseUrlPath={baseUrlPath} />);
     }
 
     // renders next "→" button, if the current page is the last page, the button is disabled
@@ -182,16 +153,9 @@ const PageLinks: FC<{ pageIndex: number; baseUrlPath: string; numOfPages: number
     return <div className={classNames('flex flex-row items-center justify-center mt-12 sm:mt-20')}>{pageLinks}</div>;
 };
 
-const PageLink: FC<{ pageIndex: number; buttonLabel: string | number; baseUrlPath: string }> = ({
-    pageIndex,
-    buttonLabel,
-    baseUrlPath
-}) => {
+const PageLink: FC<{ pageIndex: number; buttonLabel: string | number; baseUrlPath: string }> = ({ pageIndex, buttonLabel, baseUrlPath }) => {
     return (
-        <Link
-            href={urlPathForPageAtIndex(pageIndex, baseUrlPath)}
-            className="px-4 py-2 mx-2 sb-component-button sb-component-button-secondary"
-        >
+        <Link href={urlPathForPageAtIndex(pageIndex, baseUrlPath)} className="px-4 py-2 mx-2 sb-component-button sb-component-button-secondary">
             {buttonLabel}
         </Link>
     );

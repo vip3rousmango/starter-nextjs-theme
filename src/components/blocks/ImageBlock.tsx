@@ -16,12 +16,7 @@ export const ImageBlock: FC<Props> = (props) => {
     const styles = props.styles?.self ?? {};
     const imageOpacity = styles.opacity || styles.opacity === 0 ? styles.opacity : 100;
     const annotationPrefix = props['data-sb-field-path'] ?? '';
-    const annotations = [
-        `${annotationPrefix}`,
-        `${annotationPrefix}.url#@src`,
-        `${annotationPrefix}.altText#@alt`,
-        `${annotationPrefix}.elementId#@id`
-    ];
+    const annotations = [`${annotationPrefix}`, `${annotationPrefix}.url#@src`, `${annotationPrefix}.altText#@alt`, `${annotationPrefix}.elementId#@id`];
 
     return (
         <img

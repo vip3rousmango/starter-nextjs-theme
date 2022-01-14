@@ -34,13 +34,7 @@ export const SelectFormControl: FC<Props> = (props) => {
                     {props.label}
                 </label>
             )}
-            <select
-                id={props.name}
-                className="sb-select"
-                name={props.name}
-                {...attr}
-                data-sb-field-path=".name#@id .name#@name .options"
-            >
+            <select id={props.name} className="sb-select" name={props.name} {...attr} data-sb-field-path=".name#@id .name#@name .options">
                 {props.defaultValue && (
                     <option value="" data-sb-field-path=".defaultValue">
                         {props.defaultValue}

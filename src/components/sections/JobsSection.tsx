@@ -45,23 +45,15 @@ export const JobsSection: React.FC<Props> = (props) => {
             <div className={classNames('flex', 'w-full', mapStyles({ justifyContent: sectionJustifyContent }))}>
                 <div className={classNames('w-full', mapMaxWidthStyles(sectionWidth))}>
                     {props.title && (
-                        <h2
-                            className={classNames(styles.title ? mapStyles(styles.title) : null)}
-                            data-sb-field-path=".title"
-                        >
+                        <h2 className={classNames(styles.title ? mapStyles(styles.title) : null)} data-sb-field-path=".title">
                             {props.title}
                         </h2>
                     )}
                     {props.subtitle && (
                         <p
-                            className={classNames(
-                                'text-lg',
-                                'sm:text-xl',
-                                styles.subtitle ? mapStyles(styles.subtitle) : null,
-                                {
-                                    'mt-6': props.title
-                                }
-                            )}
+                            className={classNames('text-lg', 'sm:text-xl', styles.subtitle ? mapStyles(styles.subtitle) : null, {
+                                'mt-6': props.title
+                            })}
                             data-sb-field-path=".subtitle"
                         >
                             {props.subtitle}
@@ -115,10 +107,7 @@ const JobListItem: FC<types.JobListItem & StackbitFieldPath> = (props) => {
                 </h4>
             )}
             {props.location && (
-                <p
-                    className={classNames('text-xl', 'font-bold', { 'mt-4': props.title })}
-                    data-sb-field-path=".location"
-                >
+                <p className={classNames('text-xl', 'font-bold', { 'mt-4': props.title })} data-sb-field-path=".location">
                     {props.location}
                 </p>
             )}
@@ -139,12 +128,7 @@ const JobListItem: FC<types.JobListItem & StackbitFieldPath> = (props) => {
                 >
                     <div className="flex flex-wrap items-center -mx-2" data-sb-field-path=".actions">
                         {actions.map((action, index) => (
-                            <Action
-                                key={index}
-                                {...action}
-                                className="mx-2 mb-3 lg:whitespace-nowrap"
-                                data-sb-field-path={`.${index}`}
-                            />
+                            <Action key={index} {...action} className="mx-2 mb-3 lg:whitespace-nowrap" data-sb-field-path={`.${index}`} />
                         ))}
                     </div>
                 </div>

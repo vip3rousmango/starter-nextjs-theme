@@ -44,11 +44,7 @@ const VideoEmbed: FC<Props> = (props) => {
     const { url, autoplay, loop, muted, controls = true } = props;
     const videoData = getVideoData(url!);
     if (!videoData.id || !videoData.service) {
-        return (
-            <p className="absolute left-0 w-full italic text-center transform -translate-y-1/2 top-1/2">
-                Video URL is not supported.
-            </p>
-        );
+        return <p className="absolute left-0 w-full italic text-center transform -translate-y-1/2 top-1/2">Video URL is not supported.</p>;
     }
     if (videoData.service === 'custom') {
         return (

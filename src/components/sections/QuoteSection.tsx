@@ -41,14 +41,7 @@ export const QuoteSection: FC<Props> = (props) => {
             }}
         >
             {props.backgroundImage && <QuoteBackgroundImage {...props.backgroundImage} />}
-            <div
-                className={classNames(
-                    'flex',
-                    'relative',
-                    'w-full',
-                    mapStyles({ justifyContent: sectionJustifyContent })
-                )}
-            >
+            <div className={classNames('flex', 'relative', 'w-full', mapStyles({ justifyContent: sectionJustifyContent }))}>
                 <div className={classNames('w-full', mapMaxWidthStyles(sectionWidth))}>{QuoteContent(props)}</div>
             </div>
         </div>
@@ -80,12 +73,7 @@ const QuoteContent: FC<Props> = (props) => {
             {props.quote && (
                 <Markdown
                     text={props.quote}
-                    className={classNames(
-                        'sb-markdown',
-                        'text-3xl',
-                        'sm:text-4xl',
-                        styles.quote ? mapStyles(styles.quote) : null
-                    )}
+                    className={classNames('sb-markdown', 'text-3xl', 'sm:text-4xl', styles.quote ? mapStyles(styles.quote) : null)}
                     fieldName="quote"
                 />
             )}
@@ -93,27 +81,14 @@ const QuoteContent: FC<Props> = (props) => {
                 <footer>
                     {props.name && (
                         <span
-                            className={classNames(
-                                'block',
-                                'text-2xl',
-                                'sm:text-3xl',
-                                styles.name ? mapStyles(styles.name) : null
-                            )}
+                            className={classNames('block', 'text-2xl', 'sm:text-3xl', styles.name ? mapStyles(styles.name) : null)}
                             data-sb-field-path=".name"
                         >
                             {props.name}
                         </span>
                     )}
                     {props.title && (
-                        <span
-                            className={classNames(
-                                'block',
-                                'text-lg',
-                                'mt-1.5',
-                                styles.title ? mapStyles(styles.title) : null
-                            )}
-                            data-sb-field-path=".title"
-                        >
+                        <span className={classNames('block', 'text-lg', 'mt-1.5', styles.title ? mapStyles(styles.title) : null)} data-sb-field-path=".title">
                             {props.title}
                         </span>
                     )}

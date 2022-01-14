@@ -137,23 +137,11 @@ const CtaActions: FC<Props> = (props) => {
         <div className={classNames('w-full', styles.self?.flexDirection === 'row' ? 'lg:w-auto' : null)}>
             <div className="overflow-x-hidden">
                 <div
-                    className={classNames(
-                        'flex',
-                        'flex-wrap',
-                        'items-center',
-                        '-mx-2',
-                        'lg:flex-nowrap',
-                        styles.actions ? mapStyles(styles.actions) : null
-                    )}
+                    className={classNames('flex', 'flex-wrap', 'items-center', '-mx-2', 'lg:flex-nowrap', styles.actions ? mapStyles(styles.actions) : null)}
                     data-sb-field-path=".actions"
                 >
                     {actions.map((action, index) => (
-                        <Action
-                            key={index}
-                            {...action}
-                            className="mx-2 mb-3 lg:whitespace-nowrap"
-                            data-sb-field-path={`.${index}`}
-                        />
+                        <Action key={index} {...action} className="mx-2 mb-3 lg:whitespace-nowrap" data-sb-field-path={`.${index}`} />
                     ))}
                 </div>
             </div>

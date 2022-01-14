@@ -105,9 +105,7 @@ export class FormBlock extends React.Component<Props, State> {
                     <div
                         className={classNames(
                             variant === 'variant-a' ? 'mt-8' : 'mt-4 sm:mt-0 sm:ml-4',
-                            styles.submitLabel?.textAlign
-                                ? mapStyles({ textAlign: styles.submitLabel?.textAlign })
-                                : null
+                            styles.submitLabel?.textAlign ? mapStyles({ textAlign: styles.submitLabel?.textAlign }) : null
                         )}
                     >
                         <button
@@ -118,9 +116,7 @@ export class FormBlock extends React.Component<Props, State> {
                             {submitLabel}
                         </button>
                         {this.state.submitted && <span className="ml-8">Thank you, your message was sent.</span>}
-                        {this.state.error && (
-                            <span className="ml-8 text-info">Something went wrong, please try again.</span>
-                        )}
+                        {this.state.error && <span className="ml-8 text-info">Something went wrong, please try again.</span>}
                     </div>
                 </div>
             </form>

@@ -12,7 +12,7 @@ export default Page;
 
 export const getStaticPaths: GetStaticPaths = async () => {
     const data = await sourcebitDataClient.getData();
-    const paths = data.pages.filter(page => !types.isType(['PostLayout', 'PostFeedLayout', 'Person'])(page)).map((page) => page.__metadata.urlPath);
+    const paths = data.pages.filter((page) => !types.isType(['PostLayout', 'PostFeedLayout', 'Person'])(page)).map((page) => page.__metadata.urlPath);
     return { paths, fallback: false };
 };
 
