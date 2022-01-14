@@ -1,14 +1,8 @@
 import { FC } from 'react';
 import { allPostLayouts, allPeople, allDocuments } from '.contentlayer/data';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import {
-    resolveProps as resolvePropsForPostLayout,
-    Props as PostLayoutProps
-} from '../../components/layouts/PostLayout';
-import {
-    Props as PostFeedLayoutProps,
-    resolveProps as resolvePropsForPostFeedLayout
-} from '../../components/layouts/PostFeedLayout';
+import { resolveProps as resolvePropsForPostLayout, Props as PostLayoutProps } from '../../components/layouts/PostLayout';
+import { Props as PostFeedLayoutProps, resolveProps as resolvePropsForPostFeedLayout } from '../../components/layouts/PostFeedLayout';
 import { DynamicComponent } from '../../components/DynamicComponent';
 
 type Props = PostLayoutProps | PostFeedLayoutProps;

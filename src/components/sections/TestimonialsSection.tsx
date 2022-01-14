@@ -46,33 +46,22 @@ export const TestimonialsSection: FC<Props> = (props) => {
             <div className={classNames('flex', 'w-full', mapStyles({ justifyContent: sectionJustifyContent }))}>
                 <div className={classNames('w-full', mapMaxWidthStyles(sectionWidth))}>
                     {props.title && (
-                        <h2
-                            className={classNames(styles.title ? mapStyles(styles.title) : null)}
-                            data-sb-field-path=".title"
-                        >
+                        <h2 className={classNames(styles.title ? mapStyles(styles.title) : null)} data-sb-field-path=".title">
                             {props.title}
                         </h2>
                     )}
                     {props.subtitle && (
                         <p
-                            className={classNames(
-                                'text-lg',
-                                'sm:text-xl',
-                                styles.subtitle ? mapStyles(styles.subtitle) : null,
-                                {
-                                    'mt-6': props.title
-                                }
-                            )}
+                            className={classNames('text-lg', 'sm:text-xl', styles.subtitle ? mapStyles(styles.subtitle) : null, {
+                                'mt-6': props.title
+                            })}
                             data-sb-field-path=".subtitle"
                         >
                             {props.subtitle}
                         </p>
                     )}
                     {testimonials.length > 0 && (
-                        <div
-                            className={classNames('space-y-12', { 'mt-12': props.title || props.subtitle })}
-                            data-sb-field-path=".testimonials"
-                        >
+                        <div className={classNames('space-y-12', { 'mt-12': props.title || props.subtitle })} data-sb-field-path=".testimonials">
                             {testimonials.map((testimonial, index) => {
                                 switch (variant) {
                                     case 'variant-a':
@@ -118,14 +107,7 @@ const TestimonialVariantA: FC<types.Testimonial & { index: number }> = ({ index,
                 {(testimonial.name || testimonial.title) && (
                     <footer className="mt-8 md:mt-12">
                         {testimonial.name && (
-                            <div
-                                className={classNames(
-                                    'text-xl',
-                                    'sm:text-2xl',
-                                    styles.name ? mapStyles(styles.name) : null
-                                )}
-                                data-sb-field-path=".name"
-                            >
+                            <div className={classNames('text-xl', 'sm:text-2xl', styles.name ? mapStyles(styles.name) : null)} data-sb-field-path=".name">
                                 {testimonial.name}
                             </div>
                         )}
@@ -174,14 +156,7 @@ const TestimonialVariantB: FC<types.Testimonial & { index: number }> = ({ index,
                     {(testimonial.name || testimonial.title) && (
                         <div className="flex-grow">
                             {testimonial.name && (
-                                <div
-                                    className={classNames(
-                                        'text-xl',
-                                        'sm:text-2xl',
-                                        styles.name ? mapStyles(styles.name) : null
-                                    )}
-                                    data-sb-field-path=".name"
-                                >
+                                <div className={classNames('text-xl', 'sm:text-2xl', styles.name ? mapStyles(styles.name) : null)} data-sb-field-path=".name">
                                     {testimonial.name}
                                 </div>
                             )}
@@ -234,14 +209,7 @@ const TestimonialVariantC: FC<types.Testimonial & { index: number }> = ({ index,
                         </div>
                     )}
                     {testimonial.name && (
-                        <div
-                            className={classNames(
-                                'text-xl',
-                                'sm:text-2xl',
-                                styles.name ? mapStyles(styles.name) : null
-                            )}
-                            data-sb-field-path=".name"
-                        >
+                        <div className={classNames('text-xl', 'sm:text-2xl', styles.name ? mapStyles(styles.name) : null)} data-sb-field-path=".name">
                             {testimonial.name}
                         </div>
                     )}

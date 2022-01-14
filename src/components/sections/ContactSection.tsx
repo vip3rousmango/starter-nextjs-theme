@@ -69,8 +69,7 @@ export const ContactSection: FC<Props> = (props) => {
                                 'space-y-8',
                                 {
                                     'lg:space-y-0 lg:space-x-8': sectionFlexDirection === 'row',
-                                    'space-y-reverse lg:space-y-0 lg:space-x-8 lg:space-x-reverse':
-                                        sectionFlexDirection === 'row-reverse',
+                                    'space-y-reverse lg:space-y-0 lg:space-x-8 lg:space-x-reverse': sectionFlexDirection === 'row-reverse',
                                     'space-y-reverse': sectionFlexDirection === 'col-reverse'
                                 }
                             )}
@@ -83,11 +82,7 @@ export const ContactSection: FC<Props> = (props) => {
                                             'mt-12': props.title || props.text
                                         })}
                                     >
-                                        <FormBlock
-                                            {...props.form}
-                                            className="inline-block w-full max-w-screen-sm"
-                                            data-sb-field-path=".form"
-                                        />
+                                        <FormBlock {...props.form} className="inline-block w-full max-w-screen-sm" data-sb-field-path=".form" />
                                     </div>
                                 )}
                             </div>

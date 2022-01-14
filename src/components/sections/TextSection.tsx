@@ -58,14 +58,9 @@ const TextBody: FC<Props> = (props) => {
             )}
             {props.subtitle && (
                 <p
-                    className={classNames(
-                        'text-xl',
-                        'sm:text-2xl',
-                        styles.subtitle ? mapStyles(styles.subtitle) : null,
-                        {
-                            'mt-2': props.title
-                        }
-                    )}
+                    className={classNames('text-xl', 'sm:text-2xl', styles.subtitle ? mapStyles(styles.subtitle) : null, {
+                        'mt-2': props.title
+                    })}
                     data-sb-field-path=".subtitle"
                 >
                     {props.subtitle}

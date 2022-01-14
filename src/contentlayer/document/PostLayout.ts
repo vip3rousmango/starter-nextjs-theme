@@ -13,8 +13,7 @@ export const PostLayout = defineDocumentType(() => ({
         category: { type: 'json' },
         excerpt: {
             type: 'string',
-            default:
-                'Nunc rutrum felis dui, ut consequat sapien scelerisque vel. Integer condimentum dignissim justo vel faucibus.'
+            default: 'Nunc rutrum felis dui, ut consequat sapien scelerisque vel. Integer condimentum dignissim justo vel faucibus.'
         },
         featuredImage: {
             type: 'nested',

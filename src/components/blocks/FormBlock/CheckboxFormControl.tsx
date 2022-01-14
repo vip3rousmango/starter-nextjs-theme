@@ -23,14 +23,7 @@ export const CheckboxFormControl: FC<Props> = (props) => {
             })}
             data-sb-field-path={props['data-sb-field-path']}
         >
-            <input
-                id={props.name}
-                className="sb-checkbox"
-                type="checkbox"
-                name={props.name}
-                {...attr}
-                data-sb-field-path=".name#@id .name#@name"
-            />
+            <input id={props.name} className="sb-checkbox" type="checkbox" name={props.name} {...attr} data-sb-field-path=".name#@id .name#@name" />
             {props.label && (
                 <label id={labelId} className="sb-label" htmlFor={props.name} data-sb-field-path=".label .name#@for">
                     {props.label}

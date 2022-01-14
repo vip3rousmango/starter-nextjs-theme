@@ -8,10 +8,7 @@ type Props = {
     page: any;
 };
 
-export const getBaseLayoutComponent = (
-    pageBaseLayout: string | null,
-    siteConfigBaseLayout: string | null
-): FC<Props> => {
+export const getBaseLayoutComponent = (pageBaseLayout: string | null, siteConfigBaseLayout: string | null): FC<Props> => {
     const layout = pageBaseLayout ?? siteConfigBaseLayout;
 
     if (layout === 'BlankBaseLayout') {

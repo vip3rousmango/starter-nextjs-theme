@@ -44,23 +44,15 @@ export const FeaturedItemsSection: FC<Props> = (props) => {
             <div className={classNames('flex', 'w-full', mapStyles({ justifyContent: sectionJustifyContent }))}>
                 <div className={classNames('w-full', mapMaxWidthStyles(sectionWidth))}>
                     {props.title && (
-                        <h2
-                            className={classNames(styles.title ? mapStyles(styles.title) : null)}
-                            data-sb-field-path=".title"
-                        >
+                        <h2 className={classNames(styles.title ? mapStyles(styles.title) : null)} data-sb-field-path=".title">
                             {props.title}
                         </h2>
                     )}
                     {props.subtitle && (
                         <p
-                            className={classNames(
-                                'text-lg',
-                                'sm:text-xl',
-                                styles.subtitle ? mapStyles(styles.subtitle) : null,
-                                {
-                                    'mt-6': props.title
-                                }
-                            )}
+                            className={classNames('text-lg', 'sm:text-xl', styles.subtitle ? mapStyles(styles.subtitle) : null, {
+                                'mt-6': props.title
+                            })}
                             data-sb-field-path=".subtitle"
                         >
                             {props.subtitle}
@@ -74,12 +66,7 @@ export const FeaturedItemsSection: FC<Props> = (props) => {
                             data-sb-field-path=".items"
                         >
                             {props.items.map((item, index) => (
-                                <FeaturedItem
-                                    key={index}
-                                    {...item}
-                                    enableHover={props.enableHover}
-                                    data-sb-field-path={`.${index}`}
-                                />
+                                <FeaturedItem key={index} {...item} enableHover={props.enableHover} data-sb-field-path={`.${index}`} />
                             ))}
                         </div>
                     )}
@@ -99,22 +86,11 @@ const FeaturedItemActions: FC<types.FeaturedItemsSection> = (props) => {
     return (
         <div className="mt-12 overflow-x-hidden">
             <div
-                className={classNames(
-                    'flex',
-                    'flex-wrap',
-                    'items-center',
-                    '-mx-2',
-                    styles.actions ? mapStyles(styles.actions) : null
-                )}
+                className={classNames('flex', 'flex-wrap', 'items-center', '-mx-2', styles.actions ? mapStyles(styles.actions) : null)}
                 data-sb-field-path=".actions"
             >
                 {actions.map((action, index) => (
-                    <Action
-                        key={index}
-                        {...action}
-                        className="mx-2 mb-3 lg:whitespace-nowrap"
-                        data-sb-field-path={`.${index}`}
-                    />
+                    <Action key={index} {...action} className="mx-2 mb-3 lg:whitespace-nowrap" data-sb-field-path={`.${index}`} />
                 ))}
             </div>
         </div>

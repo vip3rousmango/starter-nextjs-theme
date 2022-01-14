@@ -51,23 +51,15 @@ export const FaqSection: FC<Props> = (props) => {
                         {(props.title || props.subtitle || actions.length > 0) && (
                             <div className={classNames('w-full', { 'lg:w-1/3 lg:pr-3': faqItems.length > 0 })}>
                                 {props.title && (
-                                    <h2
-                                        className={classNames(styles.title ? mapStyles(styles.title) : null)}
-                                        data-sb-field-path=".title"
-                                    >
+                                    <h2 className={classNames(styles.title ? mapStyles(styles.title) : null)} data-sb-field-path=".title">
                                         {props.title}
                                     </h2>
                                 )}
                                 {props.subtitle && (
                                     <p
-                                        className={classNames(
-                                            'text-lg',
-                                            'sm:text-xl',
-                                            styles.subtitle ? mapStyles(styles.subtitle) : null,
-                                            {
-                                                'mt-2': props.title
-                                            }
-                                        )}
+                                        className={classNames('text-lg', 'sm:text-xl', styles.subtitle ? mapStyles(styles.subtitle) : null, {
+                                            'mt-2': props.title
+                                        })}
                                         data-sb-field-path=".subtitle"
                                     >
                                         {props.subtitle}
@@ -90,12 +82,7 @@ export const FaqSection: FC<Props> = (props) => {
                                             data-sb-field-path=".actions"
                                         >
                                             {actions.map((action, index) => (
-                                                <Action
-                                                    key={index}
-                                                    {...action}
-                                                    className="mx-2 mb-3 lg:whitespace-nowrap"
-                                                    data-sb-field-path={`.${index}`}
-                                                />
+                                                <Action key={index} {...action} className="mx-2 mb-3 lg:whitespace-nowrap" data-sb-field-path={`.${index}`} />
                                             ))}
                                         </div>
                                     </div>
@@ -105,8 +92,7 @@ export const FaqSection: FC<Props> = (props) => {
                         {faqItems.length > 0 && (
                             <div
                                 className={classNames('w-full', {
-                                    'mt-12 lg:mt-0 lg:w-2/3 lg:pl-3':
-                                        props.title || props.subtitle || actions.length > 0
+                                    'mt-12 lg:mt-0 lg:w-2/3 lg:pl-3': props.title || props.subtitle || actions.length > 0
                                 })}
                                 data-sb-field-path=".items"
                             >
@@ -125,10 +111,7 @@ export const FaqSection: FC<Props> = (props) => {
 const FaqItem: FC<types.FaqItem & StackbitFieldPath> = (props) => {
     const [isActive, setIsActive] = useState(false);
     return (
-        <div
-            className="pb-8 mb-8 border-b border-current sb-faq-section-item"
-            data-sb-field-path={props['data-sb-field-path']}
-        >
+        <div className="pb-8 mb-8 border-b border-current sb-faq-section-item" data-sb-field-path={props['data-sb-field-path']}>
             {props.question && (
                 <h3
                     className={classNames(
@@ -150,12 +133,7 @@ const FaqItem: FC<types.FaqItem & StackbitFieldPath> = (props) => {
             {props.answer && (
                 <div
                     dangerouslySetInnerHTML={{ __html: props.answer.html }}
-                    className={classNames(
-                        'sb-markdown',
-                        'mt-6',
-                        props?.styles?.answer ? mapStyles(props?.styles?.answer) : null,
-                        !isActive ? 'hidden' : null
-                    )}
+                    className={classNames('sb-markdown', 'mt-6', props?.styles?.answer ? mapStyles(props?.styles?.answer) : null, !isActive ? 'hidden' : null)}
                     data-sb-field-path=".answer"
                 />
                 // <Markdown

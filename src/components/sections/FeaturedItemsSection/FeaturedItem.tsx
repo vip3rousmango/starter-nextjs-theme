@@ -87,12 +87,7 @@ const ItemActions: FC<Props> = (props) => {
                 data-sb-field-path=".actions"
             >
                 {actions.map((action, index) => (
-                    <Action
-                        key={index}
-                        {...action}
-                        className="mx-2 mb-3 lg:whitespace-nowrap"
-                        data-sb-field-path={`.${index}`}
-                    />
+                    <Action key={index} {...action} className="mx-2 mb-3 lg:whitespace-nowrap" data-sb-field-path={`.${index}`} />
                 ))}
             </div>
         </div>

@@ -71,11 +71,8 @@ export const FeatureHighlightSection: FC<Props> = (props) => {
                                 mapStyles({ alignItems: sectionAlignItems }),
                                 'space-y-8',
                                 {
-                                    'space-y-reverse':
-                                        sectionFlexDirection === 'col-reverse' ||
-                                        sectionFlexDirection === 'row-reverse',
-                                    'lg:space-y-0':
-                                        sectionFlexDirection === 'row' || sectionFlexDirection === 'row-reverse'
+                                    'space-y-reverse': sectionFlexDirection === 'col-reverse' || sectionFlexDirection === 'row-reverse',
+                                    'lg:space-y-0': sectionFlexDirection === 'row' || sectionFlexDirection === 'row-reverse'
                                 }
                             )}
                         >
@@ -120,14 +117,9 @@ const FeatureHighlightBody: FC<types.FeatureHighlightSection> = (props) => {
             )}
             {props.subtitle && (
                 <p
-                    className={classNames(
-                        'text-xl',
-                        'sm:text-2xl',
-                        styles.subtitle ? mapStyles(styles.subtitle) : null,
-                        {
-                            'mt-4': props.title
-                        }
-                    )}
+                    className={classNames('text-xl', 'sm:text-2xl', styles.subtitle ? mapStyles(styles.subtitle) : null, {
+                        'mt-4': props.title
+                    })}
                     data-sb-field-path=".subtitle"
                 >
                     {props.subtitle}
@@ -168,22 +160,11 @@ const FeatureHighlightActions: FC<types.FeatureHighlightSection> = (props) => {
             })}
         >
             <div
-                className={classNames(
-                    'flex',
-                    'flex-wrap',
-                    'items-center',
-                    '-mx-2',
-                    styles.actions ? mapStyles(styles.actions) : null
-                )}
+                className={classNames('flex', 'flex-wrap', 'items-center', '-mx-2', styles.actions ? mapStyles(styles.actions) : null)}
                 data-sb-field-path=".actions"
             >
                 {actions.map((action, index) => (
-                    <Action
-                        key={index}
-                        {...action}
-                        className="mx-2 mb-3 lg:whitespace-nowrap"
-                        data-sb-field-path={`.${index}`}
-                    />
+                    <Action key={index} {...action} className="mx-2 mb-3 lg:whitespace-nowrap" data-sb-field-path={`.${index}`} />
                 ))}
             </div>
         </div>

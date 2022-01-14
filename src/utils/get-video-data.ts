@@ -56,12 +56,7 @@ function getVimeoId(vimeoStr: string) {
         return matches[1];
     }
 
-    const vimeoPipe = [
-        'https?://player.vimeo.com/video/[0-9]+$',
-        'https?://vimeo.com/channels',
-        'groups',
-        'album'
-    ].join('|');
+    const vimeoPipe = ['https?://player.vimeo.com/video/[0-9]+$', 'https?://vimeo.com/channels', 'groups', 'album'].join('|');
 
     const vimeoRegex = new RegExp(vimeoPipe, 'gim');
 

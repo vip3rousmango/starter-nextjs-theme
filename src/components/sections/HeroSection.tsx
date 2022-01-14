@@ -47,18 +47,11 @@ export const HeroSection: FC<Props> = (props) => {
             <div className={classNames('flex', 'w-full', mapStyles({ justifyContent: sectionJustifyContent }))}>
                 <div className={classNames('w-full', mapMaxWidthStyles(sectionWidth))}>
                     <div
-                        className={classNames(
-                            'flex',
-                            mapFlexDirectionStyles(sectionFlexDirection),
-                            mapStyles({ alignItems: sectionAlignItems }),
-                            'space-y-8',
-                            {
-                                'lg:space-y-0 lg:space-x-8': sectionFlexDirection === 'row',
-                                'space-y-reverse lg:space-y-0 lg:space-x-8 lg:space-x-reverse':
-                                    sectionFlexDirection === 'row-reverse',
-                                'space-y-reverse': sectionFlexDirection === 'col-reverse'
-                            }
-                        )}
+                        className={classNames('flex', mapFlexDirectionStyles(sectionFlexDirection), mapStyles({ alignItems: sectionAlignItems }), 'space-y-8', {
+                            'lg:space-y-0 lg:space-x-8': sectionFlexDirection === 'row',
+                            'space-y-reverse lg:space-y-0 lg:space-x-8 lg:space-x-reverse': sectionFlexDirection === 'row-reverse',
+                            'space-y-reverse': sectionFlexDirection === 'col-reverse'
+                        })}
                     >
                         <div className="flex-1 w-full">
                             <HeroBody {...props} />
@@ -93,14 +86,9 @@ const HeroBody: FC<types.HeroSection> = (props) => {
             )}
             {props.subtitle && (
                 <p
-                    className={classNames(
-                        'text-xl',
-                        'sm:text-2xl',
-                        styles.subtitle ? mapStyles(styles.subtitle) : null,
-                        {
-                            'mt-4': props.title
-                        }
-                    )}
+                    className={classNames('text-xl', 'sm:text-2xl', styles.subtitle ? mapStyles(styles.subtitle) : null, {
+                        'mt-4': props.title
+                    })}
                     data-sb-field-path=".subtitle"
                 >
                     {props.subtitle}
@@ -141,22 +129,11 @@ const HeroActions: FC<types.HeroSection> = (props) => {
             })}
         >
             <div
-                className={classNames(
-                    'flex',
-                    'flex-wrap',
-                    'items-center',
-                    '-mx-2',
-                    styles.actions ? mapStyles(styles.actions) : null
-                )}
+                className={classNames('flex', 'flex-wrap', 'items-center', '-mx-2', styles.actions ? mapStyles(styles.actions) : null)}
                 data-sb-field-path=".actions"
             >
                 {actions.map((action, index) => (
-                    <Action
-                        key={index}
-                        {...action}
-                        className="mx-2 mb-3 lg:whitespace-nowrap"
-                        data-sb-field-path={`.${index}`}
-                    />
+                    <Action key={index} {...action} className="mx-2 mb-3 lg:whitespace-nowrap" data-sb-field-path={`.${index}`} />
                 ))}
             </div>
         </div>

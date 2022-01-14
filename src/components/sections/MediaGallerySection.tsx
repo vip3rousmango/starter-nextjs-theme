@@ -67,14 +67,7 @@ export const MediaGallerySection: FC<Props> = (props) => {
             }}
         >
             <div className={classNames('flex', 'w-full', mapStyles({ justifyContent: sectionJustifyContent }))}>
-                <div
-                    className={classNames(
-                        'flex',
-                        'w-full',
-                        mapMaxWidthStyles(sectionWidth),
-                        mapStyles({ justifyContent: sectionJustifyContent })
-                    )}
-                >
+                <div className={classNames('flex', 'w-full', mapMaxWidthStyles(sectionWidth), mapStyles({ justifyContent: sectionJustifyContent }))}>
                     <div className="inline-block max-w-full">
                         <MediaGalleryHeader {...props} />
                         <MediaGalleryImageGrid {...props} />
@@ -100,14 +93,9 @@ function MediaGalleryHeader(props: Props) {
             )}
             {props.subtitle && (
                 <p
-                    className={classNames(
-                        'text-lg',
-                        'sm:text-xl',
-                        styles?.subtitle ? mapStyles(styles.subtitle) : null,
-                        {
-                            'mt-6': props.title
-                        }
-                    )}
+                    className={classNames('text-lg', 'sm:text-xl', styles?.subtitle ? mapStyles(styles.subtitle) : null, {
+                        'mt-6': props.title
+                    })}
                     data-sb-field-path=".subtitle"
                 >
                     {props.subtitle}
@@ -117,15 +105,7 @@ function MediaGalleryHeader(props: Props) {
     );
 }
 
-function MediaGalleryImage({
-    image,
-    enableHover,
-    aspectRatio
-}: {
-    image: types.ImageBlock;
-    enableHover: boolean;
-    aspectRatio: string;
-}) {
+function MediaGalleryImage({ image, enableHover, aspectRatio }: { image: types.ImageBlock; enableHover: boolean; aspectRatio: string }) {
     if (!image) {
         return null;
     }
@@ -181,9 +161,7 @@ function MediaGalleryImageGrid(props: Props) {
                 >
                     <MediaGalleryImage image={image} enableHover={props.enableHover} aspectRatio={aspectRatio} />
                     {props.showCaption && image.caption && (
-                        <div className="absolute bg-white bg-opacity-70 left-0 mx-2 bottom-2 p-1.5 text-xs pointer-events-none">
-                            {image.caption}
-                        </div>
+                        <div className="absolute bg-white bg-opacity-70 left-0 mx-2 bottom-2 p-1.5 text-xs pointer-events-none">{image.caption}</div>
                     )}
                 </div>
             ))}

@@ -80,14 +80,9 @@ const PostFeedHeader: FC<PostFeedSection> = (props) => {
             )}
             {props.subtitle && (
                 <p
-                    className={classNames(
-                        'text-lg',
-                        'sm:text-xl',
-                        styles.subtitle ? mapStyles(styles.subtitle) : null,
-                        {
-                            'mt-6': props.title
-                        }
-                    )}
+                    className={classNames('text-lg', 'sm:text-xl', styles.subtitle ? mapStyles(styles.subtitle) : null, {
+                        'mt-6': props.title
+                    })}
                     data-sb-field-path=".subtitle"
                 >
                     {props.subtitle}
@@ -106,22 +101,11 @@ const PostFeedActions: FC<Props> = (props) => {
     return (
         <div className="mt-12 overflow-x-hidden">
             <div
-                className={classNames(
-                    'flex',
-                    'flex-wrap',
-                    'items-center',
-                    '-mx-2',
-                    styles.actions ? mapStyles(styles.actions) : null
-                )}
+                className={classNames('flex', 'flex-wrap', 'items-center', '-mx-2', styles.actions ? mapStyles(styles.actions) : null)}
                 data-sb-field-path=".actions"
             >
                 {props.actions.map((action, index) => (
-                    <Action
-                        key={index}
-                        {...action}
-                        className="mx-2 mb-3 lg:whitespace-nowrap"
-                        data-sb-field-path={`.${index}`}
-                    />
+                    <Action key={index} {...action} className="mx-2 mb-3 lg:whitespace-nowrap" data-sb-field-path={`.${index}`} />
                 ))}
             </div>
         </div>
@@ -292,10 +276,7 @@ const PostsVariantC: FC<Props> = (props) => {
                                     )}
                                 </div>
                                 <div className="mt-3">
-                                    <Link
-                                        href={getPageUrlPath(post)}
-                                        className="sb-component sb-component-block sb-component-link"
-                                    >
+                                    <Link href={getPageUrlPath(post)} className="sb-component sb-component-block sb-component-link">
                                         <span>Read post</span>
                                         <ArrowRightIcon className="w-5 h-5 ml-3 fill-current" />
                                     </Link>
@@ -325,11 +306,7 @@ const PostDate: FC<{ post: types.PostLayout; className?: string }> = ({ post, cl
     );
 };
 
-const PostAttribution: FC<{ showAuthor: boolean; post: types.PostLayout; className?: string }> = ({
-    showAuthor,
-    post,
-    className = ''
-}) => {
+const PostAttribution: FC<{ showAuthor: boolean; post: types.PostLayout; className?: string }> = ({ showAuthor, post, className = '' }) => {
     const author = showAuthor ? PostAuthor(post) : null;
     const category = postCategory(post);
     if (!author && !category) {

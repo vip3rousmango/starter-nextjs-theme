@@ -75,39 +75,25 @@ export const DynamicComponent: FC<Props> = (props) => {
             const HeroSection = dynamic(() => namedComponent(import('./sections/HeroSection'), 'HeroSection'));
             return <HeroSection {...props} />;
         case 'FeatureHighlightSection':
-            const FeatureHighlightSection = dynamic(() =>
-                namedComponent(import('./sections/FeatureHighlightSection'), 'FeatureHighlightSection')
-            );
+            const FeatureHighlightSection = dynamic(() => namedComponent(import('./sections/FeatureHighlightSection'), 'FeatureHighlightSection'));
             return <FeatureHighlightSection {...props} />;
         case 'FeaturedItemsSection':
-            const FeaturedItemsSection = dynamic(() =>
-                namedComponent(import('./sections/FeaturedItemsSection'), 'FeaturedItemsSection')
-            );
+            const FeaturedItemsSection = dynamic(() => namedComponent(import('./sections/FeaturedItemsSection'), 'FeaturedItemsSection'));
             return <FeaturedItemsSection {...props} />;
         case 'FeaturedPostsSection':
-            const FeaturedPostsSection = dynamic(() =>
-                namedComponent(import('./sections/FeaturedPostsSection'), 'FeaturedPostsSection')
-            );
+            const FeaturedPostsSection = dynamic(() => namedComponent(import('./sections/FeaturedPostsSection'), 'FeaturedPostsSection'));
             return <FeaturedPostsSection {...props} />;
         case 'PagedPostsSection':
-            const PagedPostsSection = dynamic(() =>
-                namedComponent(import('./sections/PagedPostsSection'), 'PagedPostsSection')
-            );
+            const PagedPostsSection = dynamic(() => namedComponent(import('./sections/PagedPostsSection'), 'PagedPostsSection'));
             return <PagedPostsSection {...props} />;
         case 'FeaturedPeopleSection':
-            const FeaturedPeopleSection = dynamic(() =>
-                namedComponent(import('./sections/FeaturedPeopleSection'), 'FeaturedPeopleSection')
-            );
+            const FeaturedPeopleSection = dynamic(() => namedComponent(import('./sections/FeaturedPeopleSection'), 'FeaturedPeopleSection'));
             return <FeaturedPeopleSection {...props} />;
         case 'RecentPostsSection':
-            const RecentPostsSection = dynamic(() =>
-                namedComponent(import('./sections/RecentPostsSection'), 'RecentPostsSection')
-            );
+            const RecentPostsSection = dynamic(() => namedComponent(import('./sections/RecentPostsSection'), 'RecentPostsSection'));
             return <RecentPostsSection {...props} />;
         case 'MediaGallerySection':
-            const MediaGallerySection = dynamic(() =>
-                namedComponent(import('./sections/MediaGallerySection'), 'MediaGallerySection')
-            );
+            const MediaGallerySection = dynamic(() => namedComponent(import('./sections/MediaGallerySection'), 'MediaGallerySection'));
             return <MediaGallerySection {...props} />;
         case 'FaqSection':
             const FaqSection = dynamic(() => namedComponent(import('./sections/FaqSection'), 'FaqSection'));
@@ -116,9 +102,7 @@ export const DynamicComponent: FC<Props> = (props) => {
             const QuoteSection = dynamic(() => namedComponent(import('./sections/QuoteSection'), 'QuoteSection'));
             return <QuoteSection {...props} />;
         case 'TestimonialsSection':
-            const TestimonialsSection = dynamic(() =>
-                namedComponent(import('./sections/TestimonialsSection'), 'TestimonialsSection')
-            );
+            const TestimonialsSection = dynamic(() => namedComponent(import('./sections/TestimonialsSection'), 'TestimonialsSection'));
             return <TestimonialsSection {...props} />;
         case 'CtaSection':
             const CtaSection = dynamic(() => namedComponent(import('./sections/CtaSection'), 'CtaSection'));
@@ -131,29 +115,19 @@ export const DynamicComponent: FC<Props> = (props) => {
             return <JobsSection {...props} />;
         // form control
         case 'EmailFormControl':
-            const EmailFormControl = dynamic(() =>
-                namedComponent(import('./blocks/FormBlock/EmailFormControl'), 'EmailFormControl')
-            );
+            const EmailFormControl = dynamic(() => namedComponent(import('./blocks/FormBlock/EmailFormControl'), 'EmailFormControl'));
             return <EmailFormControl {...props} />;
         case 'CheckboxFormControl':
-            const CheckboxFormControl = dynamic(() =>
-                namedComponent(import('./blocks/FormBlock/CheckboxFormControl'), 'CheckboxFormControl')
-            );
+            const CheckboxFormControl = dynamic(() => namedComponent(import('./blocks/FormBlock/CheckboxFormControl'), 'CheckboxFormControl'));
             return <CheckboxFormControl {...props} />;
         case 'SelectFormControl':
-            const SelectFormControl = dynamic(() =>
-                namedComponent(import('./blocks/FormBlock/SelectFormControl'), 'SelectFormControl')
-            );
+            const SelectFormControl = dynamic(() => namedComponent(import('./blocks/FormBlock/SelectFormControl'), 'SelectFormControl'));
             return <SelectFormControl {...props} />;
         case 'TextFormControl':
-            const TextFormControl = dynamic(() =>
-                namedComponent(import('./blocks/FormBlock/TextFormControl'), 'TextFormControl')
-            );
+            const TextFormControl = dynamic(() => namedComponent(import('./blocks/FormBlock/TextFormControl'), 'TextFormControl'));
             return <TextFormControl {...props} />;
         case 'TextareaFormControl':
-            const TextareaFormControl = dynamic(() =>
-                namedComponent(import('./blocks/FormBlock/TextareaFormControl'), 'TextareaFormControl')
-            );
+            const TextareaFormControl = dynamic(() => namedComponent(import('./blocks/FormBlock/TextareaFormControl'), 'TextareaFormControl'));
             return <TextareaFormControl {...props} />;
         default:
             throw new Error(`No component found for ${JSON.stringify(props, null, 2)}`);
