@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import Markdown from 'markdown-to-jsx';
 import classNames from 'classnames';
 
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
@@ -9,6 +8,7 @@ import { Badge } from '../atoms/Badge';
 import type * as types from '.contentlayer/types';
 import { FC } from 'react';
 import { DynamicComponent } from '../DynamicComponent';
+import { Markdown } from '../Markdown';
 
 export type Props = types.FeatureHighlightSection;
 
@@ -126,22 +126,13 @@ const FeatureHighlightBody: FC<types.FeatureHighlightSection> = (props) => {
                 </p>
             )}
             {props.text && (
-                <div
+                <Markdown
+                    text={props.text}
                     className={classNames('sb-markdown', 'sm:text-lg', styles.text ? mapStyles(styles.text) : null, {
                         'mt-6': props.title || props.subtitle
                     })}
-                    data-sb-field-path=".text"
-                    dangerouslySetInnerHTML={{ __html: props.text.html }}
+                    fieldName="text"
                 />
-                // <Markdown
-                //   options={{ forceBlock: true, forceWrapper: true }}
-                //   className={classNames('sb-markdown', 'sm:text-lg', styles.text ? mapStyles(styles.text) : null, {
-                //     'mt-6': props.title || props.subtitle
-                //   })}
-                //   data-sb-field-path=".text"
-                // >
-                //   {props.text}
-                // </Markdown>
             )}
         </>
     );

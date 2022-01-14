@@ -1,11 +1,11 @@
 import * as React from 'react';
-// import Markdown from 'markdown-to-jsx';
 import classNames from 'classnames';
 
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
 import { getDataAttrs } from '../../utils/get-data-attrs';
 import { FC } from 'react';
 import type * as types from '.contentlayer/types';
+import { Markdown } from '../Markdown';
 
 export type Props = types.QuoteSection;
 
@@ -71,23 +71,11 @@ const QuoteContent: FC<Props> = (props) => {
     return (
         <blockquote>
             {props.quote && (
-                <div
-                    dangerouslySetInnerHTML={{ __html: props.quote.html }}
+                <Markdown
+                    text={props.quote}
                     className={classNames('sb-markdown', 'text-3xl', 'sm:text-4xl', styles.quote ? mapStyles(styles.quote) : null)}
-                    data-sb-field-path=".quote"
+                    fieldName="quote"
                 />
-                // <Markdown
-                //   options={{ forceBlock: true, forceWrapper: true }}
-                //   className={classNames(
-                //     'sb-markdown',
-                //     'text-3xl',
-                //     'sm:text-4xl',
-                //     styles.quote ? mapStyles(styles.quote) : null
-                //   )}
-                //   data-sb-field-path=".quote"
-                // >
-                //   {props.quote}
-                // </Markdown>
             )}
             {(props.name || props.title) && (
                 <footer>
