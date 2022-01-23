@@ -1,7 +1,6 @@
 import { resolveProps as resolvePropsForFeaturedPostsSection } from './FeaturedPostsSection';
 import { resolveProps as resolvePropsForRecentPostsSection } from './RecentPostsSection';
 import { resolveProps as resolvePropsForFeaturedPeopleSection } from './FeaturedPeopleSection';
-import { resolveProps as resolvePropsForPagedPostsSection } from './PagedPostsSection';
 import * as types from '.contentlayer/types';
 
 type Section =
@@ -13,7 +12,6 @@ type Section =
     | types.ContactSection
     | types.FeaturedPostsSection
     | types.RecentPostsSection
-    | types.PagedPostsSection
     | types.MediaGallerySection
     | types.TestimonialsSection
     | types.FeaturedItemsSection
@@ -29,8 +27,6 @@ export const mapSections = (sections: Section[], allDocuments: types.DocumentTyp
                 return resolvePropsForRecentPostsSection(section, allDocuments);
             case 'FeaturedPeopleSection':
                 return resolvePropsForFeaturedPeopleSection(section, allDocuments);
-            case 'PagedPostsSection':
-                return resolvePropsForPagedPostsSection(section);
             default:
                 return section;
         }

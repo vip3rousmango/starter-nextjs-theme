@@ -2,6 +2,7 @@
 title: Smart Strategies for Growing Your Business
 date: '2021-10-26'
 author: content/data/team/hugh-saturation.json
+category: content/data/categories/react.json
 excerpt: Sed alias dicta et ducimus aperiam ab fugit nostrum. In temporibus odio ut eius dolor ut voluptates voluptatibus qui doloremque eveniet quo eveniet optio eius illum et itaque deleniti.
 featuredImage:
   type: ImageBlock

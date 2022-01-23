@@ -4,11 +4,11 @@ import * as types from '.contentlayer/types';
 import dayjs from 'dayjs';
 
 import { getBaseLayoutComponent } from '../../utils/base-layout';
-import { getPageUrlPath } from '../../utils/get-page-url-path';
 import { Link } from '../atoms/Link';
 import { DynamicComponent } from '../DynamicComponent';
 import { mapSections } from '../sections/mapSection';
 import { Markdown } from '../Markdown';
+import { resolveBlogPostLayout } from '../../utils/data-helpers';
 
 export type Props = ReturnType<typeof resolveProps>;
 
@@ -50,12 +50,14 @@ export const PostLayout: FC<Props> = ({ page, site }) => {
 
 export const resolveProps = (post: types.PostLayout, allDocuments: types.DocumentTypes[]) => {
     const config = allDocuments.filter(types.isType('Config'))[0]!;
-    const bottomSections = mapSections(post.bottomSections ?? [], allDocuments);
-
     return {
         type: 'PostLayout' as const,
         site: { ...config, baseLayout: null },
-        page: { ...post, bottomSections, baseLayout: null }
+        page: {
+            ...resolveBlogPostLayout(post, allDocuments),
+            bottomSections: mapSections(post.bottomSections ?? [], allDocuments),
+            baseLayout: null
+        }
     };
 };
 
@@ -63,7 +65,6 @@ const PostAttribution: FC<{ post: Props['page'] }> = ({ post }) => {
     if (!post.author && !post.category) {
         return null;
     }
-    const category = post.category ? PostCategory(post.category) : null;
     return (
         <div className="mt-6 text-lg">
             {post.author && (
@@ -72,10 +73,10 @@ const PostAttribution: FC<{ post: Props['page'] }> = ({ post }) => {
                     <PostAuthor author={post.author} />
                 </>
             )}
-            {category && (
+            {post.category && (
                 <>
                     {post.author ? ' in ' : 'In '}
-                    {category}
+                    <PostCategory category={post.category} />
                 </>
             )}
         </div>
@@ -99,9 +100,9 @@ const PostAuthor: FC<{ author: types.Person }> = ({ author }) => {
     );
 };
 
-const PostCategory: FC<{ title: string }> = (category) => {
+const PostCategory: FC<{ category: types.BlogCategory }> = ({ category }) => {
     return (
-        <Link data-sb-field-path="category" href={getPageUrlPath(category)}>
+        <Link data-sb-field-path="category" href={`/blog/category/${category.slug}`}>
             {category.title}
         </Link>
     );

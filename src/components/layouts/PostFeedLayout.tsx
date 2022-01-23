@@ -8,14 +8,14 @@ import { getBaseLayoutComponent } from '../../utils/base-layout';
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
 import { PostFeedSection } from '../sections/PostFeedSection';
 import { DynamicComponent } from '../DynamicComponent';
-import { sortPostsByDateDesc } from '../../utils/data-helpers';
 import { mapSections } from '../sections/mapSection';
+import { resolveBlogPostLayout } from '../../utils/data-helpers';
 
 export type Props = ReturnType<typeof resolveProps>;
 
-export const PostFeedLayout: FC<Props> = ({ page, site, posts }) => {
+export const PostFeedLayout: FC<Props> = ({ page, site }) => {
     const BaseLayout = getBaseLayoutComponent(page.baseLayout!, site.baseLayout!);
-    const { title, topSections, bottomSections, pageIndex, baseUrlPath, numOfPages, postFeed } = page;
+    const { title, topSections, bottomSections, pageIndex, baseUrlPath, numOfPages, postFeed, items } = page;
     const postFeedColors = postFeed?.colors ?? 'colors-a';
     const postFeedWidth = postFeed?.styles?.self?.width ?? 'wide';
     const postFeedJustifyContent = postFeed?.styles?.self?.justifyContent ?? 'center';
@@ -41,7 +41,7 @@ export const PostFeedLayout: FC<Props> = ({ page, site, posts }) => {
                         ))}
                     </div>
                 )}
-                <PostFeedSection {...postFeed} posts={posts} pageLinks={pageLinks} data-sb-field-path="postFeed" />
+                <PostFeedSection {...postFeed} posts={items} pageLinks={pageLinks} data-sb-field-path="postFeed" />
                 {bottomSections && bottomSections.length > 0 && (
                     <div data-sb-field-path="bottomSections">
                         {bottomSections.map((section, index) => (
@@ -54,45 +54,25 @@ export const PostFeedLayout: FC<Props> = ({ page, site, posts }) => {
     );
 };
 
-const POSTS_PER_PAGE = 10;
-const baseUrlPath = '/blog';
+export type PartialPostFeedLayout = Partial<Omit<types.PostFeedLayout, 'postFeed'> & { postFeed: Partial<types.PagedPostsSection> }>
 
-export const resolveProps = (slug: string, allDocuments: types.DocumentTypes[]) => {
-    const { filterByAuthorSlug, pageIndex } = pageInfoFromSlug(slug);
-    const allPostLayouts = allDocuments.filter(types.isType('PostLayout'));
-    const { bottomSections, topSections, ...postFeedLayout } = allDocuments.filter(types.isType('PostFeedLayout'))[0]!;
-    const config = allDocuments.filter(types.isType('Config'))[0]!;
-
-    const filteredPosts = filterByAuthorSlug === null ? allPostLayouts : allPostLayouts.filter(({ author }) => author?.slug === filterByAuthorSlug);
-    const numOfPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
-
-    const posts = filteredPosts.slice(pageIndex * POSTS_PER_PAGE, (pageIndex + 1) * POSTS_PER_PAGE).sort(sortPostsByDateDesc);
+export const resolveProps = (postFeedLayout: PartialPostFeedLayout & types.Pagination<types.PostLayout>, allDocuments: types.DocumentTypes[]) => {
+    const config = allDocuments.find(types.isType('Config'))!;
+    const items = postFeedLayout.items.map(((post) => {
+        return resolveBlogPostLayout(post, allDocuments);
+    }));
 
     return {
         type: 'PostFeedLayout' as const,
         site: { ...config, baseLayout: null },
         page: {
             ...postFeedLayout,
-            bottomSections: mapSections(bottomSections ?? [], allDocuments),
-            topSections: mapSections(topSections ?? [], allDocuments),
-            numOfPages,
-            baseUrlPath,
-            pageIndex,
+            items,
+            topSections: mapSections(postFeedLayout.topSections ?? [], allDocuments),
+            bottomSections: mapSections(postFeedLayout.bottomSections ?? [], allDocuments),
             baseLayout: null
-        },
-        posts
+        }
     };
-};
-
-const pageInfoFromSlug = (slug: string) => {
-    // https://regex101.com/r/bzQKL1/1
-    const regex = /(author\/(?<authorName>[a-zA-Z-_]+)\/?)?(page\/(?<pageIndex>\d+))?/;
-    const match = slug.match(regex);
-
-    const pageIndex = match?.groups?.pageIndex ? parseInt(match.groups.pageIndex) - 1 : 0;
-    const filterByAuthorSlug = match?.groups?.authorName ?? null;
-
-    return { pageIndex, filterByAuthorSlug };
 };
 
 const PageLinks: FC<{ pageIndex: number; baseUrlPath: string; numOfPages: number }> = ({ pageIndex, baseUrlPath, numOfPages }) => {

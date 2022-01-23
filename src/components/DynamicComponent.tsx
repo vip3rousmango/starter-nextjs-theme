@@ -9,7 +9,6 @@ import type { Props as HeroSectionProps } from './sections/HeroSection';
 import type { Props as FeatureHighlightSectionProps } from './sections/FeatureHighlightSection';
 import type { Props as FeaturedItemsSectionProps } from './sections/FeaturedItemsSection';
 import type { Props as FeaturedPostsSectionProps } from './sections/FeaturedPostsSection';
-import type { Props as PagedPostsSectionProps } from './sections/PagedPostsSection';
 import type { Props as FeaturedPeopleSectionProps } from './sections/FeaturedPeopleSection';
 import type { Props as RecentPostsSectionProps } from './sections/RecentPostsSection';
 import type { Props as MediaGallerySectionProps } from './sections/MediaGallerySection';
@@ -35,7 +34,6 @@ export type Props =
     | FeatureHighlightSectionProps
     | FeaturedItemsSectionProps
     | FeaturedPostsSectionProps
-    | PagedPostsSectionProps
     | FeaturedPeopleSectionProps
     | RecentPostsSectionProps
     | MediaGallerySectionProps
@@ -83,9 +81,6 @@ export const DynamicComponent: FC<Props> = (props) => {
         case 'FeaturedPostsSection':
             const FeaturedPostsSection = dynamic(() => namedComponent(import('./sections/FeaturedPostsSection'), 'FeaturedPostsSection'));
             return <FeaturedPostsSection {...props} />;
-        case 'PagedPostsSection':
-            const PagedPostsSection = dynamic(() => namedComponent(import('./sections/PagedPostsSection'), 'PagedPostsSection'));
-            return <PagedPostsSection {...props} />;
         case 'FeaturedPeopleSection':
             const FeaturedPeopleSection = dynamic(() => namedComponent(import('./sections/FeaturedPeopleSection'), 'FeaturedPeopleSection'));
             return <FeaturedPeopleSection {...props} />;

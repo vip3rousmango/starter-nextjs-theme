@@ -6,7 +6,7 @@ import { Header } from '../sections/Header';
 import { Footer } from '../sections/Footer';
 import type * as types from '.contentlayer/types';
 import { FC } from 'react';
-import { objectIdDataAttr, contentDirPath } from '../../utils/stackbit';
+import { objectIdDataAttr } from '../../utils/stackbit';
 
 export type Props = {
     site: types.Config;

@@ -22,6 +22,7 @@ export type DocumentTypeMap = {
     Config: Config;
     PageLayout: PageLayout;
     Person: Person;
+    BlogCategory: BlogCategory;
     PostFeedLayout: PostFeedLayout;
     PostLayout: PostLayout;
 };
@@ -67,8 +68,8 @@ export type NestedTypeMap = {
 export type AllTypes = DocumentTypes | NestedTypes;
 export type AllTypeNames = DocumentTypeNames | NestedTypeNames;
 
-export type DocumentTypes = Config | PageLayout | Person | PostFeedLayout | PostLayout;
-export type DocumentTypeNames = 'Config' | 'PageLayout' | 'Person' | 'PostFeedLayout' | 'PostLayout';
+export type DocumentTypes = Config | PageLayout | Person | BlogCategory | PostFeedLayout | PostLayout;
+export type DocumentTypeNames = 'Config' | 'PageLayout' | 'Person' | 'BlogCategory' | 'PostFeedLayout' | 'PostLayout';
 
 export type NestedTypes =
     | Badge
@@ -143,6 +144,14 @@ export type NestedTypeNames =
     | 'TextFormControl'
     | 'VideoBlock';
 
+export type Pagination<T> = {
+    pageIndex: number;
+    baseUrlPath: string;
+    numOfPages: number;
+    numOfTotalItems: number;
+    items: T[]
+}
+
 /** Document types */
 export type Config = {
     /** File path relative to `contentDirPath` */
@@ -191,6 +200,13 @@ export type Person = {
     body: string;
     slug: string;
 };
+
+export type BlogCategory = {
+    __metadata: Metadata;
+    type: 'BlogCategory';
+    title: string;
+    slug: string;
+}
 
 export type PostFeedLayout = {
     /** File path relative to `contentDirPath` */
@@ -245,8 +261,8 @@ export type PostLayout = {
     type: 'PostLayout';
     title: string;
     date: string;
-    author: Person | undefined;
-    category: any | undefined;
+    author: string | undefined;
+    category: string | undefined;
     excerpt: string;
     featuredImage: ImageBlock;
     bottomSections:
@@ -270,6 +286,11 @@ export type PostLayout = {
     markdown_content: string;
     slug: string;
 };
+
+export type PostLayoutResolved = Omit<PostLayout, 'author' | 'category'> & {
+    author?: Person
+    category?: BlogCategory
+}
 
 /** Nested types */
 export type Badge = {

@@ -8,19 +8,25 @@ import { Link } from '../atoms/Link';
 import { Action } from '../atoms/Action';
 import { ImageBlock } from '../blocks/ImageBlock';
 import ArrowRightIcon from '../svgs/arrow-right';
-import { getPageUrlPath } from '../../utils/get-page-url-path';
 import type * as types from '.contentlayer/types';
 import { FC } from 'react';
-import type { Props as FeaturedPostsSectionProps } from './FeaturedPostsSection';
-import type { Props as PagedPostsSectionProps } from './PagedPostsSection';
 import { objectIdDataAttr } from '../../utils/stackbit';
+import { BlogCategory, Styles } from '.contentlayer/types';
 
-type PostFeedSection = types.RecentPostsSection | FeaturedPostsSectionProps | PagedPostsSectionProps;
-export type Props = PostFeedSection & {
-    posts: types.PostLayout[];
-    elementId?: string; // TODO REMOVE
+export type Props = {
+    title?: string;
+    subtitle?: string;
+    elementId?: string;
+    colors?: string;
+    variant?: 'variant-a' | 'variant-b' | 'variant-c';
+    styles?: Styles;
     pageLinks?: React.ReactNode;
+    posts?: types.PostLayoutResolved[];
     annotatePosts?: boolean;
+    showDate?: boolean;
+    showExcerpt?: boolean;
+    showAuthor?: boolean;
+    actions?: (types.Button | types.Link)[];
 };
 
 export const PostFeedSection: FC<Props> = (props) => {
@@ -66,7 +72,7 @@ export const PostFeedSection: FC<Props> = (props) => {
     );
 };
 
-const PostFeedHeader: FC<PostFeedSection> = (props) => {
+const PostFeedHeader: FC<Props> = (props) => {
     if (!props.title && !props.subtitle) {
         return null;
     }
@@ -104,7 +110,7 @@ const PostFeedActions: FC<Props> = (props) => {
                 className={classNames('flex', 'flex-wrap', 'items-center', '-mx-2', styles.actions ? mapStyles(styles.actions) : null)}
                 data-sb-field-path=".actions"
             >
-                {props.actions.map((action, index) => (
+                {props.actions?.map((action, index) => (
                     <Action key={index} {...action} className="mx-2 mb-3 lg:whitespace-nowrap" data-sb-field-path={`.${index}`} />
                 ))}
             </div>
@@ -143,7 +149,7 @@ const PostsVariantA: FC<Props> = (props) => {
                 <article key={index} {...objectIdDataAttr(post.__metadata)}>
                     {post.featuredImage && (
                         <Link
-                            href={getPageUrlPath(post)}
+                            href={post.__metadata.urlPath}
                             className="relative block w-full h-0 mb-6 overflow-hidden rounded-2xl pt-1/1 lg:mb-10"
                             data-sb-field-path="featuredImage"
                         >
@@ -155,7 +161,7 @@ const PostsVariantA: FC<Props> = (props) => {
                     )}
                     <div>
                         <h3 className="text-2xl">
-                            <Link href={getPageUrlPath(post)} data-sb-field-path="title">
+                            <Link href={post.__metadata.urlPath} data-sb-field-path="title">
                                 {post.title}
                             </Link>
                         </h3>
@@ -198,7 +204,7 @@ const PostsVariantB: FC<Props> = (props) => {
                 >
                     {post.featuredImage && (
                         <Link
-                            href={getPageUrlPath(post)}
+                            href={post.__metadata.urlPath}
                             className="relative block w-full h-0 mb-6 overflow-hidden rounded-2xl pt-9/16 md:pt-0 md:h-64 lg:h-96 lg:mb-10"
                             data-sb-field-path="featuredImage"
                         >
@@ -210,7 +216,7 @@ const PostsVariantB: FC<Props> = (props) => {
                     )}
                     <div>
                         <h3 className="text-2xl">
-                            <Link href={getPageUrlPath(post)} data-sb-field-path="title">
+                            <Link href={post.__metadata.urlPath} data-sb-field-path="title">
                                 {post.title}
                             </Link>
                         </h3>
@@ -250,7 +256,7 @@ const PostsVariantC: FC<Props> = (props) => {
                         <div className="flex flex-col min-h-full">
                             {post.featuredImage && (
                                 <Link
-                                    href={getPageUrlPath(post)}
+                                    href={post.__metadata.urlPath}
                                     className="relative block w-full h-0 overflow-hidden pt-9/16"
                                     data-sb-field-path="featuredImage"
                                 >
@@ -264,7 +270,7 @@ const PostsVariantC: FC<Props> = (props) => {
                                 <div className="flex-grow">
                                     {props.showDate && <PostDate post={post} className="mb-2" />}
                                     <h3 className="text-2xl">
-                                        <Link href={getPageUrlPath(post)} data-sb-field-path="title">
+                                        <Link href={post.__metadata.urlPath} data-sb-field-path="title">
                                             {post.title}
                                         </Link>
                                     </h3>
@@ -276,7 +282,7 @@ const PostsVariantC: FC<Props> = (props) => {
                                     )}
                                 </div>
                                 <div className="mt-3">
-                                    <Link href={getPageUrlPath(post)} className="sb-component sb-component-block sb-component-link">
+                                    <Link href={post.__metadata.urlPath} className="sb-component sb-component-block sb-component-link">
                                         <span>Read post</span>
                                         <ArrowRightIcon className="w-5 h-5 ml-3 fill-current" />
                                     </Link>
@@ -290,7 +296,7 @@ const PostsVariantC: FC<Props> = (props) => {
     );
 };
 
-const PostDate: FC<{ post: types.PostLayout; className?: string }> = ({ post, className = '' }) => {
+const PostDate: FC<{ post: types.PostLayoutResolved; className?: string }> = ({ post, className = '' }) => {
     if (!post.date) {
         return null;
     }
@@ -306,35 +312,32 @@ const PostDate: FC<{ post: types.PostLayout; className?: string }> = ({ post, cl
     );
 };
 
-const PostAttribution: FC<{ showAuthor: boolean; post: types.PostLayout; className?: string }> = ({ showAuthor, post, className = '' }) => {
-    const author = showAuthor ? PostAuthor(post) : null;
-    const category = postCategory(post);
-    if (!author && !category) {
+const PostAttribution: FC<{ showAuthor?: boolean; post: types.PostLayoutResolved; className?: string }> = ({ showAuthor, post, className = '' }) => {
+    if (!post.author && !post.category) {
         return null;
     }
     return (
         <div className={className}>
-            {author && (
+            {showAuthor && post.author && (
                 <>
                     {'By '}
-                    {author}
+                    <PostAuthor author={post.author} />
                 </>
             )}
-            {category && (
+            {post.category && (
                 <>
-                    {author ? ' in ' : 'In '}
-                    {category}
+                    {post.author ? ' in ' : 'In '}
+                    <PostCategory category={post.category} />
                 </>
             )}
         </div>
     );
 };
 
-const PostAuthor: FC<types.PostLayout> = (post) => {
-    if (!post.author) {
+const PostAuthor: FC<{ author: types.Person }> = ({ author }) => {
+    if (!author) {
         return null;
     }
-    const author = post.author;
     const children = (
         <>
             {author.firstName && <span data-sb-field-path=".firstName">{author.firstName}</span>}{' '}
@@ -352,13 +355,12 @@ const PostAuthor: FC<types.PostLayout> = (post) => {
     }
 };
 
-const postCategory: FC<types.PostLayout> = (post) => {
-    if (!post.category) {
+const PostCategory: FC<{ category: BlogCategory }> = ({ category }) => {
+    if (!category) {
         return null;
     }
-    const category = post.category;
     return (
-        <Link data-sb-field-path="category" href={getPageUrlPath(category)}>
+        <Link data-sb-field-path="category" href={`/blog/category/${category.slug}`}>
             {category.title}
         </Link>
     );
