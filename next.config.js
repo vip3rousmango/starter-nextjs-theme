@@ -24,17 +24,13 @@ module.exports = withBundleAnalyzer({
                     {
                         key: 'X-Content-Type-Options',
                         value: 'nosniff'
-                    },
-                    // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/upgrade-insecure-requests
-                    {
-                        key: 'Content-Security-Policy',
-                        value: 'upgrade-insecure-requests'
                     }
                 ]
             }
         ];
     },
     images: {
+        path: '/_next/image/',
         // Allow use assets from assets.stackbit.com
         domains: ['assets.stackbit.com']
     },
