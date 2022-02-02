@@ -30,9 +30,9 @@ module.exports = withBundleAnalyzer({
         ];
     },
     images: {
-        path: '/_next/image/',
         // Allow use assets from assets.stackbit.com
-        domains: ['assets.stackbit.com']
+        domains: ['assets.stackbit.com'],
+        path: '/_next/image/'
     },
     webpack: (config, { webpack, dev }) => {
         // Tell webpack to ignore watching content files in the content folder.
