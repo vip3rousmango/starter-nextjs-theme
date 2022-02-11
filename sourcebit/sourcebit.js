@@ -1,5 +1,5 @@
 const path = require('path');
-const { flattenMarkdownData, cssClassesFromFilePath, cssClassesFromUrlPath, urlPathFromFilePath } = require('./sourcebit-utils');
+const { flattenMarkdownData, cssClassesFromFilePath, cssClassesFromUrlPath, urlPathFromFilePath, setEnvironmentVariables } = require('./sourcebit-utils');
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -44,6 +44,7 @@ module.exports = {
                 flattenAssetUrls: true,
                 commonProps: (objects) => {
                     const site = objects.find((page) => page.__metadata.id === 'content/data/config.json');
+                    site.env = setEnvironmentVariables();
                     return { site };
                 },
                 pages: (objects) => {

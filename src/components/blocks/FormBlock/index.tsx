@@ -89,11 +89,11 @@ export class FormBlock extends React.Component<Props, State> {
                 data-netlify-honeypot={formHoneypotName}
                 data-sb-field-path={annotation}
             >
-                <div className={classNames('w-full', 'flex', 'flex-col', { 'sm:flex-row': variant === 'variant-b' })}>
+                <div className={classNames('w-full', 'flex', 'flex-col', { 'sm:flex-row sm:items-end': variant === 'variant-b' })}>
                     <div
                         className={classNames('grid', 'gap-y-4', 'sm:grid-cols-2', 'sm:gap-x-4', {
                             'sm:flex-grow': variant === 'variant-b'
-                        })}
+                        }, 'text-left')}
                         data-sb-field-path=".fields"
                     >
                         <input type="hidden" name="form-name" value={elementId} />
