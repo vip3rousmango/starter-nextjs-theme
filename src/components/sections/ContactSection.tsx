@@ -1,18 +1,16 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
+import type * as types from 'types';
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
-import { getDataAttrs } from '../../utils/get-data-attrs';
 import { FormBlock } from '../blocks/FormBlock';
-import { FC } from 'react';
-import type * as types from '.contentlayer/types';
 import { DynamicComponent } from '../DynamicComponent';
 import { Markdown } from '../Markdown';
+import { toFieldPath, pickDataAttrs } from '../../utils/annotations';
 
 export type Props = types.ContactSection;
 
-export const ContactSection: FC<Props> = (props) => {
-    const cssId = props.elementId ?? null;
+export const ContactSection: React.FC<Props> = (props) => {
     const colors = props.colors ?? 'colors-a';
     const bgSize = props.backgroundSize ?? 'full';
     const sectionStyles = props.styles?.self ?? {};
@@ -23,8 +21,8 @@ export const ContactSection: FC<Props> = (props) => {
     const sectionAlignItems = sectionStyles.alignItems ?? 'center';
     return (
         <div
-            id={cssId}
-            {...getDataAttrs(props)}
+            id={props.elementId}
+            {...pickDataAttrs(props)}
             className={classNames(
                 'sb-component',
                 'sb-component-section',
@@ -82,13 +80,13 @@ export const ContactSection: FC<Props> = (props) => {
                                             'mt-12': props.title || props.text
                                         })}
                                     >
-                                        <FormBlock {...props.form} className="inline-block w-full max-w-screen-sm" data-sb-field-path=".form" />
+                                        <FormBlock {...props.form} className="inline-block w-full max-w-screen-sm" {...toFieldPath('.form')} />
                                     </div>
                                 )}
                             </div>
                             {props.media && (
                                 <div className="flex-1 w-full">
-                                    <DynamicComponent {...props.media} data-sb-field-path=".media" />
+                                    <DynamicComponent {...props.media} {...toFieldPath('.media')} />
                                 </div>
                             )}
                         </div>
@@ -99,12 +97,12 @@ export const ContactSection: FC<Props> = (props) => {
     );
 };
 
-const ContactBody: FC<Props> = (props) => {
+const ContactBody: React.FC<Props> = (props) => {
     const styles = props.styles ?? {};
     return (
         <>
             {props.title && (
-                <h2 className={classNames(styles.title ? mapStyles(styles.title) : null)} data-sb-field-path=".title">
+                <h2 className={classNames(styles.title ? mapStyles(styles.title) : null)} {...toFieldPath('.title')}>
                     {props.title}
                 </h2>
             )}

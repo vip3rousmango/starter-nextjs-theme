@@ -1,29 +1,27 @@
 import * as React from 'react';
 import classNames from 'classnames';
+import type * as types from 'types';
+
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
-import { FC } from 'react';
-import type * as types from '.contentlayer/types';
-import { StackbitFieldPath } from '../../utils/stackbit';
+import { toFieldPath, getFieldPath, StackbitFieldPath } from '../../utils/annotations';
 
-export type Props = types.Badge & { className?: string } & StackbitFieldPath;
+export type Props = types.Badge & StackbitFieldPath & { className?: string };
 
-export const Badge: FC<Props> = (props) => {
+export const Badge: React.FC<Props> = (props) => {
     const { label } = props;
     if (!label) {
         return null;
     }
-    const cssClasses = props.className ?? null;
-    const cssId = props.elementId ?? null;
-    const annotationPrefix = props['data-sb-field-path'] ?? '';
-    const annotations = [`${annotationPrefix}`, `${annotationPrefix}.elementId#@id`];
+    const annotationPrefix = getFieldPath(props);
+    const annotations = annotationPrefix ? [`${annotationPrefix}`, `${annotationPrefix}.elementId#@id`] : [];
     const styles = props.styles?.self ?? {};
     return (
         <div
-            id={cssId}
-            className={classNames('sb-component', 'sb-component-block', 'sb-component-badge', cssClasses, styles ? mapStyles(styles) : null)}
-            data-sb-field-path={annotations.join(' ').trim()}
+            id={props.elementId}
+            className={classNames('sb-component', 'sb-component-block', 'sb-component-badge', props.className, styles ? mapStyles(styles) : null)}
+            {...toFieldPath(...annotations)}
         >
-            <span data-sb-field-path=".label">{label}</span>
+            <span {...toFieldPath('.label')}>{label}</span>
         </div>
     );
 };

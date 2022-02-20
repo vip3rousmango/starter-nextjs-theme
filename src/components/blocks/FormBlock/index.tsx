@@ -1,11 +1,11 @@
 import * as React from 'react';
 import axios from 'axios';
 import classNames from 'classnames';
-import type * as types from '.contentlayer/types';
+import type * as types from 'types';
 
 import { mapStylesToClassNames as mapStyles } from '../../../utils/map-styles-to-class-names';
 import { DynamicComponent } from '../../DynamicComponent';
-import { StackbitFieldPath } from '../../../utils/stackbit';
+import { toFieldPath, StackbitFieldPath } from '../../../utils/annotations';
 
 export type Props = types.FormBlock & { className?: string } & StackbitFieldPath;
 type State = any;
@@ -87,19 +87,26 @@ export class FormBlock extends React.Component<Props, State> {
                 data-netlify="true"
                 ref={this.formRef}
                 data-netlify-honeypot={formHoneypotName}
-                data-sb-field-path={annotation}
+                {...toFieldPath(annotation)}
             >
                 <div className={classNames('w-full', 'flex', 'flex-col', { 'sm:flex-row sm:items-end': variant === 'variant-b' })}>
                     <div
-                        className={classNames('grid', 'gap-y-4', 'sm:grid-cols-2', 'sm:gap-x-4', {
-                            'sm:flex-grow': variant === 'variant-b'
-                        }, 'text-left')}
-                        data-sb-field-path=".fields"
+                        className={classNames(
+                            'grid',
+                            'gap-y-4',
+                            'sm:grid-cols-2',
+                            'sm:gap-x-4',
+                            {
+                                'sm:flex-grow': variant === 'variant-b'
+                            },
+                            'text-left'
+                        )}
+                        {...toFieldPath('.fields')}
                     >
                         <input type="hidden" name="form-name" value={elementId} />
                         <input type="hidden" name="form-destination" value={destination} />
                         {fields.map((field, index) => {
-                            return <DynamicComponent key={index} {...field} data-sb-field-path={`.${index}`} />;
+                            return <DynamicComponent key={index} {...field} {...toFieldPath(`.${index}`)} />;
                         })}
                     </div>
                     <div
@@ -111,7 +118,7 @@ export class FormBlock extends React.Component<Props, State> {
                         <button
                             type="submit"
                             className="sb-component sb-component-block sb-component-button sb-component-button-primary"
-                            data-sb-field-path=".submitLabel"
+                            {...toFieldPath('.submitLabel')}
                         >
                             {submitLabel}
                         </button>

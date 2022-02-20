@@ -1,18 +1,17 @@
 import * as React from 'react';
-import { FC } from 'react';
-import * as types from '.contentlayer/types';
 import classNames from 'classnames';
 
+import type * as types from 'types';
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
-import { getDataAttrs } from '../../utils/get-data-attrs';
 import { Action } from '../atoms/Action';
 import { ImageBlock } from '../blocks/ImageBlock';
 import { Markdown } from '../Markdown';
+import { filterPersons } from '../../utils/static-resolver-utils';
+import { toFieldPath, pickDataAttrs } from '../../utils/annotations';
 
 export type Props = ReturnType<typeof resolveProps>;
 
-export const FeaturedPeopleSection: FC<Props> = (props) => {
-    const cssId = props.elementId ?? null;
+export const FeaturedPeopleSection: React.FC<Props> = (props) => {
     const colors = props.colors ?? 'colors-a';
     const styles = props.styles ?? {};
     const sectionWidth = styles.self?.width ?? 'wide';
@@ -20,8 +19,8 @@ export const FeaturedPeopleSection: FC<Props> = (props) => {
     const sectionJustifyContent = styles.self?.justifyContent ?? 'center';
     return (
         <div
-            id={cssId}
-            {...getDataAttrs(props)}
+            id={props.elementId}
+            {...pickDataAttrs(props)}
             className={classNames(
                 'sb-component',
                 'sb-component-section',
@@ -38,13 +37,13 @@ export const FeaturedPeopleSection: FC<Props> = (props) => {
                 styles.self?.borderRadius ? mapStyles({ borderRadius: styles.self?.borderRadius }) : null
             )}
             style={{
-                borderWidth: styles.self?.borderWidth ? `${styles.self?.borderWidth}px` : null
+                borderWidth: styles.self?.borderWidth
             }}
         >
             <div className={classNames('flex', 'w-full', mapStyles({ justifyContent: sectionJustifyContent }))}>
                 <div className={classNames('w-full', mapMaxWidthStyles(sectionWidth))}>
                     {props.title && (
-                        <h2 className={classNames(styles.title ? mapStyles(styles.title) : null)} data-sb-field-path=".title">
+                        <h2 className={classNames(styles.title ? mapStyles(styles.title) : null)} {...toFieldPath('.title')}>
                             {props.title}
                         </h2>
                     )}
@@ -53,7 +52,7 @@ export const FeaturedPeopleSection: FC<Props> = (props) => {
                             className={classNames('text-lg', 'sm:text-xl', styles.subtitle ? mapStyles(styles.subtitle) : null, {
                                 'mt-6': props.title
                             })}
-                            data-sb-field-path=".subtitle"
+                            {...toFieldPath('.subtitle')}
                         >
                             {props.subtitle}
                         </p>
@@ -66,12 +65,15 @@ export const FeaturedPeopleSection: FC<Props> = (props) => {
     );
 };
 
-export const resolveProps = (props: types.FeaturedPeopleSection, allDocuments: types.DocumentTypes[]) => {
-    const people = allDocuments.filter(types.isType('Person')).filter((_) => props.people?.includes(_.__metadata.id));
-    return { ...props, people };
+export const resolveProps = (section: types.FeaturedPeopleSection, allDocuments: types.DocumentTypes[]) => {
+    const allPersons = filterPersons(allDocuments);
+    const people = (section.people ?? [])
+        .map((personId) => allPersons.find((person) => person.__metadata.id === personId))
+        .filter((person): person is types.Person => !!person);
+    return { ...section, people };
 };
 
-const FeaturedPeopleActions: FC<Props> = (props) => {
+const FeaturedPeopleActions: React.FC<Props> = (props) => {
     const actions = props.actions ?? [];
     if (actions.length === 0) {
         return null;
@@ -81,17 +83,17 @@ const FeaturedPeopleActions: FC<Props> = (props) => {
         <div className="mt-12 overflow-x-hidden">
             <div
                 className={classNames('flex', 'flex-wrap', 'items-center', '-mx-2', styles.actions ? mapStyles(styles.actions) : null)}
-                data-sb-field-path=".actions"
+                {...toFieldPath('.actions')}
             >
                 {props.actions?.map((action, index) => (
-                    <Action key={index} {...action} className="mx-2 mb-3 lg:whitespace-nowrap" data-sb-field-path={`.${index}`} />
+                    <Action key={index} {...action} className="mx-2 mb-3 lg:whitespace-nowrap" {...toFieldPath(`.${index}`)} />
                 ))}
             </div>
         </div>
     );
 };
 
-const FeaturedPeopleVariants: FC<Props> = (props) => {
+const FeaturedPeopleVariants: React.FC<Props> = (props) => {
     const variant = props.variant ?? 'variant-a';
     switch (variant) {
         case 'variant-a':
@@ -103,7 +105,7 @@ const FeaturedPeopleVariants: FC<Props> = (props) => {
     }
 };
 
-const PeopleVariantA: FC<Props> = (props) => {
+const PeopleVariantA: React.FC<Props> = (props) => {
     const people = props.people ?? [];
     if (people.length === 0) {
         return null;
@@ -113,12 +115,12 @@ const PeopleVariantA: FC<Props> = (props) => {
             className={classNames('grid', 'gap-6', 'sm:grid-cols-2', 'lg:grid-cols-4', 'lg:gap-8', {
                 'mt-12': props.title || props.subtitle
             })}
-            data-sb-field-path=".people"
+            {...toFieldPath('.people')}
         >
             {people.map((person, index) => (
-                <article key={index} data-sb-field-path={`.${index}`}>
+                <article key={index} {...toFieldPath(`.${index}`)}>
                     {person.image && (
-                        <div className="relative w-full h-0 pt-1/1" data-sb-field-path=".image">
+                        <div className="relative w-full h-0 pt-1/1" {...toFieldPath('.image')}>
                             <ImageBlock {...person.image} className="absolute top-0 left-0 object-cover w-full h-full" />
                         </div>
                     )}
@@ -129,11 +131,11 @@ const PeopleVariantA: FC<Props> = (props) => {
                     >
                         {(person.firstName || person.lastName) && (
                             <h3>
-                                {person.firstName && <span data-sb-field-path=".firstName">{person.firstName}</span>}{' '}
-                                {person.lastName && <span data-sb-field-path=".lastName">{person.lastName}</span>}
+                                {person.firstName && <span {...toFieldPath('.firstName')}>{person.firstName}</span>}{' '}
+                                {person.lastName && <span {...toFieldPath('.lastName')}>{person.lastName}</span>}
                             </h3>
                         )}
-                        {person.role && <p data-sb-field-path=".role">{person.role}</p>}
+                        {person.role && <p {...toFieldPath('.role')}>{person.role}</p>}
                     </div>
                 </article>
             ))}
@@ -141,7 +143,7 @@ const PeopleVariantA: FC<Props> = (props) => {
     );
 };
 
-const PeopleVariantB: FC<Props> = (props) => {
+const PeopleVariantB: React.FC<Props> = (props) => {
     const people = props.people ?? [];
     if (people.length === 0) {
         return null;
@@ -151,13 +153,13 @@ const PeopleVariantB: FC<Props> = (props) => {
             className={classNames('grid', 'gap-x-8', 'gap-y-10', 'lg:grid-cols-2', {
                 'mt-12': props.title || props.subtitle
             })}
-            data-sb-field-path=".people"
+            {...toFieldPath('.people')}
         >
             {people.map((person, index) => (
-                <article key={index} className="sm:flex" data-sb-field-path={`.${index}`}>
+                <article key={index} className="sm:flex" {...toFieldPath(`.${index}`)}>
                     {person.image && (
                         <div className="w-full sm:flex-shrink-0 sm:h-full sm:w-1/3">
-                            <div className="relative block w-full h-0 pt-1/1" data-sb-field-path=".image">
+                            <div className="relative block w-full h-0 pt-1/1" {...toFieldPath('.image')}>
                                 <ImageBlock {...person.image} className="absolute top-0 left-0 object-cover w-full h-full" />
                             </div>
                         </div>
@@ -169,11 +171,11 @@ const PeopleVariantB: FC<Props> = (props) => {
                     >
                         {(person.firstName || person.lastName) && (
                             <h3>
-                                {person.firstName && <span data-sb-field-path=".firstName">{person.firstName}</span>}{' '}
-                                {person.lastName && <span data-sb-field-path=".lastName">{person.lastName}</span>}
+                                {person.firstName && <span {...toFieldPath('.firstName')}>{person.firstName}</span>}{' '}
+                                {person.lastName && <span {...toFieldPath('.lastName')}>{person.lastName}</span>}
                             </h3>
                         )}
-                        {person.role && <p data-sb-field-path=".role">{person.role}</p>}
+                        {person.role && <p {...toFieldPath('.role')}>{person.role}</p>}
                         {person.bio && (
                             <Markdown
                                 text={person.bio}
@@ -190,7 +192,7 @@ const PeopleVariantB: FC<Props> = (props) => {
     );
 };
 
-const PeopleVariantC: FC<Props> = (props) => {
+const PeopleVariantC: React.FC<Props> = (props) => {
     const people = props.people ?? [];
     if (people.length === 0) {
         return null;
@@ -203,7 +205,7 @@ const PeopleVariantC: FC<Props> = (props) => {
             className={classNames('grid', 'gap-x-6', 'gap-y-12', 'sm:grid-cols-2', {
                 'mt-12': props.title || props.subtitle
             })}
-            data-sb-field-path=".people"
+            {...toFieldPath('.people')}
         >
             {peopleLeft.length > 0 && (
                 <div className="sm:mt-32">
@@ -219,23 +221,23 @@ const PeopleVariantC: FC<Props> = (props) => {
     );
 };
 
-const PeopleListVariantC: FC<{ people: Props['people']; annotIndexStart?: number }> = ({ people, annotIndexStart = 0 }) => {
+const PeopleListVariantC: React.FC<{ people: Props['people']; annotIndexStart?: number }> = ({ people, annotIndexStart = 0 }) => {
     return (
         <>
             {people.map((person, index, arr) => (
-                <article key={index} className={classNames(arr.length - 1 === index ? null : 'mb-12')} data-sb-field-path={`.${annotIndexStart + index}`}>
+                <article key={index} className={classNames(arr.length - 1 === index ? null : 'mb-12')} {...toFieldPath(`.${annotIndexStart + index}`)}>
                     {person.image && (
-                        <div data-sb-field-path=".image">
+                        <div {...toFieldPath('.image')}>
                             <ImageBlock {...person.image} className="w-full" />
                         </div>
                     )}
                     <div className={classNames({ 'mt-4': person.image })}>
                         {(person.firstName || person.lastName || person.role) && (
                             <h3 className={classNames({ 'mb-3': person.bio })}>
-                                {person.firstName && <span data-sb-field-path=".firstName">{person.firstName}</span>}{' '}
-                                {person.lastName && <span data-sb-field-path=".lastName">{person.lastName}</span>}{' '}
+                                {person.firstName && <span {...toFieldPath('.firstName')}>{person.firstName}</span>}{' '}
+                                {person.lastName && <span {...toFieldPath('.lastName')}>{person.lastName}</span>}{' '}
                                 {(person.firstName || person.lastName) && person.role && <span className="mx-1">|</span>}{' '}
-                                {person.role && <span data-sb-field-path=".role">{person.role}</span>}
+                                {person.role && <span {...toFieldPath('.role')}>{person.role}</span>}
                             </h3>
                         )}
                         {person.bio && <Markdown text={person.bio} className="sb-markdown" fieldName="bio" />}

@@ -1,17 +1,14 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import { FC } from 'react';
-import type * as types from '.contentlayer/types';
+import type * as types from 'types';
 
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
-import { getDataAttrs } from '../../utils/get-data-attrs';
 import { Markdown } from '../Markdown';
+import { toFieldPath, pickDataAttrs } from '../../utils/annotations';
 
-// TODO
-export type Props = any;
+export type Props = types.TextSection;
 
-export const TextSection: FC<Props> = (props) => {
-    const cssId = props.elementId ?? null;
+export const TextSection: React.FC<Props> = (props) => {
     const colors = props.colors ?? 'colors-a';
     const sectionStyles = props.styles?.self ?? {};
     const sectionWidth = sectionStyles.width ?? 'wide';
@@ -19,8 +16,8 @@ export const TextSection: FC<Props> = (props) => {
     const sectionJustifyContent = sectionStyles.justifyContent ?? 'center';
     return (
         <div
-            id={cssId}
-            {...getDataAttrs(props)}
+            id={props.elementId}
+            {...pickDataAttrs(props)}
             className={classNames(
                 'sb-component',
                 'sb-component-section',
@@ -37,7 +34,7 @@ export const TextSection: FC<Props> = (props) => {
                 sectionStyles.borderRadius ? mapStyles({ borderRadius: sectionStyles.borderRadius }) : null
             )}
             style={{
-                borderWidth: sectionStyles.borderWidth ? `${sectionStyles.borderWidth}px` : null
+                borderWidth: sectionStyles.borderWidth
             }}
         >
             <div className={classNames('flex', 'w-full', mapStyles({ justifyContent: sectionJustifyContent }))}>
@@ -47,12 +44,12 @@ export const TextSection: FC<Props> = (props) => {
     );
 };
 
-const TextBody: FC<Props> = (props) => {
+const TextBody: React.FC<Props> = (props) => {
     const styles = props.styles ?? {};
     return (
         <div>
             {props.title && (
-                <h2 className={classNames(styles.title ? mapStyles(styles.title) : null)} data-sb-field-path=".title">
+                <h2 className={classNames(styles.title ? mapStyles(styles.title) : null)} {...toFieldPath('.title')}>
                     {props.title}
                 </h2>
             )}
@@ -61,7 +58,7 @@ const TextBody: FC<Props> = (props) => {
                     className={classNames('text-xl', 'sm:text-2xl', styles.subtitle ? mapStyles(styles.subtitle) : null, {
                         'mt-2': props.title
                     })}
-                    data-sb-field-path=".subtitle"
+                    {...toFieldPath('.subtitle')}
                 >
                     {props.subtitle}
                 </p>

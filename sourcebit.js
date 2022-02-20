@@ -1,5 +1,11 @@
 const path = require('path');
-const { flattenMarkdownData, cssClassesFromFilePath, cssClassesFromUrlPath, urlPathFromFilePath, setEnvironmentVariables } = require('./sourcebit-utils');
+const {
+    flattenMarkdownData,
+    cssClassesFromFilePath,
+    cssClassesFromUrlPath,
+    urlPathFromFilePath,
+    setEnvironmentVariables
+} = require('./src/utils/sourcebit-utils');
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -14,8 +20,8 @@ module.exports = {
             options: {
                 watch: isDev,
                 sources: [
-                    { name: 'pages', path: path.join(__dirname, '../content/pages') },
-                    { name: 'data', path: path.join(__dirname, '../content/data') }
+                    { name: 'pages', path: path.join(__dirname, 'content/pages') },
+                    { name: 'data', path: path.join(__dirname, 'content/data') }
                 ]
             }
         },
@@ -42,26 +48,7 @@ module.exports = {
             options: {
                 liveUpdate: isDev,
                 flattenAssetUrls: true,
-                commonProps: (objects) => {
-                    const site = objects.find((page) => page.__metadata.id === 'content/data/config.json');
-                    site.env = setEnvironmentVariables();
-                    return { site };
-                },
                 pages: (objects) => {
-                    const personObjects = objects.filter((object) => object.__metadata.relProjectPath?.startsWith('content/data/team/') && !!object.slug);
-                    const personPages = personObjects.map((person) => {
-                        const { __metadata, ...restProps } = person;
-                        const urlPath = `/blog/author/${person.slug}`;
-                        return {
-                            __metadata: {
-                                ...__metadata,
-                                urlPath,
-                                pageCssClasses: cssClassesFromUrlPath(urlPath)
-                            },
-                            ...restProps
-                        };
-                    });
-
                     const pageObjects = objects.filter((page) => page.__metadata.sourceName === 'pages');
                     const pages = pageObjects.map((page) => {
                         const { __metadata, ...restProps } = page;
@@ -76,7 +63,7 @@ module.exports = {
                         };
                     });
 
-                    return [...pages, ...personPages];
+                    return [...pages];
                 }
             }
         }

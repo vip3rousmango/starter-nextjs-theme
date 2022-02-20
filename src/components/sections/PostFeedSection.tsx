@@ -2,16 +2,13 @@ import * as React from 'react';
 import classNames from 'classnames';
 import dayjs from 'dayjs';
 
+import type * as types from '../../types';
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
-import { getDataAttrs } from '../../utils/get-data-attrs';
 import { Link } from '../atoms/Link';
 import { Action } from '../atoms/Action';
 import { ImageBlock } from '../blocks/ImageBlock';
 import ArrowRightIcon from '../svgs/arrow-right';
-import type * as types from '.contentlayer/types';
-import { FC } from 'react';
-import { objectIdDataAttr } from '../../utils/stackbit';
-import { BlogCategory, Styles } from '.contentlayer/types';
+import { toFieldPath, toObjectId, pickDataAttrs } from '../../utils/annotations';
 
 export type Props = {
     title?: string;
@@ -19,7 +16,7 @@ export type Props = {
     elementId?: string;
     colors?: string;
     variant?: 'variant-a' | 'variant-b' | 'variant-c';
-    styles?: Styles;
+    styles?: types.Styles;
     pageLinks?: React.ReactNode;
     posts?: types.PostLayoutResolved[];
     annotatePosts?: boolean;
@@ -29,8 +26,7 @@ export type Props = {
     actions?: (types.Button | types.Link)[];
 };
 
-export const PostFeedSection: FC<Props> = (props) => {
-    const cssId = props.elementId ?? null;
+export const PostFeedSection: React.FC<Props> = (props) => {
     const colors = props.colors ?? 'colors-a';
     const sectionStyles = props.styles?.self ?? {};
     const sectionWidth = sectionStyles.width ?? 'wide';
@@ -38,8 +34,8 @@ export const PostFeedSection: FC<Props> = (props) => {
     const sectionJustifyContent = sectionStyles.justifyContent ?? 'center';
     return (
         <div
-            id={cssId}
-            {...getDataAttrs(props)}
+            id={props.elementId}
+            {...pickDataAttrs(props)}
             className={classNames(
                 'sb-component',
                 'sb-component-section',
@@ -57,7 +53,7 @@ export const PostFeedSection: FC<Props> = (props) => {
                 sectionStyles.borderStyle ? mapStyles({ borderStyle: sectionStyles.borderStyle }) : 'border-none'
             )}
             style={{
-                borderWidth: sectionStyles.borderWidth ? `${sectionStyles.borderWidth}px` : null
+                borderWidth: sectionStyles.borderWidth ? `${sectionStyles.borderWidth}px` : undefined
             }}
         >
             <div className={classNames('flex', 'w-full', mapStyles({ justifyContent: sectionJustifyContent }))}>
@@ -72,7 +68,7 @@ export const PostFeedSection: FC<Props> = (props) => {
     );
 };
 
-const PostFeedHeader: FC<Props> = (props) => {
+const PostFeedHeader: React.FC<Props> = (props) => {
     if (!props.title && !props.subtitle) {
         return null;
     }
@@ -80,7 +76,7 @@ const PostFeedHeader: FC<Props> = (props) => {
     return (
         <div>
             {props.title && (
-                <h2 className={classNames(styles.title ? mapStyles(styles.title) : null)} data-sb-field-path=".title">
+                <h2 className={classNames(styles.title ? mapStyles(styles.title) : null)} {...toFieldPath('.title')}>
                     {props.title}
                 </h2>
             )}
@@ -89,7 +85,7 @@ const PostFeedHeader: FC<Props> = (props) => {
                     className={classNames('text-lg', 'sm:text-xl', styles.subtitle ? mapStyles(styles.subtitle) : null, {
                         'mt-6': props.title
                     })}
-                    data-sb-field-path=".subtitle"
+                    {...toFieldPath('.subtitle')}
                 >
                     {props.subtitle}
                 </p>
@@ -98,7 +94,7 @@ const PostFeedHeader: FC<Props> = (props) => {
     );
 };
 
-const PostFeedActions: FC<Props> = (props) => {
+const PostFeedActions: React.FC<Props> = (props) => {
     const actions = props.actions ?? [];
     if (actions.length === 0) {
         return null;
@@ -108,17 +104,17 @@ const PostFeedActions: FC<Props> = (props) => {
         <div className="mt-12 overflow-x-hidden">
             <div
                 className={classNames('flex', 'flex-wrap', 'items-center', '-mx-2', styles.actions ? mapStyles(styles.actions) : null)}
-                data-sb-field-path=".actions"
+                {...toFieldPath('.actions')}
             >
                 {props.actions?.map((action, index) => (
-                    <Action key={index} {...action} className="mx-2 mb-3 lg:whitespace-nowrap" data-sb-field-path={`.${index}`} />
+                    <Action key={index} {...action} className="mx-2 mb-3 lg:whitespace-nowrap" {...toFieldPath(`.${index}`)} />
                 ))}
             </div>
         </div>
     );
 };
 
-const PostFeedVariants: FC<Props> = (props) => {
+const PostFeedVariants: React.FC<Props> = (props) => {
     const variant = props.variant ?? 'variant-a';
     switch (variant) {
         case 'variant-a':
@@ -132,7 +128,7 @@ const PostFeedVariants: FC<Props> = (props) => {
     }
 };
 
-const PostsVariantA: FC<Props> = (props) => {
+const PostsVariantA: React.FC<Props> = (props) => {
     const posts = props.posts ?? [];
     if (posts.length === 0) {
         return null;
@@ -143,30 +139,27 @@ const PostsVariantA: FC<Props> = (props) => {
             className={classNames('grid', 'gap-x-6', 'gap-y-12', 'md:grid-cols-3', 'lg:gap-x-8', {
                 'mt-12': props.title || props.subtitle
             })}
-            {...(props.annotatePosts ? { 'data-sb-field-path': '.posts' } : null)}
+            {...(props.annotatePosts ? toFieldPath('.posts') : null)}
         >
             {posts.map((post, index) => (
-                <article key={index} {...objectIdDataAttr(post.__metadata)}>
+                <article key={index} {...toObjectId(post.__metadata.id)}>
                     <Link href={post.__metadata.urlPath} className="block">
                         {post.featuredImage && (
-                            <div
-                                className="rounded-2xl mb-6 h-0 w-full pt-1/1 relative overflow-hidden lg:mb-10"
-
-                            >
+                            <div className="rounded-2xl mb-6 h-0 w-full pt-1/1 relative overflow-hidden lg:mb-10">
                                 <ImageBlock
                                     {...post.featuredImage}
                                     className="absolute left-0 top-0 h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-                                    data-sb-field-path="featuredImage"
+                                    {...toFieldPath('featuredImage')}
                                 />
                             </div>
                         )}
                         <div>
-                            <h3 className="text-2xl" data-sb-field-path="title">
+                            <h3 className="text-2xl" {...toFieldPath('title')}>
                                 {post.title}
                             </h3>
                             {props.showDate && <PostDate post={post} className="mt-2" />}
                             {props.showExcerpt && post.excerpt && (
-                                <p className="mt-6" data-sb-field-path="excerpt">
+                                <p className="mt-6" {...toFieldPath('excerpt')}>
                                     {post.excerpt}
                                 </p>
                             )}
@@ -183,7 +176,7 @@ const PostsVariantA: FC<Props> = (props) => {
     );
 };
 
-const PostsVariantB: FC<Props> = (props) => {
+const PostsVariantB: React.FC<Props> = (props) => {
     const posts = props.posts ?? [];
     if (posts.length === 0) {
         return null;
@@ -194,19 +187,19 @@ const PostsVariantB: FC<Props> = (props) => {
             className={classNames('grid', 'gap-x-6', 'gap-y-12', 'md:grid-cols-5', 'lg:gap-x-8', {
                 'mt-12': props.title || props.subtitle
             })}
-            {...(props.annotatePosts ? { 'data-sb-field-path': '.posts' } : null)}
+            {...(props.annotatePosts ? toFieldPath('.posts') : null)}
         >
             {posts.map((post, index) => (
                 <article
                     key={index}
                     className={classNames(index % 4 === 0 || (index + 1) % 4 === 0 ? 'md:col-span-3' : 'md:col-span-2')}
-                    {...objectIdDataAttr(post.__metadata)}
+                    {...toObjectId(post.__metadata.id)}
                 >
                     <Link href={post.__metadata.urlPath} className="block">
                         {post.featuredImage && (
                             <div
                                 className="rounded-2xl mb-6 h-0 w-full pt-9/16 relative overflow-hidden md:pt-0 md:h-64 lg:h-96 lg:mb-10"
-                                data-sb-field-path="featuredImage"
+                                {...toFieldPath('featuredImage')}
                             >
                                 <ImageBlock
                                     {...post.featuredImage}
@@ -215,12 +208,12 @@ const PostsVariantB: FC<Props> = (props) => {
                             </div>
                         )}
                         <div>
-                            <h3 className="text-2xl" data-sb-field-path="title">
+                            <h3 className="text-2xl" {...toFieldPath('title')}>
                                 {post.title}
                             </h3>
                             {props.showDate && <PostDate post={post} className="mt-2" />}
                             {props.showExcerpt && post.excerpt && (
-                                <p className="mt-6" data-sb-field-path="excerpt">
+                                <p className="mt-6" {...toFieldPath('excerpt')}>
                                     {post.excerpt}
                                 </p>
                             )}
@@ -237,7 +230,7 @@ const PostsVariantB: FC<Props> = (props) => {
     );
 };
 
-const PostsVariantC: FC<Props> = (props) => {
+const PostsVariantC: React.FC<Props> = (props) => {
     const posts = props.posts ?? [];
     if (posts.length === 0) {
         return null;
@@ -247,19 +240,15 @@ const PostsVariantC: FC<Props> = (props) => {
             className={classNames('grid', 'gap-6', 'md:grid-cols-3', 'lg:gap-8', {
                 'mt-12': props.title || props.subtitle
             })}
-            {...(props.annotatePosts ? { 'data-sb-field-path': '.posts' } : null)}
+            {...(props.annotatePosts ? toFieldPath('.posts') : null)}
         >
             {posts.map((post, index) => {
                 return (
-                    <article key={index} className="sb-card rounded-2xl overflow-hidden" {...objectIdDataAttr(post.__metadata)}>
+                    <article key={index} className="sb-card rounded-2xl overflow-hidden" {...toObjectId(post.__metadata.id)}>
                         <Link href={post.__metadata.urlPath} className="block">
                             <div className="flex flex-col min-h-full">
                                 {post.featuredImage && (
-                                    <div
-
-                                        className="h-0 w-full pt-9/16 relative overflow-hidden"
-                                        data-sb-field-path="featuredImage"
-                                    >
+                                    <div className="h-0 w-full pt-9/16 relative overflow-hidden" {...toFieldPath('featuredImage')}>
                                         <ImageBlock
                                             {...post.featuredImage}
                                             className="absolute left-0 top-0 h-full w-full object-cover transition-transform duration-500 hover:scale-105"
@@ -269,12 +258,12 @@ const PostsVariantC: FC<Props> = (props) => {
                                 <div className="flex flex-col flex-grow px-4 pt-6 pb-8 sm:px-6">
                                     <div className="flex-grow">
                                         {props.showDate && <PostDate post={post} className="mb-2" />}
-                                        <h3 className="text-2xl" data-sb-field-path="title">
+                                        <h3 className="text-2xl" {...toFieldPath('title')}>
                                             {post.title}
                                         </h3>
                                         <PostAttribution showAuthor={props.showAuthor} post={post} className="mt-2" />
                                         {props.showExcerpt && post.excerpt && (
-                                            <p className="mt-3" data-sb-field-path="excerpt">
+                                            <p className="mt-3" {...toFieldPath('excerpt')}>
                                                 {post.excerpt}
                                             </p>
                                         )}
@@ -295,7 +284,7 @@ const PostsVariantC: FC<Props> = (props) => {
     );
 };
 
-const PostDate: FC<{ post: types.PostLayoutResolved; className?: string }> = ({ post, className = '' }) => {
+const PostDate: React.FC<{ post: types.PostLayoutResolved; className?: string }> = ({ post, className = '' }) => {
     if (!post.date) {
         return null;
     }
@@ -304,14 +293,14 @@ const PostDate: FC<{ post: types.PostLayoutResolved; className?: string }> = ({ 
     const formattedDate = dayjs(date).format('MMMM D, YYYY');
     return (
         <div className={className}>
-            <time dateTime={dateTimeAttr} data-sb-field-path="date">
+            <time dateTime={dateTimeAttr} {...toFieldPath('date')}>
                 {formattedDate}
             </time>
         </div>
     );
 };
 
-const PostAttribution: FC<{ showAuthor?: boolean; post: types.PostLayoutResolved; className?: string }> = ({ showAuthor, post, className = '' }) => {
+const PostAttribution: React.FC<{ showAuthor?: boolean; post: types.PostLayoutResolved; className?: string }> = ({ showAuthor, post, className = '' }) => {
     if (!post.author && !post.category) {
         return null;
     }
@@ -333,33 +322,33 @@ const PostAttribution: FC<{ showAuthor?: boolean; post: types.PostLayoutResolved
     );
 };
 
-const PostAuthor: FC<{ author: types.Person }> = ({ author }) => {
+const PostAuthor: React.FC<{ author: types.Person }> = ({ author }) => {
     if (!author) {
         return null;
     }
     const children = (
         <>
-            {author.firstName && <span data-sb-field-path=".firstName">{author.firstName}</span>}{' '}
-            {author.lastName && <span data-sb-field-path=".lastName">{author.lastName}</span>}
+            {author.firstName && <span {...toFieldPath('.firstName')}>{author.firstName}</span>}{' '}
+            {author.lastName && <span {...toFieldPath('.lastName')}>{author.lastName}</span>}
         </>
     );
     if (author.slug) {
         return (
-            <Link data-sb-field-path="author" href={`/blog/author/${author.slug}`}>
+            <Link {...toFieldPath('author')} href={`/blog/author/${author.slug}`}>
                 {children}
             </Link>
         );
     } else {
-        return <span data-sb-field-path="author">{children}</span>;
+        return <span {...toFieldPath('author')}>{children}</span>;
     }
 };
 
-const PostCategory: FC<{ category: BlogCategory }> = ({ category }) => {
+const PostCategory: React.FC<{ category: types.BlogCategory }> = ({ category }) => {
     if (!category) {
         return null;
     }
     return (
-        <Link data-sb-field-path="category" href={`/blog/category/${category.slug}`}>
+        <Link {...toFieldPath('category')} href={`/blog/category/${category.slug}`}>
             {category.title}
         </Link>
     );

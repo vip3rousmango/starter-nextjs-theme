@@ -1,17 +1,15 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
+import type * as types from 'types';
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
-import { getDataAttrs } from '../../utils/get-data-attrs';
 import { Action } from '../atoms/Action';
-import { FC } from 'react';
-import type * as types from '.contentlayer/types';
 import { Markdown } from '../Markdown';
+import { toFieldPath, pickDataAttrs } from '../../utils/annotations';
 
 export type Props = types.CtaSection;
 
-export const CtaSection: FC<Props> = (props) => {
-    const cssId = props.elementId ?? null;
+export const CtaSection: React.FC<Props> = (props) => {
     const colors = props.colors ?? 'colors-a';
     const bgSize = props.backgroundSize ?? 'full';
     const sectionStyles = props.styles?.self ?? {};
@@ -22,8 +20,8 @@ export const CtaSection: FC<Props> = (props) => {
     const sectionAlignItems = sectionStyles.alignItems ?? 'center';
     return (
         <div
-            id={cssId}
-            {...getDataAttrs(props)}
+            id={props.elementId}
+            {...pickDataAttrs(props)}
             className={classNames(
                 'sb-component',
                 'sb-component-section',
@@ -84,7 +82,7 @@ export const CtaSection: FC<Props> = (props) => {
     );
 };
 
-const CtaBackgroundImage: FC<types.ImageBlock> = (image) => {
+const CtaBackgroundImage: React.FC<types.ImageBlock> = (image) => {
     const imageUrl = image.url;
     if (!imageUrl) {
         return null;
@@ -102,7 +100,7 @@ const CtaBackgroundImage: FC<types.ImageBlock> = (image) => {
     );
 };
 
-const CtaBody: FC<Props> = (props) => {
+const CtaBody: React.FC<Props> = (props) => {
     if (!props.title && !props.text) {
         return null;
     }
@@ -110,7 +108,7 @@ const CtaBody: FC<Props> = (props) => {
     return (
         <div className="w-full lg:flex-grow">
             {props.title && (
-                <h2 className={classNames(styles.title ? mapStyles(styles.title) : null)} data-sb-field-path=".title">
+                <h2 className={classNames(styles.title ? mapStyles(styles.title) : null)} {...toFieldPath('.title')}>
                     {props.title}
                 </h2>
             )}
@@ -127,7 +125,7 @@ const CtaBody: FC<Props> = (props) => {
     );
 };
 
-const CtaActions: FC<Props> = (props) => {
+const CtaActions: React.FC<Props> = (props) => {
     const actions = props.actions ?? [];
     if (actions.length === 0) {
         return null;
@@ -138,10 +136,10 @@ const CtaActions: FC<Props> = (props) => {
             <div className="overflow-x-hidden">
                 <div
                     className={classNames('flex', 'flex-wrap', 'items-center', '-mx-2', 'lg:flex-nowrap', styles.actions ? mapStyles(styles.actions) : null)}
-                    data-sb-field-path=".actions"
+                    {...toFieldPath('.actions')}
                 >
                     {actions.map((action, index) => (
-                        <Action key={index} {...action} className="mx-2 mb-3 lg:whitespace-nowrap" data-sb-field-path={`.${index}`} />
+                        <Action key={index} {...action} className="mx-2 mb-3 lg:whitespace-nowrap" {...toFieldPath(`.${index}`)} />
                     ))}
                 </div>
             </div>

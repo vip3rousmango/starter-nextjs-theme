@@ -1,15 +1,15 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import { FC } from 'react';
-import type * as types from '.contentlayer/types';
-import { StackbitFieldPath } from '../../../utils/stackbit';
+import type * as types from 'types';
+
+import { toFieldPath, pickDataAttrs, StackbitFieldPath } from '../../../utils/annotations';
 
 export type Props = types.TextareaFormControl & StackbitFieldPath;
 
-export const TextareaFormControl: FC<Props> = (props) => {
+export const TextareaFormControl: React.FC<Props> = (props) => {
     const width = props.width ?? 'full';
     const labelId = `${props.name}-label`;
-    const attr: any = {};
+    const attr: React.TextareaHTMLAttributes<HTMLTextAreaElement> = {};
     if (props.label) {
         attr['aria-labelledby'] = labelId;
     }
@@ -21,14 +21,14 @@ export const TextareaFormControl: FC<Props> = (props) => {
             className={classNames('sb-form-control', {
                 'sm:col-span-2': width === 'full'
             })}
-            data-sb-field-path={props['data-sb-field-path']}
+            {...pickDataAttrs(props)}
         >
             {props.label && (
                 <label
                     id={labelId}
                     className={classNames('sb-label', { 'sr-only': props.hideLabel })}
                     htmlFor={props.name}
-                    data-sb-field-path=".label .name#@for"
+                    {...toFieldPath('.label', '.name#@for')}
                 >
                     {props.label}
                 </label>
@@ -37,10 +37,10 @@ export const TextareaFormControl: FC<Props> = (props) => {
                 id={props.name}
                 className="sb-textarea"
                 name={props.name}
-                rows="5"
+                rows={5}
                 {...(props.placeholder ? { placeholder: props.placeholder } : null)}
                 {...attr}
-                data-sb-field-path=".name#@id .name#@name .placeholder#@placeholder"
+                {...toFieldPath('.name#@id', '.name#@name', '.placeholder#@placeholder')}
             />
         </div>
     );

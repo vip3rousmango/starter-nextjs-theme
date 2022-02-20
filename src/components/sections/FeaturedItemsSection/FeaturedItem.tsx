@@ -1,22 +1,21 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
+import type * as types from 'types';
 import { mapStylesToClassNames as mapStyles } from '../../../utils/map-styles-to-class-names';
 import { Action } from '../../atoms/Action';
 import { ImageBlock } from '../../blocks/ImageBlock';
-import { FC } from 'react';
-import type * as types from '.contentlayer/types';
-import { StackbitFieldPath } from '../../../utils/stackbit';
+import { Markdown } from '../../Markdown';
+import { toFieldPath, pickDataAttrs, StackbitFieldPath } from '../../../utils/annotations';
 
 export type Props = types.FeaturedItem & StackbitFieldPath;
 
-export const FeaturedItem: FC<Props> = (props) => {
-    const cssId = props.elementId ?? null;
+export const FeaturedItem: React.FC<Props> = (props) => {
     const styles = props.styles ?? {};
     const itemBorderWidth = styles.self?.borderWidth ? styles.self?.borderWidth : 0;
     return (
         <article
-            id={cssId}
+            id={props.elementId}
             className={classNames(
                 'sb-component',
                 'sb-component-block',
@@ -31,15 +30,15 @@ export const FeaturedItem: FC<Props> = (props) => {
             style={{
                 borderWidth: itemBorderWidth ? `${itemBorderWidth}px` : undefined
             }}
-            data-sb-field-path={props['data-sb-field-path']}
+            {...pickDataAttrs(props)}
         >
             {props.featuredImage && (
-                <div className="mb-6" data-sb-field-path=".featuredImage">
+                <div className="mb-6" {...toFieldPath('.featuredImage')}>
                     <ImageBlock {...props.featuredImage} className="inline-block" />
                 </div>
             )}
             {props.title && (
-                <h3 className={classNames(styles.title ? mapStyles(styles.title) : null)} data-sb-field-path=".title">
+                <h3 className={classNames(styles.title ? mapStyles(styles.title) : null)} {...toFieldPath('.title')}>
                     {props.title}
                 </h3>
             )}
@@ -48,26 +47,28 @@ export const FeaturedItem: FC<Props> = (props) => {
                     className={classNames('text-lg', styles.subtitle ? mapStyles(styles.subtitle) : null, {
                         'mt-1': props.title
                     })}
-                    data-sb-field-path=".subtitle"
+                    {...toFieldPath('.subtitle')}
                 >
                     {props.subtitle}
                 </p>
             )}
             {props.text && (
-                <div
+                <Markdown
+                    text={props.text}
+                    fieldName=".text"
                     className={classNames('sb-markdown', {
                         'mt-4': props.title || props.subtitle
                     })}
-                    data-sb-field-path=".text"
-                    dangerouslySetInnerHTML={{ __html: props.text.html }}
-                />
+                >
+                    {props.text}
+                </Markdown>
             )}
             <ItemActions {...props} />
         </article>
     );
 };
 
-const ItemActions: FC<Props> = (props) => {
+const ItemActions: React.FC<Props> = (props) => {
     const actions = props.actions ?? [];
     if (actions.length === 0) {
         return null;
@@ -84,10 +85,10 @@ const ItemActions: FC<Props> = (props) => {
                     'justify-center': styles.self?.textAlign === 'center',
                     'justify-end': styles.self?.textAlign === 'right'
                 })}
-                data-sb-field-path=".actions"
+                {...toFieldPath('.actions')}
             >
                 {actions.map((action, index) => (
-                    <Action key={index} {...action} className="mx-2 mb-3 lg:whitespace-nowrap" data-sb-field-path={`.${index}`} />
+                    <Action key={index} {...action} className="mx-2 mb-3 lg:whitespace-nowrap" {...toFieldPath(`.${index}`)} />
                 ))}
             </div>
         </div>

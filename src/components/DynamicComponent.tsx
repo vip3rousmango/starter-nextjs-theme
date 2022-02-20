@@ -1,5 +1,6 @@
-import type { FC } from 'react';
+import type { ComponentType, FC } from 'react';
 import dynamic from 'next/dynamic';
+import type { Props as PageLayoutProps } from './layouts/PageLayout';
 import type { Props as PostLayoutProps } from './layouts/PostLayout';
 import type { Props as PostFeedLayoutProps } from './layouts/PostFeedLayout';
 import type { Props as ImageBlockProps } from './blocks/ImageBlock';
@@ -15,6 +16,7 @@ import type { Props as MediaGallerySectionProps } from './sections/MediaGalleryS
 import type { Props as FaqSectionProps } from './sections/FaqSection';
 import type { Props as QuoteSectionProps } from './sections/QuoteSection';
 import type { Props as TestimonialsSectionProps } from './sections/TestimonialsSection';
+import type { Props as TextSectionProps } from './sections/TextSection';
 import type { Props as CtaSectionProps } from './sections/CtaSection';
 import type { Props as ContactSectionProps } from './sections/ContactSection';
 import type { Props as JobsSectionProps } from './sections/JobsSection';
@@ -25,6 +27,7 @@ import type { Props as TextFormControlProps } from './blocks/FormBlock/TextFormC
 import type { Props as TextareaFormControlProps } from './blocks/FormBlock/TextareaFormControl';
 
 export type Props =
+    | PageLayoutProps
     | PostLayoutProps
     | PostFeedLayoutProps
     | ImageBlockProps
@@ -40,6 +43,7 @@ export type Props =
     | FaqSectionProps
     | QuoteSectionProps
     | TestimonialsSectionProps
+    | TextSectionProps
     | CtaSectionProps
     | ContactSectionProps
     | JobsSectionProps
@@ -49,84 +53,51 @@ export type Props =
     | TextFormControlProps
     | TextareaFormControlProps;
 
+type ComponentsMap = {
+    [P in Props as P['type']]: ComponentType<P>;
+};
+
+const componentsMap: ComponentsMap = {
+    // layouts
+    PageLayout: dynamic(() => namedComponent(import('./layouts/PageLayout'), 'PageLayout')),
+    PostLayout: dynamic(() => namedComponent(import('./layouts/PostLayout'), 'PostLayout')),
+    PostFeedLayout: dynamic(() => namedComponent(import('./layouts/PostFeedLayout'), 'PostFeedLayout')),
+
+    // blocks
+    ImageBlock: dynamic(() => namedComponent(import('./blocks/ImageBlock'), 'ImageBlock')),
+    VideoBlock: dynamic(() => namedComponent(import('./blocks/VideoBlock'), 'VideoBlock')),
+    FormBlock: dynamic(() => namedComponent(import('./blocks/FormBlock'), 'FormBlock')),
+
+    // sections
+    HeroSection: dynamic(() => namedComponent(import('./sections/HeroSection'), 'HeroSection')),
+    FeatureHighlightSection: dynamic(() => namedComponent(import('./sections/FeatureHighlightSection'), 'FeatureHighlightSection')),
+    FeaturedItemsSection: dynamic(() => namedComponent(import('./sections/FeaturedItemsSection'), 'FeaturedItemsSection')),
+    FeaturedPostsSection: dynamic(() => namedComponent(import('./sections/FeaturedPostsSection'), 'FeaturedPostsSection')),
+    FeaturedPeopleSection: dynamic(() => namedComponent(import('./sections/FeaturedPeopleSection'), 'FeaturedPeopleSection')),
+    RecentPostsSection: dynamic(() => namedComponent(import('./sections/RecentPostsSection'), 'RecentPostsSection')),
+    MediaGallerySection: dynamic(() => namedComponent(import('./sections/MediaGallerySection'), 'MediaGallerySection')),
+    FaqSection: dynamic(() => namedComponent(import('./sections/FaqSection'), 'FaqSection')),
+    QuoteSection: dynamic(() => namedComponent(import('./sections/QuoteSection'), 'QuoteSection')),
+    TestimonialsSection: dynamic(() => namedComponent(import('./sections/TestimonialsSection'), 'TestimonialsSection')),
+    TextSection: dynamic(() => namedComponent(import('./sections/TextSection'), 'TextSection')),
+    CtaSection: dynamic(() => namedComponent(import('./sections/CtaSection'), 'CtaSection')),
+    ContactSection: dynamic(() => namedComponent(import('./sections/ContactSection'), 'ContactSection')),
+    JobsSection: dynamic(() => namedComponent(import('./sections/JobsSection'), 'JobsSection')),
+
+    // form controls
+    EmailFormControl: dynamic(() => namedComponent(import('./blocks/FormBlock/EmailFormControl'), 'EmailFormControl')),
+    CheckboxFormControl: dynamic(() => namedComponent(import('./blocks/FormBlock/CheckboxFormControl'), 'CheckboxFormControl')),
+    SelectFormControl: dynamic(() => namedComponent(import('./blocks/FormBlock/SelectFormControl'), 'SelectFormControl')),
+    TextFormControl: dynamic(() => namedComponent(import('./blocks/FormBlock/TextFormControl'), 'TextFormControl')),
+    TextareaFormControl: dynamic(() => namedComponent(import('./blocks/FormBlock/TextareaFormControl'), 'TextareaFormControl'))
+};
+
 export const DynamicComponent: FC<Props> = (props) => {
-    switch (props.type) {
-        // blog layouts
-        case 'PostLayout':
-            const PostLayout = dynamic(() => namedComponent(import('./layouts/PostLayout'), 'PostLayout'));
-            return <PostLayout {...props} />;
-        case 'PostFeedLayout':
-            const PostFeedLayout = dynamic(() => namedComponent(import('./layouts/PostFeedLayout'), 'PostFeedLayout'));
-            return <PostFeedLayout {...props} />;
-        // blocks
-        case 'ImageBlock':
-            const ImageBlock = dynamic(() => namedComponent(import('./blocks/ImageBlock'), 'ImageBlock'));
-            return <ImageBlock {...props} />;
-        case 'VideoBlock':
-            const VideoBlock = dynamic(() => namedComponent(import('./blocks/VideoBlock'), 'VideoBlock'));
-            return <VideoBlock {...props} />;
-        case 'FormBlock':
-            const FormBlock = dynamic(() => namedComponent(import('./blocks/FormBlock'), 'FormBlock'));
-            return <FormBlock {...props} />;
-        // sections
-        case 'HeroSection':
-            const HeroSection = dynamic(() => namedComponent(import('./sections/HeroSection'), 'HeroSection'));
-            return <HeroSection {...props} />;
-        case 'FeatureHighlightSection':
-            const FeatureHighlightSection = dynamic(() => namedComponent(import('./sections/FeatureHighlightSection'), 'FeatureHighlightSection'));
-            return <FeatureHighlightSection {...props} />;
-        case 'FeaturedItemsSection':
-            const FeaturedItemsSection = dynamic(() => namedComponent(import('./sections/FeaturedItemsSection'), 'FeaturedItemsSection'));
-            return <FeaturedItemsSection {...props} />;
-        case 'FeaturedPostsSection':
-            const FeaturedPostsSection = dynamic(() => namedComponent(import('./sections/FeaturedPostsSection'), 'FeaturedPostsSection'));
-            return <FeaturedPostsSection {...props} />;
-        case 'FeaturedPeopleSection':
-            const FeaturedPeopleSection = dynamic(() => namedComponent(import('./sections/FeaturedPeopleSection'), 'FeaturedPeopleSection'));
-            return <FeaturedPeopleSection {...props} />;
-        case 'RecentPostsSection':
-            const RecentPostsSection = dynamic(() => namedComponent(import('./sections/RecentPostsSection'), 'RecentPostsSection'));
-            return <RecentPostsSection {...props} />;
-        case 'MediaGallerySection':
-            const MediaGallerySection = dynamic(() => namedComponent(import('./sections/MediaGallerySection'), 'MediaGallerySection'));
-            return <MediaGallerySection {...props} />;
-        case 'FaqSection':
-            const FaqSection = dynamic(() => namedComponent(import('./sections/FaqSection'), 'FaqSection'));
-            return <FaqSection {...props} />;
-        case 'QuoteSection':
-            const QuoteSection = dynamic(() => namedComponent(import('./sections/QuoteSection'), 'QuoteSection'));
-            return <QuoteSection {...props} />;
-        case 'TestimonialsSection':
-            const TestimonialsSection = dynamic(() => namedComponent(import('./sections/TestimonialsSection'), 'TestimonialsSection'));
-            return <TestimonialsSection {...props} />;
-        case 'CtaSection':
-            const CtaSection = dynamic(() => namedComponent(import('./sections/CtaSection'), 'CtaSection'));
-            return <CtaSection {...props} />;
-        case 'ContactSection':
-            const ContactSection = dynamic(() => namedComponent(import('./sections/ContactSection'), 'ContactSection'));
-            return <ContactSection {...props} />;
-        case 'JobsSection':
-            const JobsSection = dynamic(() => namedComponent(import('./sections/JobsSection'), 'JobsSection'));
-            return <JobsSection {...props} />;
-        // form control
-        case 'EmailFormControl':
-            const EmailFormControl = dynamic(() => namedComponent(import('./blocks/FormBlock/EmailFormControl'), 'EmailFormControl'));
-            return <EmailFormControl {...props} />;
-        case 'CheckboxFormControl':
-            const CheckboxFormControl = dynamic(() => namedComponent(import('./blocks/FormBlock/CheckboxFormControl'), 'CheckboxFormControl'));
-            return <CheckboxFormControl {...props} />;
-        case 'SelectFormControl':
-            const SelectFormControl = dynamic(() => namedComponent(import('./blocks/FormBlock/SelectFormControl'), 'SelectFormControl'));
-            return <SelectFormControl {...props} />;
-        case 'TextFormControl':
-            const TextFormControl = dynamic(() => namedComponent(import('./blocks/FormBlock/TextFormControl'), 'TextFormControl'));
-            return <TextFormControl {...props} />;
-        case 'TextareaFormControl':
-            const TextareaFormControl = dynamic(() => namedComponent(import('./blocks/FormBlock/TextareaFormControl'), 'TextareaFormControl'));
-            return <TextareaFormControl {...props} />;
-        default:
-            throw new Error(`No component found for ${JSON.stringify(props, null, 2)}`);
+    const Component = componentsMap[props.type] as ComponentType<Props>;
+    if (!Component) {
+        throw new Error(`No component found for ${JSON.stringify(props, null, 2)}`);
     }
+    return <Component {...props} />;
 };
 
 const namedComponent = async <T, N extends keyof T>(modPromise: Promise<T>, exportName: N) => {

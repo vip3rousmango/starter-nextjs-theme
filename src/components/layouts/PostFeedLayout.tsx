@@ -1,20 +1,18 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import * as types from '.contentlayer/types';
-import { FC } from 'react';
+import type * as types from 'types';
 
 import { Link } from '../atoms/Link';
-import { getBaseLayoutComponent } from '../../utils/base-layout';
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
 import { PostFeedSection } from '../sections/PostFeedSection';
 import { DynamicComponent } from '../DynamicComponent';
-import { mapSections } from '../sections/mapSection';
-import { resolveBlogPostLayout } from '../../utils/data-helpers';
+import { resolvePropsForSections } from '../sections/mapSection';
+import { resolveBlogPostLayout } from '../../utils/static-resolver-utils';
+import { toFieldPath } from '../../utils/annotations';
 
-export type Props = ReturnType<typeof resolveProps>;
+export type Props = Awaited<ReturnType<typeof resolveProps>>;
 
-export const PostFeedLayout: FC<Props> = ({ page, site }) => {
-    const BaseLayout = getBaseLayoutComponent(page.baseLayout!, site.baseLayout!);
+export const PostFeedLayout: React.FC<Props> = (page) => {
     const { title, topSections, bottomSections, pageIndex, baseUrlPath, numOfPages, postFeed, items } = page;
     const postFeedColors = postFeed?.colors ?? 'colors-a';
     const postFeedWidth = postFeed?.styles?.self?.width ?? 'wide';
@@ -22,60 +20,53 @@ export const PostFeedLayout: FC<Props> = ({ page, site }) => {
     const pageLinks = <PageLinks {...{ pageIndex, baseUrlPath, numOfPages }} />;
 
     return (
-        <BaseLayout page={page} site={site}>
-            <main id="main" className="layout page-layout">
-                {title && (
-                    <div className={classNames('flex', 'py-12', 'lg:py-14', 'px-4', postFeedColors, mapStyles({ justifyContent: postFeedJustifyContent }))}>
-                        <h1
-                            className={classNames('w-full', mapMaxWidthStyles(postFeedWidth), page?.styles?.title ? mapStyles(page?.styles?.title) : null)}
-                            data-sb-field-path="title"
-                        >
-                            {title}
-                        </h1>
-                    </div>
-                )}
-                {topSections && topSections.length > 0 && (
-                    <div data-sb-field-path="topSections">
-                        {topSections.map((section, index) => (
-                            <DynamicComponent key={index} {...section} data-sb-field-path={`topSections.${index}`} />
-                        ))}
-                    </div>
-                )}
-                <PostFeedSection {...postFeed} posts={items} pageLinks={pageLinks} data-sb-field-path="postFeed" />
-                {bottomSections && bottomSections.length > 0 && (
-                    <div data-sb-field-path="bottomSections">
-                        {bottomSections.map((section, index) => (
-                            <DynamicComponent key={index} {...section} data-sb-field-path={`bottomSections.${index}`} />
-                        ))}
-                    </div>
-                )}
-            </main>
-        </BaseLayout>
+        <main id="main" className="layout page-layout">
+            {title && (
+                <div className={classNames('flex', 'py-12', 'lg:py-14', 'px-4', postFeedColors, mapStyles({ justifyContent: postFeedJustifyContent }))}>
+                    <h1
+                        className={classNames('w-full', mapMaxWidthStyles(postFeedWidth), page?.styles?.title ? mapStyles(page?.styles?.title) : null)}
+                        {...toFieldPath('title')}
+                    >
+                        {title}
+                    </h1>
+                </div>
+            )}
+            {topSections && topSections.length > 0 && (
+                <div {...toFieldPath('topSections')}>
+                    {topSections.map((section, index) => (
+                        <DynamicComponent key={index} {...section} {...toFieldPath(`topSections.${index}`)} />
+                    ))}
+                </div>
+            )}
+            <PostFeedSection {...postFeed} posts={items} pageLinks={pageLinks} {...toFieldPath('postFeed')} />
+            {bottomSections && bottomSections.length > 0 && (
+                <div {...toFieldPath('bottomSections')}>
+                    {bottomSections.map((section, index) => (
+                        <DynamicComponent key={index} {...section} {...toFieldPath(`bottomSections.${index}`)} />
+                    ))}
+                </div>
+            )}
+        </main>
     );
 };
 
-export type PartialPostFeedLayout = Partial<Omit<types.PostFeedLayout, 'postFeed'> & { postFeed: Partial<types.PagedPostsSection> }>
+export type PartialPostFeedLayout = Partial<Omit<types.PostFeedLayout, 'postFeed'> & { postFeed: Partial<types.PagedPostsSection> }>;
 
-export const resolveProps = (postFeedLayout: PartialPostFeedLayout & types.Pagination<types.PostLayout>, allDocuments: types.DocumentTypes[]) => {
-    const config = allDocuments.find(types.isType('Config'))!;
-    const items = postFeedLayout.items.map(((post) => {
+export const resolveProps = async (postFeedLayout: PartialPostFeedLayout & types.Pagination<types.PostLayout>, allDocuments: types.DocumentTypes[]) => {
+    const items = postFeedLayout.items.map((post) => {
         return resolveBlogPostLayout(post, allDocuments);
-    }));
+    });
 
     return {
+        ...postFeedLayout,
         type: 'PostFeedLayout' as const,
-        site: { ...config, baseLayout: null },
-        page: {
-            ...postFeedLayout,
-            items,
-            topSections: mapSections(postFeedLayout.topSections ?? [], allDocuments),
-            bottomSections: mapSections(postFeedLayout.bottomSections ?? [], allDocuments),
-            baseLayout: null
-        }
+        items,
+        topSections: await resolvePropsForSections(postFeedLayout.topSections ?? [], allDocuments),
+        bottomSections: await resolvePropsForSections(postFeedLayout.bottomSections ?? [], allDocuments)
     };
 };
 
-const PageLinks: FC<{ pageIndex: number; baseUrlPath: string; numOfPages: number }> = ({ pageIndex, baseUrlPath, numOfPages }) => {
+const PageLinks: React.FC<{ pageIndex: number; baseUrlPath: string; numOfPages: number }> = ({ pageIndex, baseUrlPath, numOfPages }) => {
     if (numOfPages < 2) {
         return null;
     }
@@ -133,7 +124,7 @@ const PageLinks: FC<{ pageIndex: number; baseUrlPath: string; numOfPages: number
     return <div className={classNames('flex flex-row items-center justify-center mt-12 sm:mt-20')}>{pageLinks}</div>;
 };
 
-const PageLink: FC<{ pageIndex: number; buttonLabel: string | number; baseUrlPath: string }> = ({ pageIndex, buttonLabel, baseUrlPath }) => {
+const PageLink: React.FC<{ pageIndex: number; buttonLabel: string | number; baseUrlPath: string }> = ({ pageIndex, buttonLabel, baseUrlPath }) => {
     return (
         <Link href={urlPathForPageAtIndex(pageIndex, baseUrlPath)} className="px-4 py-2 mx-2 sb-component-button sb-component-button-secondary">
             {buttonLabel}
@@ -141,7 +132,7 @@ const PageLink: FC<{ pageIndex: number; buttonLabel: string | number; baseUrlPat
     );
 };
 
-const PageLinkDisabled: FC<{ buttonLabel: string | number }> = ({ buttonLabel }) => {
+const PageLinkDisabled: React.FC<{ buttonLabel: string | number }> = ({ buttonLabel }) => {
     return (
         <span key="next" className="px-4 py-2 mx-2 opacity-25 sb-component-button sb-component-button-secondary">
             {buttonLabel}
@@ -149,7 +140,7 @@ const PageLinkDisabled: FC<{ buttonLabel: string | number }> = ({ buttonLabel })
     );
 };
 
-const Ellipsis: FC = () => <span className="px-4 py-2 mx-2">…</span>;
+const Ellipsis: React.FC = () => <span className="px-4 py-2 mx-2">…</span>;
 
 function urlPathForPageAtIndex(pageIndex: number, baseUrlPath: string) {
     return pageIndex === 0 ? baseUrlPath : `${baseUrlPath}/page/${pageIndex + 1}`;

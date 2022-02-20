@@ -78,7 +78,7 @@ const TAILWIND_MAP = {
     }
 };
 
-export function mapStylesToClassNames(styles: Record<string, any>) {
+export function mapStylesToClassNames(styles) {
     return Object.entries(styles)
         .map(([prop, value]) => {
             if (prop in TAILWIND_MAP) {

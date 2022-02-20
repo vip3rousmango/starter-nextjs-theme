@@ -1,16 +1,15 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import { FC } from 'react';
-import type * as types from '.contentlayer/types';
-import { StackbitFieldPath } from '../../../utils/stackbit';
+import type * as types from 'types';
+import { toFieldPath, pickDataAttrs, StackbitFieldPath } from '../../../utils/annotations';
 
 export type Props = types.SelectFormControl & StackbitFieldPath;
 
-export const SelectFormControl: FC<Props> = (props) => {
+export const SelectFormControl: React.FC<Props> = (props) => {
     const width = props.width ?? 'full';
     const labelId = `${props.name}-label`;
     const options = props.options ?? [];
-    const attr: any = {};
+    const attr: React.SelectHTMLAttributes<HTMLSelectElement> = {};
     if (props.label) {
         attr['aria-labelledby'] = labelId;
     }
@@ -22,27 +21,27 @@ export const SelectFormControl: FC<Props> = (props) => {
             className={classNames('sb-form-control', {
                 'sm:col-span-2': width === 'full'
             })}
-            data-sb-field-path={props['data-sb-field-path']}
+            {...pickDataAttrs(props)}
         >
             {props.label && (
                 <label
                     id={labelId}
                     className={classNames('sb-label', { 'sr-only': props.hideLabel })}
                     htmlFor={props.name}
-                    data-sb-field-path=".label .name#@for"
+                    {...toFieldPath('.label', '.name#@for')}
                 >
                     {props.label}
                 </label>
             )}
-            <select id={props.name} className="sb-select" name={props.name} {...attr} data-sb-field-path=".name#@id .name#@name .options">
+            <select id={props.name} className="sb-select" name={props.name} {...attr} {...toFieldPath('.name#@id', '.name#@name', '.options')}>
                 {props.defaultValue && (
-                    <option value="" data-sb-field-path=".defaultValue">
+                    <option value="" {...toFieldPath('.defaultValue')}>
                         {props.defaultValue}
                     </option>
                 )}
                 {options.length > 0 &&
                     options.map((option, index) => (
-                        <option key={index} value={option} data-sb-field-path={`.${index}`}>
+                        <option key={index} value={option} {...toFieldPath(`.${index}`)}>
                             {option}
                         </option>
                     ))}

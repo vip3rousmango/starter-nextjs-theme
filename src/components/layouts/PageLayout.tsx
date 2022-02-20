@@ -1,43 +1,36 @@
 import * as React from 'react';
-import * as types from '.contentlayer/types';
-import { FC } from 'react';
+import type * as types from 'types';
 
-import { getBaseLayoutComponent } from '../../utils/base-layout';
 import { DynamicComponent } from '../DynamicComponent';
-import { mapSections } from '../sections/mapSection';
+import { resolvePropsForSections } from '../sections/mapSection';
+import { toFieldPath } from '../../utils/annotations';
 
-export type Props = ReturnType<typeof resolveProps>;
+export type Props = Awaited<ReturnType<typeof resolveProps>>;
 
-export const PageLayout: FC<Props> = (props) => {
-    const { page, site } = props;
-    const BaseLayout = getBaseLayoutComponent(page.baseLayout, site.baseLayout);
-
+export const PageLayout: React.FC<Props> = (page) => {
     return (
-        <BaseLayout page={page} site={site}>
-            <main id="main" className="sb-layout sb-page-layout">
-                {page.title && (
-                    <h1 className="sr-only" data-sb-field-path="title">
-                        {page.title}
-                    </h1>
-                )}
-                {page.sections.length > 0 && (
-                    <div data-sb-field-path="sections">
-                        {page.sections.map((section, index) => (
-                            <DynamicComponent key={index} {...section} data-sb-field-path={`sections.${index}`} />
-                        ))}
-                    </div>
-                )}
-            </main>
-        </BaseLayout>
+        <main id="main" className="sb-layout sb-page-layout">
+            {page.title && (
+                <h1 className="sr-only" {...toFieldPath('title')}>
+                    {page.title}
+                </h1>
+            )}
+            {page.sections.length > 0 && (
+                <div {...toFieldPath('sections')}>
+                    {page.sections.map((section, index) => (
+                        <DynamicComponent key={index} {...section} {...toFieldPath(`sections.${index}`)} />
+                    ))}
+                </div>
+            )}
+        </main>
     );
 };
 
-export const resolveProps = (page: types.PageLayout, allDocuments: types.DocumentTypes[]) => {
-    const config = allDocuments.filter(types.isType('Config'))[0]!;
-    const sections = mapSections(page.sections, allDocuments);
+export const resolveProps = async (page: types.PageLayout, allDocuments: types.DocumentTypes[]) => {
+    const sections = await resolvePropsForSections(page.sections, allDocuments);
 
     return {
-        site: { ...config, baseLayout: null },
-        page: { ...page, sections, baseLayout: null }
+        ...page,
+        sections
     };
 };

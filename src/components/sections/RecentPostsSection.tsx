@@ -1,17 +1,17 @@
-import { PostFeedSection } from './PostFeedSection';
-import * as types from '.contentlayer/types';
-import {
-    resolveBlogPostLayout,
-    sortPostsByDateDesc
-} from '../../utils/data-helpers';
-import { FC } from 'react';
+import * as React from 'react';
 
-export const RecentPostsSection: FC<Props> = (props) => <PostFeedSection {...props} />;
+import type * as types from 'types';
+import { PostFeedSection } from './PostFeedSection';
+import { sortPostsByDateDesc, resolveBlogPostLayout, filterPostLayouts } from '../../utils/static-resolver-utils';
 
 export type Props = ReturnType<typeof resolveProps>;
 
+export const RecentPostsSection: React.FC<Props> = (props) => {
+    return <PostFeedSection {...props} />;
+};
+
 export const resolveProps = (section: types.RecentPostsSection, allDocuments: types.DocumentTypes[]) => {
-    const allPosts = allDocuments.filter(types.isType('PostLayout'));
+    const allPosts = filterPostLayouts(allDocuments);
     const recentPosts = allPosts
         .sort(sortPostsByDateDesc)
         .slice(0, section.recentCount)

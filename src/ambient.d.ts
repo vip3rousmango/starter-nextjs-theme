@@ -5,3 +5,8 @@ declare module 'sourcebit-target-next' {
 
     const sourcebitDataClient: SourcebitDataClient;
 }
+
+declare module 'sourcebit-target-next/with-remote-data-updates' {
+    import { ComponentType } from 'React';
+    const withRemoteDataUpdates: <T, P extends ComponentType<P>>(component: T) => T;
+}
