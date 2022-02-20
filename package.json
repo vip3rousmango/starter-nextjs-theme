@@ -20,7 +20,6 @@
     "dependencies": {
         "axios": "^0.24.0",
         "classnames": "^2.3.1",
-        "contentlayer": "^0.0.34-dev.10",
         "dayjs": "^1.10.7",
         "jose": "^3.14.3",
         "markdown-to-jsx": "^7.1.3",
