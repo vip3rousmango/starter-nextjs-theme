@@ -9,8 +9,16 @@ export type Pagination<T> = {
 };
 
 export type PostLayoutResolved = Omit<PostLayout, 'author' | 'category'> & {
-    author?: Person;
-    category?: BlogCategory;
+    author?: PersonResolved;
+    category?: BlogCategoryResolved;
 };
+
+export type PersonResolved = Person & {
+    pageUrl?: string;
+}
+
+export type BlogCategoryResolved = BlogCategory & {
+    pageUrl?: string;
+}
 
 export type ConfigWithEnv = Config & { env: any };

@@ -1,4 +1,9 @@
+import path from 'path';
 import * as types from 'types';
+
+import { AllPageLayoutProps, PageProps } from '../components/layouts';
+
+export const BLOG_URL = 'blog';
 
 export function getAllSortedPosts(documents: types.DocumentTypes[]) {
     return filterPostLayouts(documents).sort(sortPostsByDateDesc);
@@ -72,6 +77,44 @@ export function isConfig(document: types.DocumentTypes): document is types.Confi
     return document.type === 'Config';
 }
 
+export function pageProps<T extends AllPageLayoutProps>(pageLayoutProps: T, urlPath: string, documents: types.DocumentTypes[]) {
+    const config = findConfig(documents)!;
+    const configWithEnv: types.ConfigWithEnv = {
+        ...config,
+        env: {
+            ...(process?.env?.URL && { URL: process.env.URL })
+        }
+    };
+
+    const { __metadata, ...rest } = pageLayoutProps;
+    const pageCssClasses = cssClassesFromUrlPath(urlPath);
+
+    return {
+        site: {
+            ...configWithEnv,
+            baseLayout: null
+        },
+        page: {
+            __metadata: {
+                ...pageLayoutProps.__metadata,
+                urlPath,
+                pageCssClasses
+            },
+            baseLayout: null,
+            ...rest,
+        }
+    };
+}
+
+function cssClassesFromUrlPath(urlPath: string) {
+    const parts = splitUrl(urlPath);
+    let css = 'page';
+    return parts.map((part) => {
+        css += `-${part}`;
+        return css;
+    });
+}
+
 export function resolveBlogPostLayout(postLayout: types.PostLayout, allDocuments: types.DocumentTypes[]): types.PostLayoutResolved {
     const allPersons = allDocuments.filter(isPerson);
     const allCategories = allDocuments.filter(isBlogCategory);
@@ -80,8 +123,18 @@ export function resolveBlogPostLayout(postLayout: types.PostLayout, allDocuments
     const category = allCategories.find((doc) => doc.__metadata.id === categoryId);
     return {
         ...rest,
-        ...(author && { author }),
-        ...(category && { category })
+        ...(author && {
+            author: {
+                ...author,
+                ...(author.slug ? { pageUrl: `/${BLOG_URL}/author/${author.slug}` } : null)
+            }
+        }),
+        ...(category && {
+            category: {
+                ...category,
+                ...(category.slug ? { pageUrl: `/${BLOG_URL}/author/${category.slug}` } : null)
+            }
+        })
     };
 }
 
@@ -128,4 +181,20 @@ export function getRootPagePath(pagePath: string) {
         return pagePath;
     }
     return pagePath.substring(0, pagedPathMatch.index);
+}
+
+export function urlPathForDocument(document: types.DocumentTypes) {
+    const relSourcePath = document.__metadata.relSourcePath;
+    const pathObject = path.posix.parse(relSourcePath);
+    const parts = pathObject.dir.split(path.posix.sep).filter(Boolean);
+    if (pathObject.name !== 'index') {
+        parts.push(pathObject.name);
+    }
+    const urlPath = parts.join('/').toLowerCase();
+    return '/' + urlPath;
+}
+
+export function splitUrl(urlPath: string) {
+    const cleanUrlPath = urlPath.replace(/^\/|\/$/g, '');
+    return cleanUrlPath.split('/');
 }

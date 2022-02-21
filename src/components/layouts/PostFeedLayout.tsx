@@ -50,16 +50,13 @@ export const PostFeedLayout: React.FC<Props> = (page) => {
     );
 };
 
-export type PartialPostFeedLayout = Partial<Omit<types.PostFeedLayout, 'postFeed'> & { postFeed: Partial<types.PagedPostsSection> }>;
-
-export const resolveProps = async (postFeedLayout: PartialPostFeedLayout & types.Pagination<types.PostLayout>, allDocuments: types.DocumentTypes[]) => {
+export const resolveProps = async (postFeedLayout: types.PostFeedLayout & types.Pagination<types.PostLayout>, allDocuments: types.DocumentTypes[]) => {
     const items = postFeedLayout.items.map((post) => {
         return resolveBlogPostLayout(post, allDocuments);
     });
 
     return {
         ...postFeedLayout,
-        type: 'PostFeedLayout' as const,
         items,
         topSections: await resolvePropsForSections(postFeedLayout.topSections ?? [], allDocuments),
         bottomSections: await resolvePropsForSections(postFeedLayout.bottomSections ?? [], allDocuments)

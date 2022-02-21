@@ -1,4 +1,9 @@
-export type Metadata = { id: string; pageCssClasses: string; urlPath: string };
+export type Metadata = {
+    id: string;
+    pageCssClasses: string[];
+    urlPath: string;
+    relSourcePath: string;
+};
 
 export type AllTypes = DocumentTypes | NestedTypes;
 export type AllTypeNames = DocumentTypeNames | NestedTypeNames;
@@ -144,15 +149,13 @@ export type PostFeedLayout = {
     /** File path relative to `contentDirPath` */
     __metadata: Metadata;
     type: 'PostFeedLayout';
-    title: string;
+    title?: string;
     /** set to 0 to show all posts on a single page */
-    numOfPostsPerPage: number;
-    postFeed: PagedPostsSection;
-    topSections: Sections[] | undefined;
-    bottomSections: Sections[] | undefined;
-    styles: Styles;
-    /** string file body */
-    body: string;
+    numOfPostsPerPage?: number;
+    postFeed?: PagedPostsSection;
+    topSections?: Sections[];
+    bottomSections?: Sections[];
+    styles?: Styles;
 };
 
 export type PostLayout = {
@@ -174,7 +177,6 @@ export type PostLayout = {
 /** Nested types */
 export type Badge = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'Badge';
     label: string | undefined;
     /** The unique ID for an HTML element, must not contain whitespace */
@@ -184,7 +186,6 @@ export type Badge = {
 
 export type Button = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'Button';
     label: string;
     /** The alternative text for screen readers */
@@ -221,7 +222,6 @@ export type Button = {
 
 export type CheckboxFormControl = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'CheckboxFormControl';
     name: string | undefined;
     label: string | undefined;
@@ -231,7 +231,6 @@ export type CheckboxFormControl = {
 
 export type ContactBlock = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'ContactBlock';
     phoneNumber: string;
     phoneAltText: string;
@@ -245,7 +244,6 @@ export type ContactBlock = {
 
 export type ContactSection = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'ContactSection';
     colors: Colors;
     /** The unique ID for an HTML element, must not contain whitespace */
@@ -260,7 +258,6 @@ export type ContactSection = {
 
 export type CtaSection = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'CtaSection';
     colors: Colors;
     /** The unique ID for an HTML element, must not contain whitespace */
@@ -275,7 +272,6 @@ export type CtaSection = {
 
 export type EmailFormControl = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'EmailFormControl';
     name: string | undefined;
     label: string | undefined;
@@ -287,7 +283,6 @@ export type EmailFormControl = {
 
 export type FaqItem = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'FaqItem';
     question: string;
     answer: string;
@@ -296,7 +291,6 @@ export type FaqItem = {
 
 export type FaqSection = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'FaqSection';
     colors: Colors;
     /** The unique ID for an HTML element, must not contain whitespace */
@@ -310,7 +304,6 @@ export type FaqSection = {
 
 export type FeaturedItem = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'FeaturedItem';
     /** The unique ID for an HTML element, must not contain whitespace */
     elementId: string;
@@ -325,7 +318,6 @@ export type FeaturedItem = {
 
 export type FeaturedItemsSection = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'FeaturedItemsSection';
     title: string;
     subtitle: string;
@@ -341,7 +333,6 @@ export type FeaturedItemsSection = {
 
 export type FeaturedPeopleSection = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'FeaturedPeopleSection';
     colors: Colors;
     /** The unique ID for an HTML element, must not contain whitespace */
@@ -356,7 +347,6 @@ export type FeaturedPeopleSection = {
 
 export type FeaturedPostsSection = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'FeaturedPostsSection';
     title: string | undefined;
     subtitle: string | undefined;
@@ -372,7 +362,6 @@ export type FeaturedPostsSection = {
 
 export type FeatureHighlightSection = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'FeatureHighlightSection';
     colors: Colors;
     /** The unique ID for an HTML element, must not contain whitespace */
@@ -389,7 +378,6 @@ export type FeatureHighlightSection = {
 
 export type Footer = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'Footer';
     colors: Colors;
     logo: ImageBlock;
@@ -405,7 +393,6 @@ export type Footer = {
 
 export type FormBlock = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'FormBlock';
     variant: 'variant-a' | 'variant-b';
     fields: (TextFormControl | EmailFormControl | CheckboxFormControl | SelectFormControl | TextareaFormControl)[] | undefined;
@@ -419,7 +406,6 @@ export type FormBlock = {
 
 export type Header = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'Header';
     headerVariant: 'variant-a' | 'variant-b' | 'variant-c' | 'variant-d' | 'variant-e';
     primaryColors: Colors;
@@ -434,7 +420,6 @@ export type Header = {
 
 export type HeroSection = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'HeroSection';
     colors: Colors;
     /** The unique ID for an HTML element, must not contain whitespace */
@@ -450,7 +435,6 @@ export type HeroSection = {
 
 export type ImageBlock = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'ImageBlock';
     /** The URL of the image */
     url: string;
@@ -465,7 +449,6 @@ export type ImageBlock = {
 
 export type JobList = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'JobList';
     title: string | undefined;
     items: JobListItem[] | undefined;
@@ -473,7 +456,6 @@ export type JobList = {
 
 export type JobListItem = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'JobListItem';
     title: string | undefined;
     location: string | undefined;
@@ -483,7 +465,6 @@ export type JobListItem = {
 
 export type JobsSection = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'JobsSection';
     colors: Colors;
     /** The unique ID for an HTML element, must not contain whitespace */
@@ -496,7 +477,6 @@ export type JobsSection = {
 
 export type Link = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'Link';
     label: string;
     /** The alternative text for screen readers */
@@ -532,7 +512,6 @@ export type Link = {
 
 export type MediaGallerySection = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'MediaGallerySection';
     /** The unique ID for an HTML element, must not contain whitespace */
     elementId: string;
@@ -551,22 +530,20 @@ export type MediaGallerySection = {
 
 export type PagedPostsSection = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'PagedPostsSection';
-    title: string | undefined;
-    subtitle: string | undefined;
-    showDate: boolean;
-    showAuthor: boolean;
-    showExcerpt: boolean;
-    variant: 'variant-a' | 'variant-b' | 'variant-c';
-    actions: (Button | Link)[];
-    styles: Styles;
-    colors: Colors;
+    title?: string;
+    subtitle?: string;
+    showDate?: boolean;
+    showAuthor?: boolean;
+    showExcerpt?: boolean;
+    variant?: 'variant-a' | 'variant-b' | 'variant-c';
+    actions?: (Button | Link)[];
+    styles?: Styles;
+    colors?: Colors;
 };
 
 export type QuoteSection = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'QuoteSection';
     colors: Colors;
     /** The unique ID for an HTML element, must not contain whitespace */
@@ -580,7 +557,6 @@ export type QuoteSection = {
 
 export type RecentPostsSection = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'RecentPostsSection';
     title: string;
     subtitle: string;
@@ -596,7 +572,6 @@ export type RecentPostsSection = {
 
 export type SelectFormControl = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'SelectFormControl';
     name: string | undefined;
     label: string | undefined;
@@ -609,7 +584,6 @@ export type SelectFormControl = {
 
 export type Social = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'Social';
     label: string;
     altText: string;
@@ -628,7 +602,6 @@ export type Styles = {
 
 export type Testimonial = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'Testimonial';
     quote: string;
     name: string | undefined;
@@ -641,7 +614,6 @@ export type Testimonial = {
 
 export type TestimonialsSection = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'TestimonialsSection';
     colors: Colors;
     /** The unique ID for an HTML element, must not contain whitespace */
@@ -655,7 +627,6 @@ export type TestimonialsSection = {
 
 export type TextSection = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'TextSection';
     title: string | undefined;
     subtitle: string | undefined;
@@ -668,7 +639,6 @@ export type TextSection = {
 
 export type TextareaFormControl = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'TextareaFormControl';
     name: string | undefined;
     label: string | undefined;
@@ -680,7 +650,6 @@ export type TextareaFormControl = {
 
 export type TextFormControl = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'TextFormControl';
     name: string | undefined;
     label: string | undefined;
@@ -692,7 +661,6 @@ export type TextFormControl = {
 
 export type VideoBlock = {
     /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
     type: 'VideoBlock';
     title: string | undefined;
     url: string | undefined;

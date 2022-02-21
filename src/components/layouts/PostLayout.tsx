@@ -73,16 +73,15 @@ const PostAttribution: React.FC<{ post: Props }> = ({ post }) => {
     );
 };
 
-const PostAuthor: React.FC<{ author: types.Person }> = ({ author }) => {
+const PostAuthor: React.FC<{ author: types.PersonResolved }> = ({ author }) => {
     const children = (
         <>
             {author.firstName && <span {...toFieldPath('.firstName')}>{author.firstName}</span>}{' '}
             {author.lastName && <span {...toFieldPath('.lastName')}>{author.lastName}</span>}
         </>
     );
-    // TODO why is this condition needed?
-    return author.slug ? (
-        <Link {...toFieldPath('author')} href={`/blog/author/${author.slug}`}>
+    return author.pageUrl ? (
+        <Link {...toFieldPath('author')} href={author.pageUrl}>
             {children}
         </Link>
     ) : (
@@ -90,10 +89,12 @@ const PostAuthor: React.FC<{ author: types.Person }> = ({ author }) => {
     );
 };
 
-const PostCategory: React.FC<{ category: types.BlogCategory }> = ({ category }) => {
-    return (
-        <Link {...toFieldPath('category')} href={`/blog/category/${category.slug}`}>
+const PostCategory: React.FC<{ category: types.BlogCategoryResolved }> = ({ category }) => {
+    return category.pageUrl ? (
+        <Link {...toFieldPath('category')} href={category.pageUrl}>
             {category.title}
         </Link>
+    ) : (
+        <span {...toFieldPath('category')}>{category.title}</span>
     );
 };

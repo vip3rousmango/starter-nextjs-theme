@@ -1,6 +1,7 @@
 declare module 'sourcebit-target-next' {
+    import * as types from 'types';
     export type SourcebitDataClient = {
-        getData: () => Promise<{ pages: any[]; objects: any[] }>;
+        getData: () => Promise<{ pages: any[]; objects: types.DocumentTypes[] }>;
     };
 
     const sourcebitDataClient: SourcebitDataClient;

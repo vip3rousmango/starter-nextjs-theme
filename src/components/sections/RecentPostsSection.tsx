@@ -11,8 +11,7 @@ export const RecentPostsSection: React.FC<Props> = (props) => {
 };
 
 export const resolveProps = (section: types.RecentPostsSection, allDocuments: types.DocumentTypes[]) => {
-    const allPosts = filterPostLayouts(allDocuments);
-    const recentPosts = allPosts
+    const recentPosts = filterPostLayouts(allDocuments)
         .sort(sortPostsByDateDesc)
         .slice(0, section.recentCount)
         .map((post) => resolveBlogPostLayout(post, allDocuments));

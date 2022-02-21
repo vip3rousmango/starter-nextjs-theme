@@ -322,7 +322,7 @@ const PostAttribution: React.FC<{ showAuthor?: boolean; post: types.PostLayoutRe
     );
 };
 
-const PostAuthor: React.FC<{ author: types.Person }> = ({ author }) => {
+const PostAuthor: React.FC<{ author: types.PersonResolved }> = ({ author }) => {
     if (!author) {
         return null;
     }
@@ -332,9 +332,9 @@ const PostAuthor: React.FC<{ author: types.Person }> = ({ author }) => {
             {author.lastName && <span {...toFieldPath('.lastName')}>{author.lastName}</span>}
         </>
     );
-    if (author.slug) {
+    if (author.pageUrl) {
         return (
-            <Link {...toFieldPath('author')} href={`/blog/author/${author.slug}`}>
+            <Link {...toFieldPath('author')} href={author.pageUrl}>
                 {children}
             </Link>
         );
@@ -343,14 +343,16 @@ const PostAuthor: React.FC<{ author: types.Person }> = ({ author }) => {
     }
 };
 
-const PostCategory: React.FC<{ category: types.BlogCategory }> = ({ category }) => {
+const PostCategory: React.FC<{ category: types.BlogCategoryResolved }> = ({ category }) => {
     if (!category) {
         return null;
     }
-    return (
-        <Link {...toFieldPath('category')} href={`/blog/category/${category.slug}`}>
+    return category.pageUrl ? (
+        <Link {...toFieldPath('category')} href={category.pageUrl}>
             {category.title}
         </Link>
+    ) : (
+        <span {...toFieldPath('category')}>{category.title}</span>
     );
 };
 
