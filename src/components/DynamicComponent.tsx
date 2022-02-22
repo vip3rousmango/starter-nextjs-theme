@@ -1,5 +1,5 @@
-import type { ComponentType, FC } from 'react';
 import dynamic from 'next/dynamic';
+import type { ComponentType, FC } from 'react';
 import type { Props as PageLayoutProps } from './layouts/PageLayout';
 import type { Props as PostLayoutProps } from './layouts/PostLayout';
 import type { Props as PostFeedLayoutProps } from './layouts/PostFeedLayout';
