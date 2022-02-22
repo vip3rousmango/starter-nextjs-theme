@@ -11,6 +11,7 @@ import type { SectionsProps } from '../../sections/mapSectionProps';
 
 export type Props = Omit<types.PostFeedLayout, 'topSections' | 'bottomSections'> &
     types.Pagination<PostFeedSectionPostsProps> & {
+        annotateFields?: boolean;
         items: PostFeedSectionPostsProps[];
         topSections: SectionsProps[];
         bottomSections: SectionsProps[];
@@ -29,7 +30,7 @@ export const PostFeedLayout: React.FC<Props> = (page) => {
                 <div className={classNames('flex', 'py-12', 'lg:py-14', 'px-4', postFeedColors, mapStyles({ justifyContent: postFeedJustifyContent }))}>
                     <h1
                         className={classNames('w-full', mapMaxWidthStyles(postFeedWidth), page?.styles?.title ? mapStyles(page?.styles?.title) : null)}
-                        {...toFieldPath('title')}
+                        {...(page.annotateFields ? toFieldPath('title') : null)}
                     >
                         {title}
                     </h1>
@@ -42,7 +43,7 @@ export const PostFeedLayout: React.FC<Props> = (page) => {
                     ))}
                 </div>
             )}
-            <PostFeedSection {...postFeed} posts={items} pageLinks={pageLinks} {...toFieldPath('postFeed')} />
+            <PostFeedSection {...postFeed} posts={items} pageLinks={pageLinks} {...(page.annotateFields ? toFieldPath('postFeed') : null)} />
             {bottomSections && bottomSections.length > 0 && (
                 <div {...toFieldPath('bottomSections')}>
                     {bottomSections.map((section, index) => (

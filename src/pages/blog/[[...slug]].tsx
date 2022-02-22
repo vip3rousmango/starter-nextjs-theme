@@ -23,7 +23,7 @@ const Page: FC<Props> = (props) => {
     const { page, site } = props;
     return (
         <BaseLayout site={site} page={page}>
-            <PostFeedLayout {...page} />;
+            <PostFeedLayout {...page} annotateFields={true} />;
         </BaseLayout>
     );
 };
