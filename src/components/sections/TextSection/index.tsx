@@ -69,7 +69,7 @@ const TextBody: React.FC<Props> = (props) => {
                     className={classNames('sb-markdown', 'sm:text-lg', styles.text ? mapStyles(styles.text) : null, {
                         'mt-6': props.title || props.subtitle
                     })}
-                    fieldName="text"
+                    {...toFieldPath('.text')}
                 />
             )}
         </div>

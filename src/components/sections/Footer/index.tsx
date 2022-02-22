@@ -33,7 +33,7 @@ export const Footer: React.FC<Props> = (props) => {
                             <Markdown
                                 text={props.text}
                                 className={classNames('sb-markdown', 'max-w-xl', { 'mt-8': props.title || props.logo })}
-                                fieldName="text"
+                                {...toFieldPath('.text')}
                             />
                         )}
                     </div>
@@ -69,7 +69,7 @@ export const Footer: React.FC<Props> = (props) => {
                 )}
                 <div className="sb-divider" />
                 <div className="flex flex-col-reverse justify-between pt-6 lg:flex-row">
-                    {props.copyrightText && <Markdown text={props.copyrightText} fieldName="copyrightText" />}
+                    {props.copyrightText && <Markdown text={props.copyrightText} {...toFieldPath('.copyrightText')} />}
                     {legalLinks.length > 0 && (
                         <ul className="flex flex-col mb-6 space-y-2 lg:mb-0 sm:space-y-0 sm:space-x-5 sm:flex-row" {...toFieldPath('.legalLinks')}>
                             {legalLinks.map((link, index) => (

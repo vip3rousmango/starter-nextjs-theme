@@ -72,7 +72,7 @@ const QuoteContent: React.FC<Props> = (props) => {
                 <Markdown
                     text={props.quote}
                     className={classNames('sb-markdown', 'text-3xl', 'sm:text-4xl', styles.quote ? mapStyles(styles.quote) : null)}
-                    fieldName="quote"
+                    {...toFieldPath('.quote')}
                 />
             )}
             {(props.name || props.title) && (

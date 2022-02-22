@@ -55,13 +55,11 @@ export const FeaturedItem: React.FC<Props> = (props) => {
             {props.text && (
                 <Markdown
                     text={props.text}
-                    fieldName=".text"
+                    {...toFieldPath('.text')}
                     className={classNames('sb-markdown', {
                         'mt-4': props.title || props.subtitle
                     })}
-                >
-                    {props.text}
-                </Markdown>
+                />
             )}
             <ItemActions {...props} />
         </article>

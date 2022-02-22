@@ -35,7 +35,7 @@ export const PostLayout: React.FC<Props> = (page) => {
                         <PostAttribution post={page} />
                     </header>
                     {page.markdown_content && (
-                        <Markdown className="max-w-screen-md mx-auto sb-markdown" fieldName="markdown_content" text={page.markdown_content} />
+                        <Markdown className="max-w-screen-md mx-auto sb-markdown" {...toFieldPath('markdown_content')} text={page.markdown_content} />
                     )}
                 </div>
             </article>

@@ -131,7 +131,7 @@ const FaqItem: React.FC<types.FaqItem & StackbitFieldPath> = (props) => {
                 <Markdown
                     text={props.answer}
                     className={classNames('sb-markdown', 'mt-6', props?.styles?.answer ? mapStyles(props?.styles?.answer) : null, !isActive ? 'hidden' : null)}
-                    fieldName="answer"
+                    {...toFieldPath('.answer')}
                 />
             )}
         </div>

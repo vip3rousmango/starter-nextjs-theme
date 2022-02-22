@@ -114,7 +114,7 @@ const JobListItem: React.FC<types.JobListItem & StackbitFieldPath> = (props) => 
                     className={classNames('sb-markdown', {
                         'mt-10 lg:mt-12': props.title || props.location
                     })}
-                    fieldName="text"
+                    {...toFieldPath('.text')}
                 />
             )}
             {actions.length > 0 && (

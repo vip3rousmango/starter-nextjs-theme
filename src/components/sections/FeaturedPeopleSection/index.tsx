@@ -175,7 +175,7 @@ const PeopleVariantB: React.FC<Props> = (props) => {
                                 className={classNames({
                                     'mt-4': person.firstName || person.lastName || person.role
                                 })}
-                                fieldName="bio"
+                                {...toFieldPath('.bio')}
                             />
                         )}
                     </div>
@@ -233,7 +233,7 @@ const PeopleListVariantC: React.FC<{ people: Props['people']; annotIndexStart?: 
                                 {person.role && <span {...toFieldPath('.role')}>{person.role}</span>}
                             </h3>
                         )}
-                        {person.bio && <Markdown text={person.bio} className="sb-markdown" fieldName="bio" />}
+                        {person.bio && <Markdown text={person.bio} className="sb-markdown" {...toFieldPath('.bio')} />}
                     </div>
                 </article>
             ))}

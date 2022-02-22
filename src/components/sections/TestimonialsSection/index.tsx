@@ -92,7 +92,7 @@ const TestimonialVariantA: React.FC<types.Testimonial & { index: number }> = ({ 
                     <Markdown
                         text={testimonial.quote}
                         className="text-3xl sb-markdown sm:text-4xl sm:leading-tight lg:text-5xl lg:leading-tight"
-                        fieldName="quote"
+                        {...toFieldPath('.quote')}
                     />
                 )}
                 {(testimonial.name || testimonial.title) && (
@@ -127,7 +127,7 @@ const TestimonialVariantB: React.FC<types.Testimonial & { index: number }> = ({ 
                 <Markdown
                     text={testimonial.quote}
                     className="text-3xl sb-markdown sm:text-4xl sm:leading-tight lg:text-5xl lg:leading-tight"
-                    fieldName="quote"
+                    {...toFieldPath('.quote')}
                 />
             )}
             {(testimonial.name || testimonial.title || testimonial.image) && (
@@ -170,7 +170,7 @@ const TestimonialVariantC: React.FC<types.Testimonial & { index: number }> = ({ 
                 <Markdown
                     text={testimonial.quote}
                     className="text-3xl sb-markdown sm:text-4xl sm:leading-tight lg:text-5xl lg:leading-tight"
-                    fieldName="quote"
+                    {...toFieldPath('.quote')}
                 />
             )}
             {(testimonial.name || testimonial.title || testimonial.image) && (

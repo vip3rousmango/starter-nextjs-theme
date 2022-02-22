@@ -112,7 +112,7 @@ const ContactBody: React.FC<Props> = (props) => {
                     className={classNames('sb-markdown', styles.text ? mapStyles(styles.text) : null, {
                         'mt-4': props.title
                     })}
-                    fieldName="text"
+                    {...toFieldPath('.text')}
                 />
             )}
         </>
