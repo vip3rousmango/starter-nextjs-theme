@@ -1,11 +1,11 @@
 import * as React from 'react';
 import classNames from 'classnames';
-
+import { toFieldPath, pickDataAttrs } from '@stackbit/annotations';
 import type * as types from 'types';
+
 import { mapStylesToClassNames as mapStyles } from '../../../utils/map-styles-to-class-names';
 import { Action } from '../../atoms/Action';
 import { FeaturedItem } from './FeaturedItem';
-import { toFieldPath, pickDataAttrs } from '../../../utils/annotations';
 
 export type Props = types.FeaturedItemsSection;
 

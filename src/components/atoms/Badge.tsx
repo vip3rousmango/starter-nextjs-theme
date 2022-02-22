@@ -1,9 +1,9 @@
 import * as React from 'react';
 import classNames from 'classnames';
+import { toFieldPath, getFieldPath, StackbitFieldPath } from '@stackbit/annotations';
 import type * as types from 'types';
 
 import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-class-names';
-import { toFieldPath, getFieldPath, StackbitFieldPath } from '../../utils/annotations';
 
 export type Props = types.Badge & StackbitFieldPath & { className?: string };
 

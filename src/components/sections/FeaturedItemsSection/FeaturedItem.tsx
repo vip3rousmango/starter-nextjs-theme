@@ -1,12 +1,12 @@
 import * as React from 'react';
 import classNames from 'classnames';
-
+import { toFieldPath, pickDataAttrs, StackbitFieldPath } from '@stackbit/annotations';
 import type * as types from 'types';
+
 import { mapStylesToClassNames as mapStyles } from '../../../utils/map-styles-to-class-names';
 import { Action } from '../../atoms/Action';
 import { ImageBlock } from '../../blocks/ImageBlock';
-import { Markdown } from '../../Markdown';
-import { toFieldPath, pickDataAttrs, StackbitFieldPath } from '../../../utils/annotations';
+import { Markdown } from '../../atoms/Markdown';
 
 export type Props = types.FeaturedItem & StackbitFieldPath;
 

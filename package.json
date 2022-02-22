@@ -18,6 +18,7 @@
         "analyze:browser": "BUNDLE_ANALYZE=browser next build"
     },
     "dependencies": {
+        "@stackbit/annotations": "^0.1.0",
         "axios": "^0.24.0",
         "classnames": "^2.3.1",
         "dayjs": "^1.10.7",

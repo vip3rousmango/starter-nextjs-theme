@@ -1,7 +1,6 @@
 import * as React from 'react';
 import NextLink from 'next/link';
-
-import { StackbitFieldPath } from '../../utils/annotations';
+import { StackbitFieldPath } from '@stackbit/annotations';
 
 type AnchorProps = React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>;
 

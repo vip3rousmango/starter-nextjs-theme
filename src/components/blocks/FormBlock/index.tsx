@@ -1,11 +1,11 @@
 import * as React from 'react';
 import axios from 'axios';
 import classNames from 'classnames';
+import { toFieldPath, StackbitFieldPath } from '@stackbit/annotations';
 import type * as types from 'types';
 
 import { mapStylesToClassNames as mapStyles } from '../../../utils/map-styles-to-class-names';
 import { DynamicComponent } from '../../DynamicComponent';
-import { toFieldPath, StackbitFieldPath } from '../../../utils/annotations';
 
 export type Props = types.FormBlock & { className?: string } & StackbitFieldPath;
 type State = any;

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import classNames from 'classnames';
+import { toFieldPath, getFieldPath, StackbitFieldPath } from '@stackbit/annotations';
 import type * as types from 'types';
 
 import { Link } from './Link';
 import { iconMap } from '../svgs';
-import { toFieldPath, getFieldPath, StackbitFieldPath } from '../../utils/annotations';
 
 export type Props = (types.Link | types.Button) & StackbitFieldPath & { className?: string };
 

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import classNames from 'classnames';
+import { StackbitFieldPath, toFieldPath, getFieldPath } from '@stackbit/annotations';
 import type * as types from 'types';
 
 import { Link } from './Link';
 import { iconMap } from '../svgs';
-import { toFieldPath, StackbitFieldPath, getFieldPath } from '../../utils/annotations';
 
 export type Props = types.Social & { className?: string } & StackbitFieldPath;
 

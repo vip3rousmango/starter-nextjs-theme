@@ -1,22 +1,24 @@
 import path from 'path';
 import * as types from 'types';
 
-import { AllPageLayoutProps, PageProps } from '../components/layouts';
+import { PageProps, AllPageLayoutProps } from '../components/layouts';
 
-export const BLOG_URL = 'blog';
+export const BLOG_URL = '/blog';
+export const BLOG_AUTHOR_URL = `${BLOG_URL}/author`;
+export const BLOG_CATEGORY_URL = `${BLOG_URL}/category`;
 
-export function getAllSortedPosts(documents: types.DocumentTypes[]) {
-    return filterPostLayouts(documents).sort(sortPostsByDateDesc);
+export function findAndSortAllPost(documents: types.DocumentTypes[]) {
+    return findPostLayouts(documents).sort(sortPostsByDateDesc);
 }
 
-export function getSortedCategoryPosts(documents: types.DocumentTypes[], categoryId: string) {
-    return filterPostLayouts(documents)
+export function findAndSortCategoryPosts(documents: types.DocumentTypes[], categoryId: string) {
+    return findPostLayouts(documents)
         .filter((post) => post.category === categoryId)
         .sort(sortPostsByDateDesc);
 }
 
-export function getAuthorPostsSorted(documents: types.DocumentTypes[], authorId: string) {
-    return filterPostLayouts(documents)
+export function findAndSortAuthorPosts(documents: types.DocumentTypes[], authorId: string) {
+    return findPostLayouts(documents)
         .filter((post) => post.author === authorId)
         .sort(sortPostsByDateDesc);
 }
@@ -33,15 +35,15 @@ export function findCategoryBySlug(documents: types.DocumentTypes[], slug: strin
     return documents.filter(isBlogCategory).find((category) => category.slug === slug);
 }
 
-export function filterPageLayouts(documents: types.DocumentTypes[]) {
+export function findPageLayouts(documents: types.DocumentTypes[]) {
     return documents.filter(isPageLayout);
 }
 
-export function filterPostLayouts(documents: types.DocumentTypes[]) {
+export function findPostLayouts(documents: types.DocumentTypes[]) {
     return documents.filter(isPostLayout);
 }
 
-export function filterPersons(documents: types.DocumentTypes[]) {
+export function findPeople(documents: types.DocumentTypes[]) {
     return documents.filter(isPerson);
 }
 
@@ -77,32 +79,25 @@ export function isConfig(document: types.DocumentTypes): document is types.Confi
     return document.type === 'Config';
 }
 
-export function pageProps<T extends AllPageLayoutProps>(pageLayoutProps: T, urlPath: string, documents: types.DocumentTypes[]) {
+export function pageProps<T extends AllPageLayoutProps>(pageLayoutProps: T, urlPath: string, documents: types.DocumentTypes[]): PageProps<T> {
     const config = findConfig(documents)!;
-    const configWithEnv: types.ConfigWithEnv = {
-        ...config,
-        env: {
-            ...(process?.env?.URL && { URL: process.env.URL })
-        }
-    };
-
-    const { __metadata, ...rest } = pageLayoutProps;
     const pageCssClasses = cssClassesFromUrlPath(urlPath);
 
     return {
         site: {
-            ...configWithEnv,
-            baseLayout: null
+            ...config,
+            env: {
+                ...(process?.env?.URL && { URL: process.env.URL })
+            }
         },
         page: {
+            ...pageLayoutProps,
             __metadata: {
                 ...pageLayoutProps.__metadata,
                 urlPath,
                 pageCssClasses
-            },
-            baseLayout: null,
-            ...rest,
-        }
+            }
+        } as T
     };
 }
 
@@ -115,29 +110,86 @@ function cssClassesFromUrlPath(urlPath: string) {
     });
 }
 
-export function resolveBlogPostLayout(postLayout: types.PostLayout, allDocuments: types.DocumentTypes[]): types.PostLayoutResolved {
-    const allPersons = allDocuments.filter(isPerson);
+export function splitUrl(urlPath: string) {
+    const cleanUrlPath = urlPath.replace(/^\/|\/$/g, '');
+    return cleanUrlPath.split('/');
+}
+
+export type PostLayoutResolved = Omit<types.PostLayout, 'author' | 'category'> & {
+    author?: types.Person & { pageUrl?: string };
+    category?: types.BlogCategory & { pageUrl?: string };
+};
+
+export function resolvePostLayout(postLayout: types.PostLayout, allDocuments: types.DocumentTypes[]): PostLayoutResolved {
+    const allPeople = allDocuments.filter(isPerson);
     const allCategories = allDocuments.filter(isBlogCategory);
-    const { author: authorId, category: categoryId, ...rest } = postLayout;
-    const author = allPersons.find((doc) => doc.__metadata.id === authorId);
+    const { author: authorId, category: categoryId, __metadata, ...rest } = postLayout;
+    const author = allPeople.find((doc) => doc.__metadata.id === authorId);
     const category = allCategories.find((doc) => doc.__metadata.id === categoryId);
     return {
+        __metadata: {
+            ...__metadata,
+            urlPath: urlPathForDocument(postLayout)
+        },
         ...rest,
         ...(author && {
             author: {
                 ...author,
-                ...(author.slug ? { pageUrl: `/${BLOG_URL}/author/${author.slug}` } : null)
+                ...(author.slug ? { pageUrl: `${BLOG_AUTHOR_URL}/${author.slug}` } : null)
             }
         }),
         ...(category && {
             category: {
                 ...category,
-                ...(category.slug ? { pageUrl: `/${BLOG_URL}/author/${category.slug}` } : null)
+                ...(category.slug ? { pageUrl: `${BLOG_CATEGORY_URL}/${category.slug}` } : null)
             }
         })
     };
 }
 
+/**
+ * Takes a document and returns URL path for that document.
+ * The URL path is inferred from the document's filepath relative to the source
+ * folder this document was loaded from.
+ *
+ * The return URL path is always prefixed with forward slash. If file name is
+ * 'index', it is not included in the URL path.
+ *
+ * For example, if the source folder for page documents is content/pages, and
+ * a file representing a was loaded from content/pages/company/about.md, the
+ * inferred URL path will be "/company/about"
+ *
+ * @param document
+ */
+export function urlPathForDocument(document: types.DocumentTypes) {
+    const relSourcePath = document.__metadata.relSourcePath;
+    const pathObject = path.posix.parse(relSourcePath);
+    const parts = pathObject.dir.split(path.posix.sep).filter(Boolean);
+    if (pathObject.name !== 'index') {
+        parts.push(pathObject.name);
+    }
+    const urlPath = parts.join('/').toLowerCase();
+    return '/' + urlPath;
+}
+
+/**
+ * Takes URL path, collection of items to paginate, and number of items per page,
+ * and returns array of paginated URL paths in the '.../page/{N}' form, where N
+ * is the page number starting with 2. The first page is always the original
+ * URL path.
+ *
+ * @example
+ * getPagedPathsForPagePath('/blog', ['a', 'b', 'c', 'd', 'e', 'f', 'g'], 3)
+ * => [
+ *   '/blog',
+ *   '/blog/2',
+ *   '/blog/3'
+ * ]
+ *
+ * @param pageUrlPath
+ * @param items
+ * @param numOfItemsPerPage
+ */
 export function getPagedPathsForPagePath(pageUrlPath: string, items: any[], numOfItemsPerPage: number) {
     if (numOfItemsPerPage === 0) {
         return [pageUrlPath];
@@ -150,6 +202,27 @@ export function getPagedPathsForPagePath(pageUrlPath: string, items: any[], numO
     return paths;
 }
 
+/**
+ * Takes paginated URL path in the '.../page/{N}' form, collection of items,
+ * and number of items per page, and returns the Pagination object with items
+ * matching the page number specified in the URL path.
+ *
+ * The first page should not have '.../page/{N}'
+ *
+ * @example
+ * getPaginationDataForPagePath('/blog/page/2', ['a', 'b', 'c', 'd', 'e', 'f', 'g'], 3)
+ * => {
+ *     pageIndex: 1,
+ *     baseUrlPath: '/blog'
+ *     numOfPages: 3,
+ *     numOfTotalItems: 7,
+ *     items: ['d', 'e', 'f']
+ * }
+ *
+ * @param pageUrlPath Paginated URL path in the '.../page/{N}' form
+ * @param items Array of items to paginate
+ * @param numOfItemsPerPage Number of items per page
+ */
 export function getPaginationDataForPagePath<T>(pageUrlPath: string, items: T[], numOfItemsPerPage: number): types.Pagination<T> {
     const baseUrlPath = getRootPagePath(pageUrlPath);
     if (numOfItemsPerPage === 0) {
@@ -175,26 +248,24 @@ export function getPaginationDataForPagePath<T>(pageUrlPath: string, items: T[],
     };
 }
 
+/**
+ * Takes paginated URL path in the '.../page/{N}' form, and returns the base
+ * URL path without the '/page/{N}' part.
+ *
+ * @example
+ * getRootPagePath('/blog/page/3');
+ * => '/blog'
+ * getRootPagePath('/blog/category/react/page/2');
+ * => '/blog/category/react'
+ * getRootPagePath('/regular/page');
+ * => '/regular/page'
+ *
+ * @param pagePath Paginated URL path in the '.../page/{N}' form
+ */
 export function getRootPagePath(pagePath: string) {
     const pagedPathMatch = pagePath.match(/\/page\/\d+$/);
     if (!pagedPathMatch) {
         return pagePath;
     }
     return pagePath.substring(0, pagedPathMatch.index);
-}
-
-export function urlPathForDocument(document: types.DocumentTypes) {
-    const relSourcePath = document.__metadata.relSourcePath;
-    const pathObject = path.posix.parse(relSourcePath);
-    const parts = pathObject.dir.split(path.posix.sep).filter(Boolean);
-    if (pathObject.name !== 'index') {
-        parts.push(pathObject.name);
-    }
-    const urlPath = parts.join('/').toLowerCase();
-    return '/' + urlPath;
-}
-
-export function splitUrl(urlPath: string) {
-    const cleanUrlPath = urlPath.replace(/^\/|\/$/g, '');
-    return cleanUrlPath.split('/');
 }

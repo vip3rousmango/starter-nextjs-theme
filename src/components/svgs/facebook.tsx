@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { pickDataAttrs, StackbitFieldPath } from '../../utils/annotations';
+import { pickDataAttrs, StackbitFieldPath } from '@stackbit/annotations';
 
 export default function Facebook({ className, ...props }: StackbitFieldPath & { className: string }) {
     return (

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
+import { toFieldPath, pickDataAttrs, StackbitFieldPath } from '@stackbit/annotations';
 import type * as types from 'types';
-import { toFieldPath, pickDataAttrs, StackbitFieldPath } from '../../../utils/annotations';
 
 export type Props = types.SelectFormControl & StackbitFieldPath;
 
