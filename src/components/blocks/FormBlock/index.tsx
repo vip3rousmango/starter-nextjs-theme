@@ -8,7 +8,10 @@ import { mapStylesToClassNames as mapStyles } from '../../../utils/map-styles-to
 import { DynamicComponent } from '../../DynamicComponent';
 
 export type Props = types.FormBlock & { className?: string } & StackbitFieldPath;
-type State = any;
+type State = {
+    submitted: boolean;
+    error: boolean;
+};
 
 // TODO rewrite as functional component
 export class FormBlock extends React.Component<Props, State> {
@@ -19,7 +22,7 @@ export class FormBlock extends React.Component<Props, State> {
 
     formRef = React.createRef<HTMLFormElement>();
 
-    formHandler(data: any, url: string) {
+    formHandler(data: Record<string, FormDataEntryValue>, url: string) {
         return axios({
             method: 'post',
             url,
@@ -27,7 +30,7 @@ export class FormBlock extends React.Component<Props, State> {
         });
     }
 
-    handleSubmit(event: any, formAction: any) {
+    handleSubmit(event: React.FormEvent<HTMLFormElement>, formAction?: string) {
         event.preventDefault();
 
         const data = new FormData(this.formRef.current!);
@@ -37,6 +40,10 @@ export class FormBlock extends React.Component<Props, State> {
             submitted: false,
             error: false
         });
+
+        if (!formAction) {
+            return;
+        }
 
         this.formHandler(value, formAction)
             .then(() => {

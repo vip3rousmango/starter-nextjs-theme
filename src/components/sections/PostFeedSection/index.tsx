@@ -70,7 +70,7 @@ const PostFeedHeader: React.FC<Props> = (props) => {
     if (!props.title && !props.subtitle) {
         return null;
     }
-    const styles = props.styles ?? ({} as any);
+    const styles = props.styles ?? {};
     return (
         <div>
             {props.title && (
