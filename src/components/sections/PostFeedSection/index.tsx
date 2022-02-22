@@ -10,20 +10,10 @@ import { Action } from '../../atoms/Action';
 import { ImageBlock } from '../../blocks/ImageBlock';
 import ArrowRightIcon from '../../svgs/arrow-right';
 
-export type Props = {
-    title?: string;
-    subtitle?: string;
-    elementId?: string;
-    colors?: string;
-    variant?: 'variant-a' | 'variant-b' | 'variant-c';
-    styles?: types.Styles;
+export type Props = types.PostFeedSection & {
     pageLinks?: React.ReactNode;
     posts?: PostFeedSectionPostsProps[];
     annotatePosts?: boolean;
-    showDate?: boolean;
-    showExcerpt?: boolean;
-    showAuthor?: boolean;
-    actions?: (types.Button | types.Link)[];
 };
 
 export type PostFeedSectionPostsProps = Omit<types.PostLayout, 'author' | 'category'> & {

@@ -9,14 +9,13 @@ export const VideoBlock: React.FC<Props> = (props) => {
     if (!props.url) {
         return null;
     }
-    const cssId = props.elementId ?? null;
     const cssClasses = props.className ?? null;
     const aspectRatio = props.aspectRatio ?? '16:9';
     const annotationPrefix = props['data-sb-field-path'];
     const annotations = annotationPrefix ? [`${annotationPrefix}`, `${annotationPrefix}.elementId#@id`] : [];
     return (
         <div
-            id={cssId}
+            id={props.elementId}
             className={classNames(
                 'sb-component',
                 'sb-component-block',

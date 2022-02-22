@@ -19,6 +19,11 @@ fields:
     label: Author
     models:
       - Person
+  - type: reference
+    name: category
+    label: Category
+    models:
+      - BlogCategory
   - type: string
     name: excerpt
     label: Excerpt

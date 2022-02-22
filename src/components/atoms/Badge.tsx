@@ -12,8 +12,8 @@ export const Badge: React.FC<Props> = (props) => {
     if (!label) {
         return null;
     }
-    const annotationPrefix = getFieldPath(props);
-    const annotations = annotationPrefix ? [`${annotationPrefix}`, `${annotationPrefix}.elementId#@id`] : [];
+    const fieldPath = getFieldPath(props);
+    const annotations = fieldPath ? [`${fieldPath}`, `${fieldPath}.elementId#@id`] : [];
     const styles = props.styles?.self ?? {};
     return (
         <div
