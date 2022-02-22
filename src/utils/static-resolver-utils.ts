@@ -79,7 +79,7 @@ export function isConfig(document: types.DocumentTypes): document is types.Confi
     return document.type === 'Config';
 }
 
-export function pageProps<T extends AllPageLayoutProps>(pageLayoutProps: T, urlPath: string, documents: types.DocumentTypes[]): PageProps<T> {
+export function toPageProps<T extends AllPageLayoutProps>(pageLayoutProps: T, urlPath: string, documents: types.DocumentTypes[]): PageProps<T> {
     const config = findConfig(documents)!;
     const pageCssClasses = cssClassesFromUrlPath(urlPath);
 

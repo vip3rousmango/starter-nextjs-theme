@@ -10,4 +10,3 @@ export type Props = Omit<types.FeaturedPostsSection, 'posts'> & {
 export const FeaturedPostsSection: React.FC<Props> = (props) => {
     return <PostFeedSection {...props} annotatePosts={true} />;
 };
-

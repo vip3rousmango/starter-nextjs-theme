@@ -4,7 +4,7 @@ import { resolvePostLayout } from '../../../utils/static-resolver-utils';
 import { mapSectionProps } from '../../sections/mapSectionProps';
 import type { Props as PostFeedLayoutProps } from './index';
 
-export const resolveProps = async (
+export const mapProps = async (
     postFeedLayout: types.PostFeedLayout & types.Pagination<types.PostLayout>,
     allDocuments: types.DocumentTypes[]
 ): Promise<PostFeedLayoutProps> => {

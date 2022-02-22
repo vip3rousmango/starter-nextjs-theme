@@ -27,4 +27,3 @@ export const PageLayout: React.FC<Props> = (page) => {
         </main>
     );
 };
-

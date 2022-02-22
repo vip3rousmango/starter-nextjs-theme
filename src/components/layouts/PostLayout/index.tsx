@@ -15,7 +15,7 @@ export type Props = Omit<types.PostLayout, 'author' | 'category' | 'bottomSectio
 };
 
 export type PersonProps = types.Person & { pageUrl?: string };
-export type CategoryProps = types.BlogCategory & { pageUrl?: string; };
+export type CategoryProps = types.BlogCategory & { pageUrl?: string };
 
 export const PostLayout: React.FC<Props> = (page) => {
     const dateTimeAttr = dayjs(page.date).format('YYYY-MM-DD HH:mm:ss');

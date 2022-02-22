@@ -2,7 +2,7 @@ import { SignJWT } from 'jose/jwt/sign';
 import crypto from 'crypto';
 import type * as types from 'types';
 
-export const resolveProps = async (props: types.FormBlock): Promise<types.FormBlock> => {
+export const mapProps = async (props: types.FormBlock): Promise<types.FormBlock> => {
     if (!props.destination) {
         return props;
     }
@@ -16,4 +16,4 @@ export const resolveProps = async (props: types.FormBlock): Promise<types.FormBl
         ...props,
         destination
     };
-}
+};

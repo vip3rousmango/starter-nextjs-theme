@@ -8,8 +8,16 @@ export const BaseLayout: React.FC<PageProps<AllPageLayoutProps>> = (props) => {
     const { page, site, children } = props;
     const layout = page.baseLayout ?? site.baseLayout;
     if (layout === 'BlankBaseLayout') {
-        return <BlankBaseLayout site={site} page={page}>{children}</BlankBaseLayout>;
+        return (
+            <BlankBaseLayout site={site} page={page}>
+                {children}
+            </BlankBaseLayout>
+        );
     } else {
-        return <DefaultBaseLayout site={site} page={page}>{children}</DefaultBaseLayout>;
+        return (
+            <DefaultBaseLayout site={site} page={page}>
+                {children}
+            </DefaultBaseLayout>
+        );
     }
 };

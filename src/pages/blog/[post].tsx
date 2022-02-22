@@ -6,8 +6,8 @@ import { withRemoteDataUpdates } from 'sourcebit-target-next/with-remote-data-up
 import { PageProps } from '../../components/layouts';
 import { BaseLayout } from '../../components/layouts/BaseLayout';
 import { PostLayout, Props as PostLayoutProps } from '../../components/layouts/PostLayout';
-import { BLOG_URL, findPostLayouts, urlPathForDocument, pageProps } from '../../utils/static-resolver-utils';
-import { resolveProps as resolvePropsForPostLayout } from '../../components/layouts/PostLayout/resolveProps';
+import { BLOG_URL, findPostLayouts, urlPathForDocument, toPageProps } from '../../utils/static-resolver-utils';
+import { mapProps as mapPostLayoutProps } from '../../components/layouts/PostLayout/mapProps';
 
 export type Props = PageProps<PostLayoutProps>;
 
@@ -38,7 +38,7 @@ export const getStaticProps: GetStaticProps<Props, { post: string }> = async ({ 
     const documents = data.objects;
     const urlPath = `${BLOG_URL}/${params?.post}`;
     const post = findPostLayouts(documents).find((post) => urlPathForDocument(post) === urlPath)!;
-    const postLayoutProps = await resolvePropsForPostLayout(post, documents);
-    const props = pageProps(postLayoutProps, urlPath, documents);
+    const postLayoutProps = await mapPostLayoutProps(post, documents);
+    const props = toPageProps(postLayoutProps, urlPath, documents);
     return { props };
 };

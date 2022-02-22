@@ -6,8 +6,8 @@ import { withRemoteDataUpdates } from 'sourcebit-target-next/with-remote-data-up
 import { PageProps } from '../components/layouts';
 import { BaseLayout } from '../components/layouts/BaseLayout';
 import { PageLayout, Props as PageLayoutProps } from '../components/layouts/PageLayout';
-import { findPageLayouts, pageProps, urlPathForDocument } from '../utils/static-resolver-utils';
-import { resolveProps as resolvePropsForPageLayout } from '../components/layouts/PageLayout/resolveProps';
+import { findPageLayouts, toPageProps, urlPathForDocument } from '../utils/static-resolver-utils';
+import { mapProps as mapPageLayoutProps } from '../components/layouts/PageLayout/mapProps';
 
 export type Props = PageProps<PageLayoutProps>;
 
@@ -38,7 +38,7 @@ export const getStaticProps: GetStaticProps<Props, { slug: string[] }> = async (
     const documents = data.objects;
     const urlPath = '/' + (params?.slug || []).join('/');
     const page = findPageLayouts(documents).find((page) => urlPathForDocument(page) === urlPath)!;
-    const pageLayoutProps = await resolvePropsForPageLayout(page, documents);
-    const props = pageProps(pageLayoutProps, urlPath, documents);
+    const pageLayoutProps = await mapPageLayoutProps(page, documents);
+    const props = toPageProps(pageLayoutProps, urlPath, documents);
     return { props };
 };

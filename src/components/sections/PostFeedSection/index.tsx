@@ -32,7 +32,7 @@ export type PostFeedSectionPostsProps = Omit<types.PostLayout, 'author' | 'categ
 };
 
 export type PersonProps = types.Person & { pageUrl?: string };
-export type CategoryProps = types.BlogCategory & { pageUrl?: string; };
+export type CategoryProps = types.BlogCategory & { pageUrl?: string };
 
 export const PostFeedSection: React.FC<Props> = (props) => {
     const colors = props.colors ?? 'colors-a';

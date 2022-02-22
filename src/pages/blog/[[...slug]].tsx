@@ -6,7 +6,7 @@ import { withRemoteDataUpdates } from 'sourcebit-target-next/with-remote-data-up
 import { PageProps } from '../../components/layouts';
 import { BaseLayout } from '../../components/layouts/BaseLayout';
 import { PostFeedLayout, Props as PostFeedLayoutProps } from '../../components/layouts/PostFeedLayout';
-import { resolveProps as resolvePropsForPostFeedLayout } from '../../components/layouts/PostFeedLayout/resolveProps';
+import { mapProps as mapPostFeedLayoutProps } from '../../components/layouts/PostFeedLayout/mapProps';
 import {
     BLOG_URL,
     findPostLayouts,
@@ -14,7 +14,7 @@ import {
     findAndSortAllPost,
     getPagedPathsForPagePath,
     getPaginationDataForPagePath,
-    pageProps
+    toPageProps
 } from '../../utils/static-resolver-utils';
 
 export type Props = PageProps<PostFeedLayoutProps>;
@@ -74,7 +74,7 @@ export const getStaticProps: GetStaticProps<Props, { slug: string[] }> = async (
     const allPostsSorted = findAndSortAllPost(documents);
     const numOfItemsPerPage = postFeedLayout.numOfPostsPerPage ?? DEFAULT_NUM_OF_POSTS_PER_PAGE;
     const paginationData = getPaginationDataForPagePath(urlPath, allPostsSorted, numOfItemsPerPage);
-    const postFeedLayoutProps = await resolvePropsForPostFeedLayout(
+    const postFeedLayoutProps = await mapPostFeedLayoutProps(
         {
             __metadata,
             ...postFeedLayout,
@@ -82,6 +82,6 @@ export const getStaticProps: GetStaticProps<Props, { slug: string[] }> = async (
         },
         documents
     );
-    const props = pageProps(postFeedLayoutProps, urlPath, documents);
+    const props = toPageProps(postFeedLayoutProps, urlPath, documents);
     return { props };
 };

@@ -1,12 +1,12 @@
 import type * as types from 'types';
 
-import { Props as FeaturedPostsSectionProps} from './FeaturedPostsSection';
-import { Props as RecentPostsSectionProps} from './RecentPostsSection';
-import { Props as FeaturedPeopleSectionProps} from './FeaturedPeopleSection';
-import { resolveProps as resolvePropsForFeaturedPeopleSection } from './FeaturedPeopleSection/resolveProps';
-import { resolveProps as resolvePropsForFeaturedPostsSection } from './FeaturedPostsSection/resolveProps';
-import { resolveProps as resolvePropsForRecentPostsSection } from './RecentPostsSection/resolveProps';
-import { resolveProps as resolvePropsForFormBlock } from '../blocks/FormBlock/resolveProps';
+import { Props as FeaturedPostsSectionProps } from './FeaturedPostsSection';
+import { Props as RecentPostsSectionProps } from './RecentPostsSection';
+import { Props as FeaturedPeopleSectionProps } from './FeaturedPeopleSection';
+import { mapProps as mapFeaturedPeopleSectionProps } from './FeaturedPeopleSection/mapProps';
+import { mapProps as mapFeaturedPostsSectionProps } from './FeaturedPostsSection/mapProps';
+import { mapProps as mapRecentPostsSectionProps } from './RecentPostsSection/mapProps';
+import { mapProps as mapFormBlockProps } from '../blocks/FormBlock/mapProps';
 
 export type SectionsProps =
     | Exclude<types.Sections, types.RecentPostsSection | types.FeaturedPostsSection | types.FeaturedPeopleSection>
@@ -19,18 +19,18 @@ export const mapSectionProps = async (sections: types.Sections[], allDocuments: 
         (sections ?? []).map(async (section) => {
             switch (section.type) {
                 case 'FeaturedPostsSection':
-                    return resolvePropsForFeaturedPostsSection(section, allDocuments);
+                    return mapFeaturedPostsSectionProps(section, allDocuments);
                 case 'RecentPostsSection':
-                    return resolvePropsForRecentPostsSection(section, allDocuments);
+                    return mapRecentPostsSectionProps(section, allDocuments);
                 case 'FeaturedPeopleSection':
-                    return resolvePropsForFeaturedPeopleSection(section, allDocuments);
+                    return mapFeaturedPeopleSectionProps(section, allDocuments);
                 case 'HeroSection':
                     if (section.media?.type !== 'FormBlock') {
                         return section;
                     }
                     return {
                         ...section,
-                        media: await resolvePropsForFormBlock(section.media)
+                        media: await mapFormBlockProps(section.media)
                     };
                 case 'ContactSection':
                     if (!section.form) {
@@ -38,7 +38,7 @@ export const mapSectionProps = async (sections: types.Sections[], allDocuments: 
                     }
                     return {
                         ...section,
-                        form: await resolvePropsForFormBlock(section.form)
+                        form: await mapFormBlockProps(section.form)
                     };
                 default:
                     return section;

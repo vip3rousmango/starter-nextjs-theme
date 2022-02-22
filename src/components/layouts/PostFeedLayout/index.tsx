@@ -5,20 +5,16 @@ import type * as types from 'types';
 
 import { Link } from '../../atoms/Link';
 import { mapStylesToClassNames as mapStyles } from '../../../utils/map-styles-to-class-names';
-import { PostFeedSection } from '../../sections/PostFeedSection';
+import { PostFeedSection, PostFeedSectionPostsProps } from '../../sections/PostFeedSection';
 import { DynamicComponent } from '../../DynamicComponent';
 import type { SectionsProps } from '../../sections/mapSectionProps';
 
-export type Props = Omit<types.PostFeedLayout, 'topSections' | 'bottomSections'> & types.Pagination<PostFeedLayoutPostsProps> & {
-    items: PostFeedLayoutPostsProps[];
-    topSections: SectionsProps[];
-    bottomSections: SectionsProps[];
-};
-
-export type PostFeedLayoutPostsProps = Omit<types.PostLayout, 'author' | 'category'> & {
-    author?: types.Person & { pageUrl?: string };
-    category?: types.BlogCategory & { pageUrl?: string; };
-};
+export type Props = Omit<types.PostFeedLayout, 'topSections' | 'bottomSections'> &
+    types.Pagination<PostFeedSectionPostsProps> & {
+        items: PostFeedSectionPostsProps[];
+        topSections: SectionsProps[];
+        bottomSections: SectionsProps[];
+    };
 
 export const PostFeedLayout: React.FC<Props> = (page) => {
     const { title, topSections, bottomSections, pageIndex, baseUrlPath, numOfPages, postFeed, items } = page;

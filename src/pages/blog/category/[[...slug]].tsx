@@ -6,7 +6,7 @@ import { withRemoteDataUpdates } from 'sourcebit-target-next/with-remote-data-up
 import { PageProps } from '../../../components/layouts';
 import { BaseLayout } from '../../../components/layouts/BaseLayout';
 import { PostFeedLayout, Props as PostFeedLayoutProps } from '../../../components/layouts/PostFeedLayout';
-import { resolveProps as resolvePropsForPostFeedLayout } from '../../../components/layouts/PostFeedLayout/resolveProps';
+import { mapProps as mapPostFeedLayoutProps } from '../../../components/layouts/PostFeedLayout/mapProps';
 import {
     BLOG_CATEGORY_URL,
     findPostLayouts,
@@ -15,7 +15,7 @@ import {
     getPaginationDataForPagePath,
     findAndSortCategoryPosts,
     isBlogCategory,
-    pageProps
+    toPageProps
 } from '../../../utils/static-resolver-utils';
 
 export type Props = PageProps<PostFeedLayoutProps>;
@@ -53,7 +53,7 @@ export const getStaticProps: GetStaticProps<Props, { slug: string[] }> = async (
     const { __metadata, ...category } = findCategoryBySlug(documents, params?.slug[0]!)!;
     const categoryPosts = findAndSortCategoryPosts(documents, __metadata.id);
     const paginationData = getPaginationDataForPagePath(urlPath, categoryPosts, DEFAULT_NUM_OF_POSTS_PER_PAGE);
-    const postFeedLayoutProps = await resolvePropsForPostFeedLayout(
+    const postFeedLayoutProps = await mapPostFeedLayoutProps(
         {
             __metadata,
             type: 'PostFeedLayout',
@@ -68,6 +68,6 @@ export const getStaticProps: GetStaticProps<Props, { slug: string[] }> = async (
         },
         documents
     );
-    const props = pageProps(postFeedLayoutProps, urlPath, documents);
+    const props = toPageProps(postFeedLayoutProps, urlPath, documents);
     return { props };
 };
