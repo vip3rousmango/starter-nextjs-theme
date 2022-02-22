@@ -63,7 +63,7 @@ export const FeaturedItemsSection: React.FC<Props> = (props) => {
                             })}
                             {...toFieldPath('.items')}
                         >
-                            {props.items.map((item, index) => (
+                            {featuredItems.map((item, index) => (
                                 <FeaturedItem key={index} {...item} enableHover={props.enableHover} {...toFieldPath(`.${index}`)} />
                             ))}
                         </div>

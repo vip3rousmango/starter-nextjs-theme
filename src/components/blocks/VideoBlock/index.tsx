@@ -38,11 +38,11 @@ export const VideoBlock: React.FC<Props> = (props) => {
 };
 
 type VideoEmbedProps = {
-    url: string | undefined;
-    autoplay: boolean;
-    loop: boolean;
-    muted: boolean;
-    controls: boolean;
+    url: string;
+    autoplay?: boolean;
+    loop?: boolean;
+    muted?: boolean;
+    controls?: boolean;
 };
 
 const VideoEmbed: React.FC<VideoEmbedProps> = (props) => {

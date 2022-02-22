@@ -12,7 +12,6 @@ import { Markdown } from '../../atoms/Markdown';
 export type Props = types.HeroSection;
 
 export const HeroSection: React.FC<Props> = (props) => {
-    const cssId = props.elementId ?? null;
     const colors = props.colors ?? 'colors-a';
     const sectionStyles = props.styles?.self ?? {};
     const sectionWidth = sectionStyles.width ?? 'wide';
@@ -23,7 +22,7 @@ export const HeroSection: React.FC<Props> = (props) => {
 
     return (
         <div
-            id={cssId}
+            id={props.elementId}
             {...pickDataAttrs(props)}
             className={classNames(
                 'sb-component',

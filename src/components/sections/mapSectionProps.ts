@@ -14,7 +14,7 @@ export type SectionsProps =
     | FeaturedPostsSectionProps
     | FeaturedPeopleSectionProps;
 
-export const mapSectionProps = async (sections: types.Sections[], allDocuments: types.DocumentTypes[]): Promise<SectionsProps[]> => {
+export const mapSectionProps = async (sections: types.Sections[] = [], allDocuments: types.DocumentTypes[]): Promise<SectionsProps[]> => {
     return Promise.all(
         (sections ?? []).map(async (section) => {
             switch (section.type) {

@@ -76,7 +76,7 @@ function MediaGalleryHeader(props: Props) {
     );
 }
 
-function MediaGalleryImage({ image, enableHover, aspectRatio }: { image: types.ImageBlock; enableHover: boolean; aspectRatio: string }) {
+function MediaGalleryImage({ image, enableHover, aspectRatio }: { image: types.ImageBlock; enableHover?: boolean; aspectRatio: string }) {
     if (!image) {
         return null;
     }
