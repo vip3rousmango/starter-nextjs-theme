@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { DefaultBaseLayout } from './DefaultBaseLayout';
 import { BlankBaseLayout } from './BlankBaseLayout';
-import { AllPageLayoutProps, PageProps } from '../index';
+import type { AllPageLayoutProps, PageProps } from '../index';
 
 export const BaseLayout: React.FC<PageProps<AllPageLayoutProps>> = (props) => {
     const { page, site, children } = props;

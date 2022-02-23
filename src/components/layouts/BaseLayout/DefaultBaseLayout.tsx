@@ -6,7 +6,7 @@ import { toObjectId } from '@stackbit/annotations';
 import { Header } from '../../sections/Header';
 import { Footer } from '../../sections/Footer';
 import { seoGenerateTitle, seoGenerateMetaTags, seoGenerateMetaDescription } from '../../../utils/seo-utils';
-import { PageProps, AllPageLayoutProps } from '../index';
+import type { PageProps, AllPageLayoutProps } from '../index';
 
 export const DefaultBaseLayout: React.FC<PageProps<AllPageLayoutProps>> = (props) => {
     const { page, site } = props;

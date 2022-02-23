@@ -3,7 +3,7 @@ import Head from 'next/head';
 import classNames from 'classnames';
 import { toObjectId } from '@stackbit/annotations';
 
-import { PageProps, AllPageLayoutProps } from '../index';
+import type { PageProps, AllPageLayoutProps } from '../index';
 
 export const BlankBaseLayout: React.FC<PageProps<AllPageLayoutProps>> = (props) => {
     const { page, site } = props;

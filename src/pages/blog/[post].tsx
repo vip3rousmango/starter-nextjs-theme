@@ -3,7 +3,7 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 import { sourcebitDataClient } from 'sourcebit-target-next';
 import { hotContentReload } from 'sourcebit-target-next/hot-content-reload';
 
-import { PageProps } from '../../components/layouts';
+import type { PageProps } from '../../components/layouts';
 import { BaseLayout } from '../../components/layouts/BaseLayout';
 import { PostLayout, Props as PostLayoutProps } from '../../components/layouts/PostLayout';
 import { BLOG_URL, findPostLayouts, urlPathForDocument, toPageProps } from '../../utils/static-resolver-utils';

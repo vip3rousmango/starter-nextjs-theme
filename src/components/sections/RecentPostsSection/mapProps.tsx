@@ -1,7 +1,7 @@
 import type * as types from 'types';
 
 import { findPostLayouts, resolvePostLayout, sortPostsByDateDesc } from '../../../utils/static-resolver-utils';
-import { Props as RecentPostsSectionProps } from './index';
+import type { Props as RecentPostsSectionProps } from './index';
 
 export const mapProps = (section: types.RecentPostsSection, allDocuments: types.DocumentTypes[]): RecentPostsSectionProps => {
     const recentPosts = findPostLayouts(allDocuments)

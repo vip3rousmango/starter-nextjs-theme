@@ -3,7 +3,7 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 import { sourcebitDataClient } from 'sourcebit-target-next';
 import { hotContentReload } from 'sourcebit-target-next/hot-content-reload';
 
-import { PageProps } from '../../components/layouts';
+import type { PageProps } from '../../components/layouts';
 import { BaseLayout } from '../../components/layouts/BaseLayout';
 import { PostFeedLayout, Props as PostFeedLayoutProps } from '../../components/layouts/PostFeedLayout';
 import { mapProps as mapPostFeedLayoutProps } from '../../components/layouts/PostFeedLayout/mapProps';
