@@ -1,8 +1,5 @@
 import dynamic from 'next/dynamic';
 import type { ComponentType, FC } from 'react';
-import type { Props as PageLayoutProps } from './layouts/PageLayout';
-import type { Props as PostLayoutProps } from './layouts/PostLayout';
-import type { Props as PostFeedLayoutProps } from './layouts/PostFeedLayout';
 import type { Props as ImageBlockProps } from './blocks/ImageBlock';
 import type { Props as VideoBlockProps } from './blocks/VideoBlock';
 import type { Props as FormBlockProps } from './blocks/FormBlock';
@@ -27,9 +24,6 @@ import type { Props as TextFormControlProps } from './blocks/FormBlock/TextFormC
 import type { Props as TextareaFormControlProps } from './blocks/FormBlock/TextareaFormControl';
 
 export type Props =
-    | PageLayoutProps
-    | PostLayoutProps
-    | PostFeedLayoutProps
     | ImageBlockProps
     | VideoBlockProps
     | FormBlockProps
@@ -58,11 +52,6 @@ type ComponentsMap = {
 };
 
 const componentsMap: ComponentsMap = {
-    // layouts
-    PageLayout: dynamic(() => namedComponent(import('./layouts/PageLayout'), 'PageLayout')),
-    PostLayout: dynamic(() => namedComponent(import('./layouts/PostLayout'), 'PostLayout')),
-    PostFeedLayout: dynamic(() => namedComponent(import('./layouts/PostFeedLayout'), 'PostFeedLayout')),
-
     // blocks
     ImageBlock: dynamic(() => namedComponent(import('./blocks/ImageBlock'), 'ImageBlock')),
     VideoBlock: dynamic(() => namedComponent(import('./blocks/VideoBlock'), 'VideoBlock')),

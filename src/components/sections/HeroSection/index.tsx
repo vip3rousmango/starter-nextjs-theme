@@ -68,7 +68,15 @@ export const HeroSection: React.FC<Props> = (props) => {
     );
 };
 
-const HeroBody: React.FC<types.HeroSection> = (props) => {
+type HeroBodyProps = {
+    title?: string;
+    subtitle?: string;
+    badge?: types.Badge;
+    text?: string;
+    styles?: types.Styles;
+};
+
+const HeroBody: React.FC<HeroBodyProps> = (props) => {
     const styles = props.styles ?? {};
     return (
         <div>

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { sourcebitDataClient } from 'sourcebit-target-next';
-import { withRemoteDataUpdates } from 'sourcebit-target-next/with-remote-data-updates';
+import { hotContentReload } from 'sourcebit-target-next/hot-content-reload';
 
 import { PageProps } from '../../../components/layouts';
 import { BaseLayout } from '../../../components/layouts/BaseLayout';
@@ -29,7 +29,8 @@ const Page: FC<Props> = (props) => {
     );
 };
 
-export default withRemoteDataUpdates(Page);
+const withHotContentReload = hotContentReload({ disable: process.env.NODE_ENV === 'production' });
+export default withHotContentReload(Page);
 
 const DEFAULT_NUM_OF_POSTS_PER_PAGE = 10;
 

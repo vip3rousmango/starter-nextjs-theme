@@ -200,6 +200,8 @@ export type PostLayout = SEO & {
     markdown_content?: string;
 };
 
+export type Action = Button | Link;
+
 /** Nested types */
 export type Badge = {
     /** File path relative to `contentDirPath` */
@@ -291,7 +293,7 @@ export type CtaSection = {
     backgroundSize?: 'full' | 'inset';
     title?: string;
     text?: string;
-    actions?: (Button | Link)[];
+    actions?: Action[];
     backgroundImage?: ImageBlock;
     styles?: Styles;
 };
@@ -323,7 +325,7 @@ export type FaqSection = {
     elementId?: string;
     title?: string;
     subtitle?: string;
-    actions?: (Button | Link)[];
+    actions?: Action[];
     items?: FaqItem[];
     styles?: Styles;
 };
@@ -337,7 +339,7 @@ export type FeaturedItem = {
     subtitle?: string;
     text?: string;
     featuredImage?: ImageBlock;
-    actions?: (Button | Link)[];
+    actions?: Action[];
     enableHover?: boolean;
     styles?: Styles;
 };
@@ -348,7 +350,7 @@ export type FeaturedItemsSection = {
     title?: string;
     subtitle?: string;
     items?: FeaturedItem[];
-    actions?: (Button | Link)[];
+    actions?: Action[];
     columns?: number;
     enableHover?: boolean;
     colors?: Colors;
@@ -366,7 +368,7 @@ export type FeaturedPeopleSection = {
     variant?: 'variant-a' | 'variant-b' | 'variant-c';
     title?: string;
     subtitle?: string;
-    actions?: (Button | Link)[];
+    actions?: Action[];
     people?: string[];
     styles?: Styles;
 };
@@ -380,7 +382,7 @@ export type PostFeedSection = {
     showAuthor?: boolean;
     showExcerpt?: boolean;
     variant?: 'variant-a' | 'variant-b' | 'variant-c';
-    actions?: (Button | Link)[];
+    actions?: Action[];
     styles?: Styles;
 };
 
@@ -412,7 +414,7 @@ export type FeatureHighlightSection = {
     subtitle?: string;
     badge?: Badge;
     text?: string;
-    actions?: (Button | Link)[];
+    actions?: Action[];
     media?: ImageBlock | VideoBlock;
     styles?: Styles;
 };
@@ -426,9 +428,9 @@ export type Footer = {
     text?: string;
     contacts?: ContactBlock;
     copyrightText?: string;
-    primaryLinks?: (Link | Button)[];
+    primaryLinks?: Action[];
     socialLinks?: Social[];
-    legalLinks?: (Link | Button)[];
+    legalLinks?: Action[];
     styles?: Styles;
 };
 
@@ -454,8 +456,8 @@ export type Header = {
     title?: string;
     isTitleVisible?: boolean;
     logo?: ImageBlock;
-    primaryLinks?: (Link | Button)[];
-    secondaryLinks?: (Link | Button)[];
+    primaryLinks?: Action[];
+    secondaryLinks?: Action[];
     styles?: Styles;
 };
 
@@ -469,7 +471,7 @@ export type HeroSection = {
     subtitle?: string;
     badge?: Badge;
     text?: string;
-    actions?: (Button | Link)[];
+    actions?: Action[];
     media?: FormBlock | ImageBlock | VideoBlock;
     styles?: Styles;
 };
@@ -501,7 +503,7 @@ export type JobListItem = {
     title?: string;
     location?: string;
     text?: string;
-    actions?: (Button | Link)[];
+    actions?: Action[];
 };
 
 export type JobsSection = {
