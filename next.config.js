@@ -1,12 +1,9 @@
-const sourcebit = require('sourcebit');
-const sourcebitConfig = require('./sourcebit.js');
+const withSourcebit = require('sourcebit').sourcebitNext();
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
     enabled: process.env.ANALYZE === 'true'
 });
 
-sourcebit.fetch(sourcebitConfig);
-
-module.exports = withBundleAnalyzer({
+module.exports = withSourcebit(withBundleAnalyzer({
     typescript: { ignoreBuildErrors: true },
     trailingSlash: true,
     devIndicators: {
@@ -30,4 +27,4 @@ module.exports = withBundleAnalyzer({
 
         return config;
     }
-});
+}));
