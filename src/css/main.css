@@ -19,6 +19,19 @@
     }
 }
 
+@layer utilities {
+    .placeholder-text {
+        @apply text-gray-400;
+    }
+    .placeholder-box {
+        @apply bg-gray-300 text-gray-600 text-5xl py-16;
+        text-align: center;
+    }
+    .placeholder-box::before {
+        content: "+"
+    }
+}
+
 @layer components {
     .sb-component.overlap {
         @apply -mt-72 relative z-10;

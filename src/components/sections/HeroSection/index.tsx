@@ -8,6 +8,7 @@ import { Action } from '../../atoms/Action';
 import { Badge } from '../../atoms/Badge';
 import { DynamicComponent } from '../../DynamicComponent';
 import { Markdown } from '../../atoms/Markdown';
+import { usePlaceholders } from '../../../utils/usePlaceholders';
 
 export type Props = types.HeroSection;
 
@@ -19,6 +20,7 @@ export const HeroSection: React.FC<Props> = (props) => {
     const sectionJustifyContent = sectionStyles.justifyContent ?? 'center';
     const sectionFlexDirection = sectionStyles.flexDirection ?? 'row';
     const sectionAlignItems = sectionStyles.alignItems ?? 'center';
+    const showPlaceholders = usePlaceholders();
 
     return (
         <div
@@ -56,9 +58,10 @@ export const HeroSection: React.FC<Props> = (props) => {
                             <HeroBody {...props} />
                             <HeroActions {...props} />
                         </div>
-                        {props.media && (
-                            <div className="flex-1 w-full">
-                                <DynamicComponent {...props.media} {...toFieldPath('.media')} />{' '}
+                        {(props.media || showPlaceholders) && (
+                            <div className={classNames("flex-1 w-full")}>
+                                {props.media && <DynamicComponent {...props.media} {...toFieldPath('.media')} />}
+                                {!props.media && <div className="placeholder-box" {...toFieldPath('.media')} />}
                             </div>
                         )}
                     </div>
@@ -78,27 +81,30 @@ type HeroBodyProps = {
 
 const HeroBody: React.FC<HeroBodyProps> = (props) => {
     const styles = props.styles ?? {};
+    const showPlaceholders = usePlaceholders();
     return (
         <div>
             {props.badge && <Badge {...props.badge} {...toFieldPath('.badge')} />}
-            {props.title && (
+            {(props.title || showPlaceholders) && (
                 <h2
                     className={classNames('h1', styles.title ? mapStyles(styles.title) : null, {
-                        'mt-4': props.badge?.label
+                        'mt-4': props.badge?.label,
+                        'placeholder-text': !props.title
                     })}
                     {...toFieldPath('.title')}
                 >
-                    {props.title}
+                    {props.title || 'Enter title here'}
                 </h2>
             )}
-            {props.subtitle && (
+            {(props.subtitle || showPlaceholders) && (
                 <p
                     className={classNames('text-xl', 'sm:text-2xl', styles.subtitle ? mapStyles(styles.subtitle) : null, {
-                        'mt-4': props.title
+                        'mt-4': props.title,
+                        'placeholder-text': !props.subtitle
                     })}
                     {...toFieldPath('.subtitle')}
                 >
-                    {props.subtitle}
+                    {props.subtitle || 'Enter subtitle here'}
                 </p>
             )}
             {props.text && (
@@ -117,7 +123,17 @@ const HeroBody: React.FC<HeroBodyProps> = (props) => {
 };
 
 const HeroActions: React.FC<types.HeroSection> = (props) => {
-    const actions = props.actions ?? [];
+    const actions: (types.Action & { className?: string })[] = props.actions?.slice() ?? [];
+    const showPlaceholders = usePlaceholders();
+    if (actions.length === 0 && showPlaceholders) {
+        actions.push({
+            type: 'Button',
+            label: 'Add a Button',
+            style: 'secondary',
+            className: 'mx-2 mb-3 lg:whitespace-nowrap bg-gray-400 text-white border-0',
+            url: '#'
+        });
+    }
     if (actions.length === 0) {
         return null;
     }
@@ -125,7 +141,7 @@ const HeroActions: React.FC<types.HeroSection> = (props) => {
     return (
         <div
             className={classNames('overflow-x-hidden', {
-                'mt-8': props.title || props.subtitle || props.text || props.badge
+                'mt-8': props.title || props.subtitle || props.text || props.badge || showPlaceholders
             })}
         >
             <div
@@ -133,7 +149,7 @@ const HeroActions: React.FC<types.HeroSection> = (props) => {
                 {...toFieldPath('.actions')}
             >
                 {actions.map((action, index) => (
-                    <Action key={index} {...action} className="mx-2 mb-3 lg:whitespace-nowrap" {...toFieldPath(`.${index}`)} />
+                    <Action key={index} className="mx-2 mb-3 lg:whitespace-nowrap" {...action} {...toFieldPath(`.${index}`)} />
                 ))}
             </div>
         </div>

@@ -4,6 +4,8 @@ import type { Props as ImageBlockProps } from './blocks/ImageBlock';
 import type { Props as VideoBlockProps } from './blocks/VideoBlock';
 import type { Props as FormBlockProps } from './blocks/FormBlock';
 import type { Props as HeroSectionProps } from './sections/HeroSection';
+import type { Props as GridSectionProps } from './sections/GridSection';
+import type { Props as PlaceholderSectionProps } from './PlaceholderSection';
 import type { Props as FeatureHighlightSectionProps } from './sections/FeatureHighlightSection';
 import type { Props as FeaturedItemsSectionProps } from './sections/FeaturedItemsSection';
 import type { Props as FeaturedPostsSectionProps } from './sections/FeaturedPostsSection';
@@ -28,6 +30,8 @@ export type Props =
     | VideoBlockProps
     | FormBlockProps
     | HeroSectionProps
+    | GridSectionProps
+    | PlaceholderSectionProps
     | FeatureHighlightSectionProps
     | FeaturedItemsSectionProps
     | FeaturedPostsSectionProps
@@ -59,6 +63,8 @@ const componentsMap: ComponentsMap = {
 
     // sections
     HeroSection: dynamic(() => namedComponent(import('./sections/HeroSection'), 'HeroSection')),
+    GridSection: dynamic(() => namedComponent(import('./sections/GridSection'), 'GridSection')),
+    PlaceholderSection: dynamic(() => namedComponent(import('./PlaceholderSection'), 'PlaceholderSection')),
     FeatureHighlightSection: dynamic(() => namedComponent(import('./sections/FeatureHighlightSection'), 'FeatureHighlightSection')),
     FeaturedItemsSection: dynamic(() => namedComponent(import('./sections/FeaturedItemsSection'), 'FeaturedItemsSection')),
     FeaturedPostsSection: dynamic(() => namedComponent(import('./sections/FeaturedPostsSection'), 'FeaturedPostsSection')),
