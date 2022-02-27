@@ -15,7 +15,7 @@ const Page: FC<Props> = (props) => {
     const { page, site } = props;
     return (
         <BaseLayout site={site} page={page}>
-            <PostLayout {...page} />;
+            <PostLayout {...page} />
         </BaseLayout>
     );
 };
