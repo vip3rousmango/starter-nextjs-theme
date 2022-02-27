@@ -9,13 +9,14 @@ import { PostFeedLayout, Props as PostFeedLayoutProps } from '../../../component
 import { mapProps as mapPostFeedLayoutProps } from '../../../components/layouts/PostFeedLayout/mapProps';
 import {
     BLOG_AUTHOR_URL,
+    isAuthorFeedLayout,
     findPostLayouts,
-    findPersonBySlug,
-    findAndSortAuthorPosts,
+    urlPathForDocument,
+    isPerson,
     getPagedPathsForPagePath,
+    findAndSortAuthorPosts,
     getPaginationDataForPagePath,
-    toPageProps,
-    isPerson
+    toPageProps
 } from '../../../utils/static-resolver-utils';
 
 export type Props = PageProps<PostFeedLayoutProps>;
@@ -37,11 +38,14 @@ const DEFAULT_NUM_OF_POSTS_PER_PAGE = 10;
 export const getStaticPaths: GetStaticPaths = async () => {
     const data = await sourcebitDataClient.getData();
     const documents = data.objects;
-    const authorsWithSlug = documents.filter(isPerson).filter((person) => person.slug);
+    const authorPostFeedLayouts = documents.filter(isAuthorFeedLayout);
     const allPosts = findPostLayouts(documents);
-    const paths = authorsWithSlug.reduce((paths: string[], author) => {
-        const authorPosts = allPosts.filter((post) => post.author === author.__metadata.id);
-        const authorPaths = getPagedPathsForPagePath(`${BLOG_AUTHOR_URL}/${author.slug}`, authorPosts, DEFAULT_NUM_OF_POSTS_PER_PAGE);
+    const paths = authorPostFeedLayouts.reduce((paths: string[], authorPostFeedLayout) => {
+        const authorId = authorPostFeedLayout.author;
+        const urlPath = urlPathForDocument(authorPostFeedLayout);
+        const numOfItemsPerPage = authorPostFeedLayout.numOfPostsPerPage ?? DEFAULT_NUM_OF_POSTS_PER_PAGE;
+        const authorPosts = allPosts.filter((post) => post.author === authorId);
+        const authorPaths = getPagedPathsForPagePath(urlPath, authorPosts, numOfItemsPerPage);
         return paths.concat(authorPaths);
     }, []);
     return { paths, fallback: false };
@@ -51,20 +55,15 @@ export const getStaticProps: GetStaticProps<Props, { slug: string[] }> = async (
     const data = await sourcebitDataClient.getData();
     const documents = data.objects;
     const urlPath = `${BLOG_AUTHOR_URL}/${params?.slug.join('/')}`;
-    const { __metadata, ...author } = findPersonBySlug(documents, params?.slug[0]!)!;
-    const authorPosts = findAndSortAuthorPosts(documents, __metadata.id);
-    const paginationData = getPaginationDataForPagePath(urlPath, authorPosts, DEFAULT_NUM_OF_POSTS_PER_PAGE);
+    const authorPostFeedLayout = documents.filter(isAuthorFeedLayout).find((authorPostFeedLayout) => urlPathForDocument(authorPostFeedLayout) === urlPath)!;
+    const author = documents.filter(isPerson).find((person) => person.__metadata.id === authorPostFeedLayout.author);
+    const authorPosts = author ? findAndSortAuthorPosts(documents, author.__metadata.id) : [];
+    const numOfItemsPerPage = authorPostFeedLayout.numOfPostsPerPage ?? DEFAULT_NUM_OF_POSTS_PER_PAGE;
+    const paginationData = getPaginationDataForPagePath(urlPath, authorPosts, numOfItemsPerPage);
     const postFeedLayoutProps = await mapPostFeedLayoutProps(
         {
-            __metadata,
+            ...authorPostFeedLayout,
             type: 'PostFeedLayout',
-            title: `Posts by ${author.firstName} ${author.lastName}`,
-            postFeed: {
-                type: 'PagedPostsSection',
-                showAuthor: true,
-                showDate: true,
-                variant: 'variant-c'
-            },
             ...paginationData
         },
         documents

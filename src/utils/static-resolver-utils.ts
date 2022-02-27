@@ -27,14 +27,6 @@ export function sortPostsByDateDesc(postA: types.PostLayout, postB: types.PostLa
     return new Date(postB.date).getTime() - new Date(postA.date).getTime();
 }
 
-export function findPersonBySlug(documents: types.DocumentTypes[], slug: string) {
-    return documents.filter(isPerson).find((person) => person.slug === slug);
-}
-
-export function findCategoryBySlug(documents: types.DocumentTypes[], slug: string) {
-    return documents.filter(isBlogCategory).find((category) => category.slug === slug);
-}
-
 export function findPageLayouts(documents: types.DocumentTypes[]) {
     return documents.filter(isPageLayout);
 }
@@ -67,12 +59,21 @@ export function isPerson(document: types.DocumentTypes): document is types.Perso
     return document.type === 'Person';
 }
 
+
 export function isBlogCategory(document: types.DocumentTypes): document is types.BlogCategory {
     return document.type === 'BlogCategory';
 }
 
 export function isPostFeedLayout(document: types.DocumentTypes): document is types.PostFeedLayout {
     return document.type === 'PostFeedLayout';
+}
+
+export function isAuthorFeedLayout(document: types.DocumentTypes): document is types.AuthorPostFeedLayout {
+    return document.type === 'AuthorPostFeedLayout';
+}
+
+export function isCategoryFeedLayout(document: types.DocumentTypes): document is types.CategoryPostFeedLayout {
+    return document.type === 'CategoryPostFeedLayout';
 }
 
 export function isConfig(document: types.DocumentTypes): document is types.Config {
@@ -126,6 +127,9 @@ export function resolvePostLayout(postLayout: types.PostLayout, allDocuments: ty
     const { author: authorId, category: categoryId, __metadata, ...rest } = postLayout;
     const author = allPeople.find((doc) => doc.__metadata.id === authorId);
     const category = allCategories.find((doc) => doc.__metadata.id === categoryId);
+    const authorPostFeedLayouts = allDocuments.filter(isAuthorFeedLayout);
+    const authorPostFeedLayout = authorPostFeedLayouts.find((authorPostFeedLayout) => authorPostFeedLayout.author === authorId);
+    const categoryPostFeedLayout = allDocuments.filter(isCategoryFeedLayout).find((categoryPostFeedLayout) => categoryPostFeedLayout.category === categoryId);
     return {
         __metadata: {
             ...__metadata,
@@ -135,13 +139,13 @@ export function resolvePostLayout(postLayout: types.PostLayout, allDocuments: ty
         ...(author && {
             author: {
                 ...author,
-                ...(author.slug ? { pageUrl: `${BLOG_AUTHOR_URL}/${author.slug}` } : null)
+                ...(authorPostFeedLayout ? { pageUrl: urlPathForDocument(authorPostFeedLayout) } : null)
             }
         }),
         ...(category && {
             category: {
                 ...category,
-                ...(category.slug ? { pageUrl: `${BLOG_CATEGORY_URL}/${category.slug}` } : null)
+                ...(categoryPostFeedLayout ? { pageUrl: urlPathForDocument(categoryPostFeedLayout) } : null)
             }
         })
     };

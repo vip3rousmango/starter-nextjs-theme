@@ -1,5 +1,5 @@
 name: PostFeedLayout
-label: Blog
+label: Blog Feed
 labelField: title
 layout: PostFeedLayout
 hideContent: true

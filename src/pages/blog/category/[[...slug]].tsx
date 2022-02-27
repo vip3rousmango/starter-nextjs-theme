@@ -9,12 +9,13 @@ import { PostFeedLayout, Props as PostFeedLayoutProps } from '../../../component
 import { mapProps as mapPostFeedLayoutProps } from '../../../components/layouts/PostFeedLayout/mapProps';
 import {
     BLOG_CATEGORY_URL,
+    isCategoryFeedLayout,
     findPostLayouts,
-    findCategoryBySlug,
-    getPagedPathsForPagePath,
-    getPaginationDataForPagePath,
-    findAndSortCategoryPosts,
+    urlPathForDocument,
     isBlogCategory,
+    getPagedPathsForPagePath,
+    findAndSortCategoryPosts,
+    getPaginationDataForPagePath,
     toPageProps
 } from '../../../utils/static-resolver-utils';
 
@@ -37,11 +38,14 @@ const DEFAULT_NUM_OF_POSTS_PER_PAGE = 10;
 export const getStaticPaths: GetStaticPaths = async () => {
     const data = await sourcebitDataClient.getData();
     const documents = data.objects;
-    const categoriesWithSlug = documents.filter(isBlogCategory).filter((category) => category.slug);
+    const categoryPostFeedLayouts = documents.filter(isCategoryFeedLayout);
     const allPosts = findPostLayouts(documents);
-    const paths = categoriesWithSlug.reduce((paths: string[], category) => {
-        const categoryPosts = allPosts.filter((post) => post.category === category.__metadata.id);
-        const categoryPaths = getPagedPathsForPagePath(`${BLOG_CATEGORY_URL}/${category.slug}`, categoryPosts, DEFAULT_NUM_OF_POSTS_PER_PAGE);
+    const paths = categoryPostFeedLayouts.reduce((paths: string[], categoryPostFeedLayout) => {
+        const categoryId = categoryPostFeedLayout.category;
+        const urlPath = urlPathForDocument(categoryPostFeedLayout);
+        const numOfItemsPerPage = categoryPostFeedLayout.numOfPostsPerPage ?? DEFAULT_NUM_OF_POSTS_PER_PAGE;
+        const categoryPosts = allPosts.filter((post) => post.category === categoryId);
+        const categoryPaths = getPagedPathsForPagePath(urlPath, categoryPosts, numOfItemsPerPage);
         return paths.concat(categoryPaths);
     }, []);
     return { paths, fallback: false };
@@ -51,20 +55,17 @@ export const getStaticProps: GetStaticProps<Props, { slug: string[] }> = async (
     const data = await sourcebitDataClient.getData();
     const documents = data.objects;
     const urlPath = `${BLOG_CATEGORY_URL}/${params?.slug.join('/')}`;
-    const { __metadata, ...category } = findCategoryBySlug(documents, params?.slug[0]!)!;
-    const categoryPosts = findAndSortCategoryPosts(documents, __metadata.id);
-    const paginationData = getPaginationDataForPagePath(urlPath, categoryPosts, DEFAULT_NUM_OF_POSTS_PER_PAGE);
+    const categoryPostFeedLayout = documents
+        .filter(isCategoryFeedLayout)
+        .find((categoryPostFeedLayout) => urlPathForDocument(categoryPostFeedLayout) === urlPath)!;
+    const category = documents.filter(isBlogCategory).find((category) => category.__metadata.id === categoryPostFeedLayout.category);
+    const categoryPosts = category ? findAndSortCategoryPosts(documents, category.__metadata.id) : [];
+    const numOfItemsPerPage = categoryPostFeedLayout.numOfPostsPerPage ?? DEFAULT_NUM_OF_POSTS_PER_PAGE;
+    const paginationData = getPaginationDataForPagePath(urlPath, categoryPosts, numOfItemsPerPage);
     const postFeedLayoutProps = await mapPostFeedLayoutProps(
         {
-            __metadata,
+            ...categoryPostFeedLayout,
             type: 'PostFeedLayout',
-            title: `Posts in ${category.title} category`,
-            postFeed: {
-                type: 'PagedPostsSection',
-                showAuthor: true,
-                showDate: true,
-                variant: 'variant-c'
-            },
             ...paginationData
         },
         documents

@@ -12,9 +12,6 @@ fields:
     label: Last name
     default: Surname
   - type: string
-    name: slug
-    label: Slug
-  - type: string
     name: role
     label: Role
     default: Role

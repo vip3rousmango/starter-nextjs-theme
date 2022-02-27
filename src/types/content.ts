@@ -8,8 +8,16 @@ export type Metadata = {
 export type AllTypes = DocumentTypes | NestedTypes;
 export type AllTypeNames = DocumentTypeNames | NestedTypeNames;
 
-export type DocumentTypes = Config | PageLayout | Person | BlogCategory | PostFeedLayout | PostLayout;
-export type DocumentTypeNames = 'Config' | 'PageLayout' | 'Person' | 'BlogCategory' | 'PostFeedLayout' | 'PostLayout';
+export type DocumentTypes = Config | PageLayout | Person | BlogCategory | PostFeedLayout | AuthorPostFeedLayout | CategoryPostFeedLayout | PostLayout;
+export type DocumentTypeNames =
+    | 'Config'
+    | 'PageLayout'
+    | 'Person'
+    | 'BlogCategory'
+    | 'PostFeedLayout'
+    | 'AuthorPostFeedLayout'
+    | 'CategoryPostFeedLayout'
+    | 'PostLayout';
 
 export type NestedTypes =
     | Badge
@@ -160,7 +168,6 @@ export type Person = {
     type: 'Person';
     firstName: string;
     lastName?: string;
-    slug?: string;
     role?: string;
     bio?: string;
     image?: ImageBlock;
@@ -170,7 +177,6 @@ export type BlogCategory = {
     __metadata: Metadata;
     type: 'BlogCategory';
     title: string;
-    slug?: string;
 };
 
 export type PostFeedLayout = SEO & {
@@ -184,6 +190,16 @@ export type PostFeedLayout = SEO & {
     topSections?: Sections[];
     bottomSections?: Sections[];
     styles?: Styles;
+};
+
+export type AuthorPostFeedLayout = Omit<PostFeedLayout, 'type'> & {
+    type: 'AuthorPostFeedLayout';
+    author: string;
+};
+
+export type CategoryPostFeedLayout = Omit<PostFeedLayout, 'type'> & {
+    type: 'CategoryPostFeedLayout';
+    category: string;
 };
 
 export type PostLayout = SEO & {

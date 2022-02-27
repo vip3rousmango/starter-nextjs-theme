@@ -31,6 +31,14 @@ contentModels:
     urlPath: '/blog'
     file: 'blog/index.md'
     newFilePath: 'blog/index.md'
+  AuthorPostFeedLayout:
+    isPage: true
+    urlPath: '/blog/author/{slug}'
+    newFilePath: 'blog/author/{slug}.md'
+  CategoryPostFeedLayout:
+    isPage: true
+    urlPath: '/blog/category/{slug}'
+    newFilePath: 'blog/category/{slug}.md'
   Person:
     newFilePath: 'team/{slug}.json'
   BlogCategory:
