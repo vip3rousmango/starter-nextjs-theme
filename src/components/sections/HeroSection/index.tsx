@@ -16,7 +16,6 @@ export const HeroSection: React.FC<Props> = (props) => {
     const { type, elementId, colors, badge, title, subtitle, text, media, actions = [], styles = {} } = props;
     const sectionFlexDirection = styles.self?.flexDirection ?? 'row';
     const sectionAlignItems = styles.self?.alignItems ?? 'center';
-
     return (
         <Section type={type} elementId={elementId} colors={colors} styles={styles.self} {...pickDataAttrs(props)}>
             <div

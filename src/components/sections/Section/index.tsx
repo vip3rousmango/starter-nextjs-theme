@@ -4,13 +4,14 @@ import { pickDataAttrs } from '@stackbit/annotations';
 import type * as types from 'types';
 
 import { mapStylesToClassNames as mapStyles } from '../../../utils/map-styles-to-class-names';
+import { BackgroundImage } from '../../atoms/BackgroundImage';
 
 export type Props = React.PropsWithChildren<{
     type?: string;
     elementId?: string;
     colors?: types.Colors;
     backgroundSize?: 'full' | 'inset';
-    backgroundImage?: types.ImageBlock;
+    backgroundImage?: types.BackgroundImage;
     styles?: types.Styles;
 }>;
 
@@ -59,6 +60,7 @@ export const SectionInset: React.FC<Props> = (props) => {
                     borderWidth: styles.borderWidth ? `${styles.borderWidth}px` : undefined
                 }}
             >
+                {backgroundImage && <BackgroundImage {...backgroundImage} />}
                 <div className="relative w-full">{children}</div>
             </div>
         </div>
@@ -93,6 +95,7 @@ export const SectionFullWidth: React.FC<Props> = (props) => {
                 borderWidth: styles.borderWidth ? `${styles.borderWidth}px` : undefined
             }}
         >
+            {backgroundImage && <BackgroundImage {...backgroundImage} />}
             <div className={classNames('flex', 'w-full', mapStyles({ justifyContent: styles.justifyContent ?? 'center' }))}>
                 <div className={classNames('relative', 'w-full', mapStyles({ width: styles.width ?? 'wide' }))}>{children}</div>
             </div>

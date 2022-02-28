@@ -20,6 +20,7 @@ export type DocumentTypeNames =
     | 'PostLayout';
 
 export type NestedTypes =
+    | BackgroundImage
     | Badge
     | Button
     | CheckboxFormControl
@@ -58,6 +59,7 @@ export type NestedTypes =
     | VideoBlock;
 
 export type NestedTypeNames =
+    | 'BackgroundImage'
     | 'Badge'
     | 'Button'
     | 'CheckboxFormControl'
@@ -219,6 +221,18 @@ export type PostLayout = SEO & {
 export type Action = Button | Link;
 
 /** Nested types */
+export type BackgroundImage = {
+    /** File path relative to `contentDirPath` */
+    type: 'BackgroundImage';
+    /** The URL of the image */
+    url?: string;
+    /** The unique ID for an HTML element, must not contain whitespace */
+    backgroundSize?: 'auto' | 'cover' | 'contain';
+    backgroundPosition?: 'bottom' | 'center' | 'left' | 'left-bottom' | 'left-top' | 'right' | 'right-bottom' | 'right-top' | 'top';
+    backgroundRepeat?: 'repeat' | 'repeat-x' | 'repeat-y' | 'no-repeat';
+    opacity?: number;
+};
+
 export type Badge = {
     /** File path relative to `contentDirPath` */
     type: 'Badge';
@@ -307,10 +321,10 @@ export type CtaSection = {
     /** The unique ID for an HTML element, must not contain whitespace */
     elementId?: string;
     backgroundSize?: 'full' | 'inset';
+    backgroundImage?: BackgroundImage;
     title?: string;
     text?: string;
     actions?: Action[];
-    backgroundImage?: ImageBlock;
     styles?: Styles;
 };
 
@@ -596,7 +610,7 @@ export type QuoteSection = {
     quote: string;
     name?: string;
     title?: string;
-    backgroundImage?: ImageBlock;
+    backgroundImage?: BackgroundImage;
     styles?: Styles;
 };
 
