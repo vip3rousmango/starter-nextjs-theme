@@ -30,7 +30,7 @@ export const PostFeedLayout: React.FC<Props> = (page) => {
                 <div className={classNames('flex', 'py-12', 'lg:py-14', 'px-4', postFeedColors, mapStyles({ justifyContent: postFeedJustifyContent }))}>
                     <h1
                         className={classNames('w-full', mapMaxWidthStyles(postFeedWidth), page?.styles?.title ? mapStyles(page?.styles?.title) : null)}
-                        {...(page.annotateFields ? toFieldPath('title') : null)}
+                        {...toFieldPath('title')}
                     >
                         {title}
                     </h1>
