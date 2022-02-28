@@ -183,7 +183,7 @@ export type PostFeedLayout = SEO & {
     /** File path relative to `contentDirPath` */
     __metadata: Metadata;
     type: 'PostFeedLayout';
-    title?: string;
+    title: string;
     /** set to 0 to show all posts on a single page */
     numOfPostsPerPage?: number;
     postFeed?: PagedPostsSection;

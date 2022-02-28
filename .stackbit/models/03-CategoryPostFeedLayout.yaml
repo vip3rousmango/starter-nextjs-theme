@@ -1,5 +1,5 @@
 name: CategoryPostFeedLayout
-label: Category Post Feed
+label: Category Page
 labelField: title
 layout: CategoryPostFeedLayout
 hideContent: true

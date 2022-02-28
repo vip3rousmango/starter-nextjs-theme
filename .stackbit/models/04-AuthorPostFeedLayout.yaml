@@ -1,5 +1,5 @@
 name: AuthorPostFeedLayout
-label: Author Post Feed
+label: Author Page
 labelField: title
 layout: AuthorPostFeedLayout
 hideContent: true
