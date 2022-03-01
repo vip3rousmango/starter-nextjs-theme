@@ -16,13 +16,7 @@ export type Props = types.PostFeedSection & {
     annotatePosts?: boolean;
 };
 
-export type PostFeedSectionPostsProps = Omit<types.PostLayout, 'author' | 'category'> & {
-    author?: PersonProps;
-    category?: CategoryProps;
-};
-
-export type PersonProps = types.Person & { pageUrl?: string };
-export type CategoryProps = types.BlogCategory & { pageUrl?: string };
+export type PostFeedSectionPostsProps = types.PostLayoutResolvedWithoutSections;
 
 export const PostFeedSection: React.FC<Props> = (props) => {
     const colors = props.colors ?? 'colors-a';
@@ -320,7 +314,7 @@ const PostAttribution: React.FC<{ showAuthor?: boolean; post: PostFeedSectionPos
     );
 };
 
-const PostAuthor: React.FC<{ author: PersonProps }> = ({ author }) => {
+const PostAuthor: React.FC<{ author: types.PersonProps }> = ({ author }) => {
     if (!author) {
         return null;
     }
@@ -341,7 +335,7 @@ const PostAuthor: React.FC<{ author: PersonProps }> = ({ author }) => {
     }
 };
 
-const PostCategory: React.FC<{ category: CategoryProps }> = ({ category }) => {
+const PostCategory: React.FC<{ category: types.CategoryProps }> = ({ category }) => {
     if (!category) {
         return null;
     }
