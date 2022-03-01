@@ -324,34 +324,19 @@ const PostAuthor: React.FC<{ author: PersonProps }> = ({ author }) => {
     if (!author) {
         return null;
     }
-    const children = (
-        <>
+    return (
+        <span {...toFieldPath('author')}>
             {author.firstName && <span {...toFieldPath('.firstName')}>{author.firstName}</span>}{' '}
             {author.lastName && <span {...toFieldPath('.lastName')}>{author.lastName}</span>}
-        </>
+        </span>
     );
-    if (author.pageUrl) {
-        return (
-            <Link {...toFieldPath('author')} href={author.pageUrl}>
-                {children}
-            </Link>
-        );
-    } else {
-        return <span {...toFieldPath('author')}>{children}</span>;
-    }
 };
 
 const PostCategory: React.FC<{ category: CategoryProps }> = ({ category }) => {
     if (!category) {
         return null;
     }
-    return category.pageUrl ? (
-        <Link {...toFieldPath('category')} href={category.pageUrl}>
-            {category.title}
-        </Link>
-    ) : (
-        <span {...toFieldPath('category')}>{category.title}</span>
-    );
+    return <span {...toFieldPath('category')}>{category.title}</span>;
 };
 
 function mapMinHeightStyles(height: string) {

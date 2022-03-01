@@ -105,9 +105,6 @@ sections:
       altText: Where did everyone go?
       caption: Team meeting
       elementId: ''
-      styles:
-        self:
-          opacity: 100
       type: ImageBlock
   - colors: colors-h
     subtitle: Trusted by
@@ -186,9 +183,6 @@ sections:
           altText: altText of the image
           caption: Caption of the image
           elementId: ''
-          styles:
-            self:
-              opacity: 100
           type: ImageBlock
         styles:
           self:
@@ -211,9 +205,6 @@ sections:
           altText: altText of the image
           caption: Caption of the image
           elementId: ''
-          styles:
-            self:
-              opacity: 100
           type: ImageBlock
         styles:
           self:
@@ -236,9 +227,6 @@ sections:
           altText: altText of the image
           caption: Caption of the image
           elementId: ''
-          styles:
-            self:
-              opacity: 100
           type: ImageBlock
         styles:
           self:

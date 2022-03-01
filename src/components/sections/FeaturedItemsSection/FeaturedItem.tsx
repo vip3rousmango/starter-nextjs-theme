@@ -11,77 +11,79 @@ import { Markdown } from '../../atoms/Markdown';
 export type Props = types.FeaturedItem & StackbitFieldPath;
 
 export const FeaturedItem: React.FC<Props> = (props) => {
-    const styles = props.styles ?? {};
-    const itemBorderWidth = styles.self?.borderWidth ? styles.self?.borderWidth : 0;
+    const { elementId, title, subtitle, text, featuredImage, actions = [], enableHover, styles = {} } = props;
+    const { self = {} } = styles;
+    const { borderWidth, ...otherStyles } = self;
     return (
         <article
-            id={props.elementId}
+            id={elementId || undefined}
             className={classNames(
                 'sb-component',
                 'sb-component-block',
                 'sb-component-item',
-                props.enableHover ? 'sb-component-item-hover' : null,
-                styles.self?.padding,
-                styles.self?.borderColor,
-                styles.self?.borderStyle ? mapStyles({ borderStyle: styles.self?.borderStyle }) : 'border-none',
-                styles.self?.borderRadius ? mapStyles({ borderRadius: styles.self?.borderRadius }) : null,
-                styles.self?.textAlign ? mapStyles({ textAlign: styles.self?.textAlign }) : null
+                enableHover ? 'sb-component-item-hover' : null,
+                mapStyles(otherStyles)
             )}
             style={{
-                borderWidth: itemBorderWidth ? `${itemBorderWidth}px` : undefined
+                borderWidth: borderWidth ? `${borderWidth}px` : undefined
             }}
             {...pickDataAttrs(props)}
         >
-            {props.featuredImage && (
-                <div className="mb-6" {...toFieldPath('.featuredImage')}>
-                    <ImageBlock {...props.featuredImage} className="inline-block" />
+            {featuredImage && (
+                <div className="mb-6">
+                    <ImageBlock {...featuredImage} className="inline-block" {...toFieldPath('.featuredImage')} />
                 </div>
             )}
-            {props.title && (
+            {title && (
                 <h3 className={classNames(styles.title ? mapStyles(styles.title) : null)} {...toFieldPath('.title')}>
-                    {props.title}
+                    {title}
                 </h3>
             )}
-            {props.subtitle && (
+            {subtitle && (
                 <p
                     className={classNames('text-lg', styles.subtitle ? mapStyles(styles.subtitle) : null, {
-                        'mt-1': props.title
+                        'mt-1': title
                     })}
                     {...toFieldPath('.subtitle')}
                 >
-                    {props.subtitle}
+                    {subtitle}
                 </p>
             )}
-            {props.text && (
+            {text && (
                 <Markdown
-                    text={props.text}
+                    text={text}
                     {...toFieldPath('.text')}
                     className={classNames('sb-markdown', {
-                        'mt-4': props.title || props.subtitle
+                        'mt-4': title || subtitle
                     })}
                 />
             )}
-            <ItemActions {...props} />
+            <ItemActions actions={actions} textAlign={otherStyles.textAlign} hasTopMargin={!!(title || subtitle || text)} />
         </article>
     );
 };
 
-const ItemActions: React.FC<Props> = (props) => {
-    const actions = props.actions ?? [];
+type ItemActionsProps = {
+    actions?: types.Action[];
+    textAlign?: string;
+    hasTopMargin?: boolean;
+};
+
+const ItemActions: React.FC<ItemActionsProps> = (props) => {
+    const { actions = [], textAlign, hasTopMargin } = props;
     if (actions.length === 0) {
         return null;
     }
-    const styles = props.styles ?? {};
     return (
         <div
             className={classNames('overflow-x-hidden', {
-                'mt-6': props.title || props.subtitle || props.text
+                'mt-6': hasTopMargin
             })}
         >
             <div
                 className={classNames('flex', 'flex-wrap', 'items-center', '-mx-2', {
-                    'justify-center': styles.self?.textAlign === 'center',
-                    'justify-end': styles.self?.textAlign === 'right'
+                    'justify-center': textAlign === 'center',
+                    'justify-end': textAlign === 'right'
                 })}
                 {...toFieldPath('.actions')}
             >

@@ -81,7 +81,7 @@ const CtaActions: React.FC<CtaActionsProps> = (props) => {
         <div className={classNames('w-full', { 'lg:w-auto': styles.self?.flexDirection === 'row' })}>
             <div className="overflow-x-hidden">
                 <div
-                    className={classNames('flex', 'flex-wrap', 'items-center', '-mx-2', 'lg:flex-nowrap', mapStyles(styles.actions))}
+                    className={classNames('flex', 'flex-wrap', 'items-center', '-mx-2', 'lg:flex-nowrap', styles.actions ? mapStyles(styles.actions) : null)}
                     {...toFieldPath('.actions')}
                 >
                     {actions.map((action, index) => (
@@ -99,6 +99,7 @@ function mapFlexDirectionStyles(flexDirection: string) {
             return ['flex-col', 'lg:flex-row', 'lg:justify-between'];
         case 'col':
             return ['flex-col'];
+        default:
+            return null;
     }
-    return null;
 }

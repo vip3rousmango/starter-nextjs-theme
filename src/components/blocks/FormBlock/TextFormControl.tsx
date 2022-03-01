@@ -35,7 +35,7 @@ export const TextFormControl: React.FC<Props> = (props) => {
             <input
                 type={'text'}
                 id={props.name}
-                className="sb-text"
+                className="sb-input"
                 name={props.name}
                 {...(props.placeholder ? { placeholder: props.placeholder } : null)}
                 {...attr}

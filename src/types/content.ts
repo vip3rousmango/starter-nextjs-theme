@@ -515,7 +515,6 @@ export type ImageBlock = {
     altText?: string;
     /** The caption of the timage */
     caption?: string;
-    styles?: Styles;
     /** The unique ID for an HTML element, must not contain whitespace */
     elementId?: string;
 };

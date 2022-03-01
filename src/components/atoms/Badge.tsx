@@ -8,17 +8,16 @@ import { mapStylesToClassNames as mapStyles } from '../../utils/map-styles-to-cl
 export type Props = types.Badge & StackbitFieldPath & { className?: string };
 
 export const Badge: React.FC<Props> = (props) => {
-    const { label } = props;
+    const { elementId, className, label, styles = {} } = props;
     if (!label) {
         return null;
     }
     const fieldPath = getFieldPath(props);
-    const annotations = fieldPath ? [`${fieldPath}`, `${fieldPath}.elementId#@id`] : [];
-    const styles = props.styles?.self ?? {};
+    const annotations = fieldPath ? [fieldPath, `${fieldPath}.elementId#@id`] : [];
     return (
         <div
-            id={props.elementId}
-            className={classNames('sb-component', 'sb-component-block', 'sb-component-badge', props.className, styles ? mapStyles(styles) : null)}
+            id={elementId || undefined}
+            className={classNames('sb-component', 'sb-component-block', 'sb-component-badge', className, styles.self ? mapStyles(styles.self) : null)}
             {...toFieldPath(...annotations)}
         >
             <span {...toFieldPath('.label')}>{label}</span>

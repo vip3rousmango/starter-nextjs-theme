@@ -31,7 +31,7 @@ export const HeroSection: React.FC<Props> = (props) => {
                 </div>
                 {media && (
                     <div className="flex-1 w-full">
-                        <DynamicComponent {...media} {...toFieldPath('.media')} />{' '}
+                        <DynamicComponent {...media} {...toFieldPath('.media')} />
                     </div>
                 )}
             </div>
