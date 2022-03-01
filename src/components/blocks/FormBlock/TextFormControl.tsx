@@ -1,15 +1,14 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import { FC } from 'react';
-import type * as types from '.contentlayer/types';
-import { StackbitFieldPath } from '../../../utils/stackbit';
+import { toFieldPath, pickDataAttrs, StackbitFieldPath } from '@stackbit/annotations';
+import type * as types from 'types';
 
 export type Props = types.TextFormControl & StackbitFieldPath;
 
-export const TextFormControl: FC<Props> = (props) => {
+export const TextFormControl: React.FC<Props> = (props) => {
     const width = props.width ?? 'full';
     const labelId = `${props.name}-label`;
-    const attr: any = {};
+    const attr: React.InputHTMLAttributes<HTMLInputElement> = {};
     if (props.label) {
         attr['aria-labelledby'] = labelId;
     }
@@ -21,14 +20,14 @@ export const TextFormControl: FC<Props> = (props) => {
             className={classNames('sb-form-control', {
                 'sm:col-span-2': width === 'full'
             })}
-            data-sb-field-path={props['data-sb-field-path']}
+            {...pickDataAttrs(props)}
         >
             {props.label && (
                 <label
                     id={labelId}
                     className={classNames('sb-label', { 'sr-only': props.hideLabel })}
                     htmlFor={props.name}
-                    data-sb-field-path=".label .name#@for"
+                    {...toFieldPath('.label', '.name#@for')}
                 >
                     {props.label}
                 </label>
@@ -40,7 +39,7 @@ export const TextFormControl: FC<Props> = (props) => {
                 name={props.name}
                 {...(props.placeholder ? { placeholder: props.placeholder } : null)}
                 {...attr}
-                data-sb-field-path=".name#@id .name#@name .placeholder#@placeholder"
+                {...toFieldPath('.name#@id', '.name#@name', '.placeholder#@placeholder')}
             />
         </div>
     );

@@ -40,6 +40,4 @@ yarn-error.log*
 *.code-workspace
 .idea
 
-
-# Contentlayer
-.contentlayer
+.cache

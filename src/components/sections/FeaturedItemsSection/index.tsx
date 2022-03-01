@@ -1,17 +1,15 @@
 import * as React from 'react';
 import classNames from 'classnames';
+import { toFieldPath, pickDataAttrs } from '@stackbit/annotations';
+import type * as types from 'types';
 
 import { mapStylesToClassNames as mapStyles } from '../../../utils/map-styles-to-class-names';
-import { getDataAttrs } from '../../../utils/get-data-attrs';
 import { Action } from '../../atoms/Action';
 import { FeaturedItem } from './FeaturedItem';
-import { FC } from 'react';
-import type * as types from '.contentlayer/types';
 
 export type Props = types.FeaturedItemsSection;
 
-export const FeaturedItemsSection: FC<Props> = (props) => {
-    const cssId = props.elementId ?? null;
+export const FeaturedItemsSection: React.FC<Props> = (props) => {
     const colors = props.colors ?? 'colors-a';
     const styles = props.styles ?? {};
     const sectionWidth = styles.self?.width ?? 'wide';
@@ -20,8 +18,8 @@ export const FeaturedItemsSection: FC<Props> = (props) => {
     const featuredItems = props.items ?? [];
     return (
         <div
-            id={cssId}
-            {...getDataAttrs(props)}
+            id={props.elementId}
+            {...pickDataAttrs(props)}
             className={classNames(
                 'sb-component',
                 'sb-component-section',
@@ -38,13 +36,13 @@ export const FeaturedItemsSection: FC<Props> = (props) => {
                 styles.self?.borderRadius ? mapStyles({ borderRadius: styles.self?.borderRadius }) : null
             )}
             style={{
-                borderWidth: styles.self?.borderWidth ? `${styles.self?.borderWidth}px` : null
+                borderWidth: styles.self?.borderWidth
             }}
         >
             <div className={classNames('flex', 'w-full', mapStyles({ justifyContent: sectionJustifyContent }))}>
                 <div className={classNames('w-full', mapMaxWidthStyles(sectionWidth))}>
                     {props.title && (
-                        <h2 className={classNames(styles.title ? mapStyles(styles.title) : null)} data-sb-field-path=".title">
+                        <h2 className={classNames(styles.title ? mapStyles(styles.title) : null)} {...toFieldPath('.title')}>
                             {props.title}
                         </h2>
                     )}
@@ -53,7 +51,7 @@ export const FeaturedItemsSection: FC<Props> = (props) => {
                             className={classNames('text-lg', 'sm:text-xl', styles.subtitle ? mapStyles(styles.subtitle) : null, {
                                 'mt-6': props.title
                             })}
-                            data-sb-field-path=".subtitle"
+                            {...toFieldPath('.subtitle')}
                         >
                             {props.subtitle}
                         </p>
@@ -63,10 +61,10 @@ export const FeaturedItemsSection: FC<Props> = (props) => {
                             className={classNames('grid', 'gap-6', 'lg:gap-8', mapColStyles(props?.columns || 3), {
                                 'mt-12': props.title || props.subtitle
                             })}
-                            data-sb-field-path=".items"
+                            {...toFieldPath('.items')}
                         >
-                            {props.items.map((item, index) => (
-                                <FeaturedItem key={index} {...item} enableHover={props.enableHover} data-sb-field-path={`.${index}`} />
+                            {featuredItems.map((item, index) => (
+                                <FeaturedItem key={index} {...item} enableHover={props.enableHover} {...toFieldPath(`.${index}`)} />
                             ))}
                         </div>
                     )}
@@ -77,7 +75,7 @@ export const FeaturedItemsSection: FC<Props> = (props) => {
     );
 };
 
-const FeaturedItemActions: FC<types.FeaturedItemsSection> = (props) => {
+const FeaturedItemActions: React.FC<types.FeaturedItemsSection> = (props) => {
     const actions = props.actions ?? [];
     if (actions.length === 0) {
         return null;
@@ -87,10 +85,10 @@ const FeaturedItemActions: FC<types.FeaturedItemsSection> = (props) => {
         <div className="mt-12 overflow-x-hidden">
             <div
                 className={classNames('flex', 'flex-wrap', 'items-center', '-mx-2', styles.actions ? mapStyles(styles.actions) : null)}
-                data-sb-field-path=".actions"
+                {...toFieldPath('.actions')}
             >
                 {actions.map((action, index) => (
-                    <Action key={index} {...action} className="mx-2 mb-3 lg:whitespace-nowrap" data-sb-field-path={`.${index}`} />
+                    <Action key={index} {...action} className="mx-2 mb-3 lg:whitespace-nowrap" {...toFieldPath(`.${index}`)} />
                 ))}
             </div>
         </div>

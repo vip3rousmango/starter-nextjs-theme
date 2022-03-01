@@ -1,13 +1,16 @@
 name: PostFeedLayout
-label: Blog
+label: Blog Feed
 labelField: title
 layout: PostFeedLayout
 hideContent: true
+extends:
+  - Seo
 fields:
   - type: string
     name: title
     label: Title
     default: This is a page title
+    required: true
   - type: number
     name: numOfPostsPerPage
     label: Number of Posts per page

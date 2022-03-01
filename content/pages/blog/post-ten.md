@@ -1,7 +1,7 @@
 ---
 title: The Most Creative Ways Our Customers Use Our Products
 date: '2020-12-20'
-author: data/team/hugh-saturation.json
+author: content/data/team/hugh-saturation.json
 excerpt: Et libero doloribus qui consequatur ratione cum rerum dolor sit dolor laborum aut dignissimos tempora aut molestiae beatae in voluptatem neque. Et illo aspernatur.
 featuredImage:
   type: ImageBlock

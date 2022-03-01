@@ -7,7 +7,6 @@ sections:
     colors: colors-a
     title: 'Love your work. Work loves you.'
     subtitle: 'One platform, one community.'
-    text:
     actions:
       - type: Button
         label: Get Started
@@ -53,7 +52,6 @@ sections:
     colors: colors-f
     backgroundSize: inset
     title: Where did everyone go?
-    subtitle:
     text: >
       Learn how top tech companies have learned working remote using our
       product.
@@ -112,7 +110,6 @@ sections:
           opacity: 100
       type: ImageBlock
   - colors: colors-h
-    title: null
     subtitle: Trusted by
     elementId: ''
     images:
@@ -178,7 +175,6 @@ sections:
     subtitle: >-
       These are all excellent features that will provide exactly the things
       you’re looking for.
-    actions: []
     items:
       - type: FeaturedItem
         title: Faster
@@ -391,8 +387,8 @@ sections:
         showIcon: true
         icon: arrowRight
     posts:
-      - pages/blog/post-four.md
-      - pages/blog/post-three.md
+      - content/pages/blog/post-four.md
+      - content/pages/blog/post-three.md
     styles:
       self:
         height: auto
@@ -420,35 +416,36 @@ sections:
         justifyContent: flex-start
     type: FeaturedPostsSection
     showDate: true
+    showAuthor: true
   - colors: colors-f
     elementId: ''
     title: Need Answers?
     items:
-      - question: How it this different from what we have today?
+      - question: How is this different from what we have today?
         answer: >-
           At the office, working together is often a distruction, on remote, it
           could be motivation, At the office, working together is often a
           distruction, on remote, it could be motivation, At the office, working
           together is often a distruction, on remote, it could be motivation
-      - question: How it this different from what we have today?
+      - question: How is this different from what we have today?
         answer: >-
           At the office, working together is often a distruction, on remote, it
           could be motivation, At the office, working together is often a
           distruction, on remote, it could be motivation, At the office, working
           together is often a distruction, on remote, it could be motivation
-      - question: How it this different from what we have today?
+      - question: How is this different from what we have today?
         answer: >-
           At the office, working together is often a distruction, on remote, it
           could be motivation, At the office, working together is often a
           distruction, on remote, it could be motivation, At the office, working
           together is often a distruction, on remote, it could be motivation
-      - question: How it this different from what we have today?
+      - question: How is this different from what we have today?
         answer: >-
           At the office, working together is often a distruction, on remote, it
           could be motivation. At the office, working together is often a
           distruction, on remote, it could be motivation. At the office, working
           together is often a distruction, on remote, it could be motivation.
-      - question: How it this different from what we have today?
+      - question: How is this different from what we have today?
         answer: >-
           At the office, working together is often a distruction, on remote, it
           could be motivation. At the office, working together is often a

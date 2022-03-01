@@ -1,61 +1,40 @@
 import * as React from 'react';
-import { FC } from 'react';
-import type * as types from '.contentlayer/types';
 import classNames from 'classnames';
-import { Link } from './Link';
-import Facebook from '../svgs/facebook';
-import GitHub from '../svgs/github';
-import Instagram from '../svgs/instagram';
-import LinkedIn from '../svgs/linkedin';
-import Reddit from '../svgs/reddit';
-import Twitter from '../svgs/twitter';
-import Vimeo from '../svgs/vimeo';
-import YouTube from '../svgs/youtube';
-import { StackbitFieldPath } from '../../utils/stackbit';
+import { StackbitFieldPath, toFieldPath, getFieldPath } from '@stackbit/annotations';
+import type * as types from 'types';
 
-const iconMap = {
-    facebook: Facebook,
-    github: GitHub,
-    instagram: Instagram,
-    linkedin: LinkedIn,
-    reddit: Reddit,
-    twitter: Twitter,
-    vimeo: Vimeo,
-    youtube: YouTube
-};
+import { Link } from './Link';
+import { iconMap } from '../svgs';
 
 export type Props = types.Social & { className?: string } & StackbitFieldPath;
 
-export const Social: FC<Props> = (props) => {
-    const { label, altText, url } = props;
+export const Social: React.FC<Props> = (props) => {
+    const { elementId, className, label, altText, url } = props;
     const icon = props.icon ?? 'facebook';
     const IconComponent = iconMap[icon];
-    const annotationPrefix = props['data-sb-field-path'] ?? '';
-    const annotations = [
-        `${annotationPrefix}`,
-        `${annotationPrefix}.url#@href`,
-        `${annotationPrefix}.altText#@aria-label`,
-        `${annotationPrefix}.elementId#@id`,
-        `${annotationPrefix}.label#span[1]`,
-        `${annotationPrefix}.icon#svg[1]`
-    ];
+    const annotationPrefix = getFieldPath(props);
+    const annotations = annotationPrefix
+        ? [`${annotationPrefix}`, `${annotationPrefix}.url#@href`, `${annotationPrefix}.altText#@aria-label`, `${annotationPrefix}.elementId#@id`]
+        : [];
     const style = props.style ?? 'link';
-    const cssClasses = props.className ?? null;
-    const cssId = props.elementId ?? null;
 
     return (
         <Link
             href={url}
             aria-label={altText}
-            id={cssId}
-            className={classNames('sb-component', 'sb-component-block', 'sb-component-social', cssClasses, {
+            id={elementId}
+            className={classNames('sb-component', 'sb-component-block', 'sb-component-social', className, {
                 'sb-component-social-primary': style === 'primary',
                 'sb-component-social-secondary': style === 'secondary'
             })}
-            data-sb-field-path={annotations.join(' ').trim()}
+            {...toFieldPath(...annotations)}
         >
-            {label && <span className="sr-only">{label}</span>}
-            {IconComponent && <IconComponent className="w-5 h-5 fill-current" />}
+            {label && (
+                <span className="sr-only" {...toFieldPath('.label')}>
+                    {label}
+                </span>
+            )}
+            {IconComponent && <IconComponent className="w-5 h-5 fill-current" {...toFieldPath('.icon')} />}
         </Link>
     );
 };
