@@ -26,11 +26,7 @@ export default withHotContentReload(Page);
 export const getStaticPaths: GetStaticPaths = async () => {
     const data = await sourcebitDataClient.getData();
     const documents = data.objects;
-    const allPosts = findPostLayouts(documents);
-    const paths = allPosts.reduce((paths: string[], post) => {
-        const urlPath = urlPathForDocument(post);
-        return paths.concat(urlPath);
-    }, []);
+    const paths = findPostLayouts(documents).map((post) => urlPathForDocument(post));
     return { paths: paths, fallback: false };
 };
 
