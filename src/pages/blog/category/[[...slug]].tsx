@@ -12,7 +12,8 @@ import {
     getPagedPathsForPagePath,
     findAndSortCategoryPosts,
     getPaginationDataForPagePath,
-    toPageProps
+    toPageProps,
+    getRootPagePath
 } from '../../../utils/static-resolver-utils';
 
 export type Props = PageProps<PostFeedLayoutProps>;
@@ -67,7 +68,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
  */
 export const getStaticProps: GetStaticProps<Props, { slug: string[] }> = async ({ params }) => {
     const urlPath = `${BLOG_CATEGORY_URL}/${params?.slug.join('/')}`;
-    const categoryPostFeedLayout = allCategoryPostFeedLayouts.find((categoryPostFeedLayout) => urlPathForDocument(categoryPostFeedLayout) === urlPath)!;
+    const categoryPostFeedLayout = allCategoryPostFeedLayouts.find(
+        (categoryPostFeedLayout) => urlPathForDocument(categoryPostFeedLayout) === getRootPagePath(urlPath)
+    )!;
     const category = allBlogCategories.find((category) => category._id === categoryPostFeedLayout.category);
     const categoryPosts = category ? findAndSortCategoryPosts(allDocuments, category._id) : [];
     const numOfItemsPerPage = categoryPostFeedLayout.numOfPostsPerPage ?? DEFAULT_NUM_OF_POSTS_PER_PAGE;

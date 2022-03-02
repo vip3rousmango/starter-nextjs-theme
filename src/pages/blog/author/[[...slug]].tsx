@@ -12,7 +12,8 @@ import {
     getPagedPathsForPagePath,
     findAndSortAuthorPosts,
     getPaginationDataForPagePath,
-    toPageProps
+    toPageProps,
+    getRootPagePath
 } from '../../../utils/static-resolver-utils';
 
 export type Props = PageProps<PostFeedLayoutProps>;
@@ -44,7 +45,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps<Props, { slug: string[] }> = async ({ params }) => {
     const urlPath = `${BLOG_AUTHOR_URL}/${params?.slug.join('/')}`;
-    const authorPostFeedLayout = allAuthorPostFeedLayouts.find((authorPostFeedLayout) => urlPathForDocument(authorPostFeedLayout) === urlPath)!;
+    const authorPostFeedLayout = allAuthorPostFeedLayouts.find(
+        (authorPostFeedLayout) => urlPathForDocument(authorPostFeedLayout) === getRootPagePath(urlPath)
+    )!;
     const author = allPeople.find((person) => person._id === authorPostFeedLayout.author);
     const authorPosts = author ? findAndSortAuthorPosts(allDocuments, author._id) : [];
     const numOfItemsPerPage = authorPostFeedLayout.numOfPostsPerPage ?? DEFAULT_NUM_OF_POSTS_PER_PAGE;
