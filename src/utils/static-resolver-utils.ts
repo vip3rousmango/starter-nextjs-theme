@@ -93,8 +93,7 @@ export function toPageProps<T extends AllPageLayoutProps>(pageLayoutProps: T, ur
         },
         page: {
             ...pageLayoutProps,
-            pageCssClasses,
-            urlPath
+            pageCssClasses
         } as T
     };
 }
@@ -120,6 +119,7 @@ export function resolvePostLayout(postLayout: types.PostLayout, allDocuments: ty
     const categoryPostFeedLayout = allDocuments.filter(isCategoryFeedLayout).find((categoryPostFeedLayout) => categoryPostFeedLayout.category === categoryId);
     return {
         ...rest,
+        urlPath: urlPathForDocument(postLayout),
         ...(author && {
             author: {
                 ...author,

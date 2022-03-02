@@ -13,6 +13,7 @@ export type Pagination<T> = {
 export type PostLayoutResolvedWithoutSections = Omit<types.PostLayout, 'author' | 'category' | 'bottomSections'> & {
     author?: PersonProps;
     category?: CategoryProps;
+    urlPath: string;
     bottomSections?: never;
 };
 
