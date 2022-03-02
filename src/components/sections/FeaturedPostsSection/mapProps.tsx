@@ -6,7 +6,7 @@ import type { Props as FeaturedPostsSectionProps } from './index';
 export const mapProps = (section: types.FeaturedPostsSection, allDocuments: types.DocumentTypes[]): FeaturedPostsSectionProps => {
     const allPosts = findPostLayouts(allDocuments);
     const posts = section.posts
-        .map((postId) => allPosts.find((post) => post.__metadata.id === postId))
+        .map((postId) => allPosts.find((post) => post._id === postId))
         .filter(isNotNullable)
         .filter(isPostLayout)
         .map((post) => resolvePostLayout(post, allDocuments));

@@ -10,14 +10,12 @@ import type { PageProps, AllPageLayoutProps } from '../index';
 
 export const DefaultBaseLayout: React.FC<PageProps<AllPageLayoutProps>> = (props) => {
     const { page, site } = props;
-    const siteMeta = site?.__metadata;
-    const pageMeta = page?.__metadata;
-    const siteId = siteMeta?.id;
+    const siteId = site?._id;
     const title = seoGenerateTitle(page, site);
     const metaTags = seoGenerateMetaTags(page, site);
     const metaDescription = seoGenerateMetaDescription(page, site);
     return (
-        <div className={classNames('sb-page', pageMeta?.pageCssClasses)} {...toObjectId(pageMeta?.id)}>
+        <div className={classNames('sb-page', page?.pageCssClasses)} {...toObjectId(page?._id)}>
             <div className="sb-base sb-default-base-layout">
                 <Head>
                     <title>{title}</title>

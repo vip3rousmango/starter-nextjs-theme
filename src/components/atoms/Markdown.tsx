@@ -1,13 +1,9 @@
 import { FC } from 'react';
-import MarkdownToJsx from 'markdown-to-jsx';
 import { pickDataAttrs, StackbitFieldPath } from '@stackbit/annotations';
+import type * as types from 'types';
 
-export type Props = { text: string; className?: string } & StackbitFieldPath;
+export type Props = { text: types.Markdown; className?: string } & StackbitFieldPath;
 
 export const Markdown: FC<Props> = ({ text, className, ...rest }) => {
-    return (
-        <MarkdownToJsx options={{ forceBlock: true, forceWrapper: true }} className={className} {...pickDataAttrs(rest)}>
-            {text}
-        </MarkdownToJsx>
-    );
+    return <div dangerouslySetInnerHTML={{ __html: text.html }} className={className} {...pickDataAttrs(rest)} />;
 };

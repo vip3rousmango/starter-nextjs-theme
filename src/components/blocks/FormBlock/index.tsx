@@ -78,7 +78,7 @@ export class FormBlock extends React.Component<Props, State> {
             destination,
             submitLabel,
             className,
-            styles = {} as types.Styles,
+            styles = {},
             'data-sb-field-path': annotation
         } = this.props;
         if (fields.length === 0) {

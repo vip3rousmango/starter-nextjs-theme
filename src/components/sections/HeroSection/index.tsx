@@ -72,8 +72,8 @@ type HeroBodyProps = {
     title?: string;
     subtitle?: string;
     badge?: types.Badge;
-    text?: string;
-    styles?: types.Styles;
+    text?: types.Markdown;
+    styles?: any;
 };
 
 const HeroBody: React.FC<HeroBodyProps> = (props) => {

@@ -2,6 +2,7 @@ import path from 'path';
 import * as types from 'types';
 
 import { PageProps, AllPageLayoutProps } from '../components/layouts';
+import type { Pagination, PostLayoutResolvedWithoutSections } from '../types';
 
 export const BLOG_URL = '/blog';
 export const BLOG_AUTHOR_URL = `${BLOG_URL}/author`;
@@ -9,10 +10,6 @@ export const BLOG_CATEGORY_URL = `${BLOG_URL}/category`;
 
 export function isNotNullable<T>(value: T | undefined): value is NonNullable<T> {
     return value !== undefined && value !== null;
-}
-
-export function findAndSortAllPost(documents: types.DocumentTypes[]) {
-    return findPostLayouts(documents).sort(sortPostsByDateDesc);
 }
 
 export function findAndSortCategoryPosts(documents: types.DocumentTypes[], categoryId: string) {
@@ -96,17 +93,15 @@ export function toPageProps<T extends AllPageLayoutProps>(pageLayoutProps: T, ur
         },
         page: {
             ...pageLayoutProps,
-            __metadata: {
-                ...pageLayoutProps.__metadata,
-                urlPath,
-                pageCssClasses
-            }
+            pageCssClasses,
+            urlPath
         } as T
     };
 }
 
 function cssClassesFromUrlPath(urlPath: string) {
-    const parts = splitUrl(urlPath);
+    const cleanUrlPath = urlPath.replace(/^\/|\/$/g, '');
+    const parts = cleanUrlPath.split('/');
     let css = 'page';
     return parts.map((part) => {
         css += `-${part}`;
@@ -114,25 +109,16 @@ function cssClassesFromUrlPath(urlPath: string) {
     });
 }
 
-export function splitUrl(urlPath: string) {
-    const cleanUrlPath = urlPath.replace(/^\/|\/$/g, '');
-    return cleanUrlPath.split('/');
-}
-
-export function resolvePostLayout(postLayout: types.PostLayout, allDocuments: types.DocumentTypes[]): types.PostLayoutResolvedWithoutSections {
+export function resolvePostLayout(postLayout: types.PostLayout, allDocuments: types.DocumentTypes[]): PostLayoutResolvedWithoutSections {
     const allPeople = allDocuments.filter(isPerson);
     const allCategories = allDocuments.filter(isBlogCategory);
-    const { author: authorId, category: categoryId, __metadata, bottomSections, ...rest } = postLayout;
-    const author = allPeople.find((doc) => doc.__metadata.id === authorId);
-    const category = allCategories.find((doc) => doc.__metadata.id === categoryId);
+    const { author: authorId, category: categoryId, bottomSections, ...rest } = postLayout;
+    const author = allPeople.find((doc) => doc._id === authorId);
+    const category = allCategories.find((doc) => doc._id === categoryId);
     const authorPostFeedLayouts = allDocuments.filter(isAuthorFeedLayout);
     const authorPostFeedLayout = authorPostFeedLayouts.find((authorPostFeedLayout) => authorPostFeedLayout.author === authorId);
     const categoryPostFeedLayout = allDocuments.filter(isCategoryFeedLayout).find((categoryPostFeedLayout) => categoryPostFeedLayout.category === categoryId);
     return {
-        __metadata: {
-            ...__metadata,
-            urlPath: urlPathForDocument(postLayout)
-        },
         ...rest,
         ...(author && {
             author: {
@@ -164,7 +150,7 @@ export function resolvePostLayout(postLayout: types.PostLayout, allDocuments: ty
  * @param document
  */
 export function urlPathForDocument(document: types.DocumentTypes) {
-    const relSourcePath = document.__metadata.relSourcePath;
+    const relSourcePath = document._raw.sourceFilePath.replace(/^pages(\/|$)/, '');
     const pathObject = path.posix.parse(relSourcePath);
     const parts = pathObject.dir.split(path.posix.sep).filter(Boolean);
     if (pathObject.name !== 'index') {
@@ -225,7 +211,7 @@ export function getPagedPathsForPagePath(pageUrlPath: string, items: any[], numO
  * @param items Array of items to paginate
  * @param numOfItemsPerPage Number of items per page
  */
-export function getPaginationDataForPagePath<T>(pageUrlPath: string, items: T[], numOfItemsPerPage: number): types.Pagination<T> {
+export function getPaginationDataForPagePath<T>(pageUrlPath: string, items: T[], numOfItemsPerPage: number): Pagination<T> {
     const baseUrlPath = getRootPagePath(pageUrlPath);
     if (numOfItemsPerPage === 0) {
         return {

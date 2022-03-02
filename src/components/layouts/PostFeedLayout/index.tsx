@@ -8,9 +8,10 @@ import { mapStylesToClassNames as mapStyles } from '../../../utils/map-styles-to
 import { PostFeedSection, PostFeedSectionPostsProps } from '../../sections/PostFeedSection';
 import { DynamicComponent } from '../../DynamicComponent';
 import type { SectionsProps } from '../../sections/mapSectionProps';
+import type { Pagination } from '../../../types';
 
 export type Props = Omit<types.PostFeedLayout, 'topSections' | 'bottomSections'> &
-    types.Pagination<PostFeedSectionPostsProps> & {
+    Pagination<PostFeedSectionPostsProps> & {
         annotateFields?: boolean;
         items: PostFeedSectionPostsProps[];
         topSections: SectionsProps[];

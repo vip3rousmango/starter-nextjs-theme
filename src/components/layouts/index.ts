@@ -10,5 +10,5 @@ export type Site = types.Config & { env?: Record<string, string>; baseLayout?: s
 
 export type PageProps<T extends AllPageLayoutProps> = {
     site: Site;
-    page: T & { baseLayout?: string };
+    page: T & { baseLayout?: string; pageCssClasses?: string[] };
 };

@@ -87,7 +87,9 @@ export const DynamicComponent: FC<Props> = (props) => {
     }
     const Component = componentsMap[props.type] as ComponentType<Props>;
     if (!Component) {
-        throw new Error(`No component match object with type: '${props.type}'\nMake sure DynamicComponent.tsx file has an entry for '${props.type}' in 'componentsMap'`);
+        throw new Error(
+            `No component match object with type: '${props.type}'\nMake sure DynamicComponent.tsx file has an entry for '${props.type}' in 'componentsMap'`
+        );
     }
     return <Component {...props} />;
 };

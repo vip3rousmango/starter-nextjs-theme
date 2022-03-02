@@ -3,9 +3,10 @@ import type * as types from 'types';
 import { resolvePostLayout } from '../../../utils/static-resolver-utils';
 import { mapSectionProps } from '../../sections/mapSectionProps';
 import type { Props as PostFeedLayoutProps } from './index';
+import type { Pagination } from '../../../types';
 
 export const mapProps = async (
-    postFeedLayout: types.PostFeedLayout & types.Pagination<types.PostLayout>,
+    postFeedLayout: types.PostFeedLayout & Pagination<types.PostLayout>,
     allDocuments: types.DocumentTypes[]
 ): Promise<PostFeedLayoutProps> => {
     const items = postFeedLayout.items.map((post) => {

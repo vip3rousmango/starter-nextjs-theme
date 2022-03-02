@@ -1,14 +1,14 @@
 import * as React from 'react';
 import dayjs from 'dayjs';
 import { toFieldPath } from '@stackbit/annotations';
-import type * as types from 'types';
 
 import { Link } from '../../atoms/Link';
 import { DynamicComponent } from '../../DynamicComponent';
 import { Markdown } from '../../atoms/Markdown';
 import type { SectionsProps } from '../../sections/mapSectionProps';
+import type { PostLayoutResolvedWithoutSections, PersonProps, CategoryProps } from '../../../types';
 
-export type Props = Omit<types.PostLayoutResolvedWithoutSections, 'bottomSections'> & {
+export type Props = Omit<PostLayoutResolvedWithoutSections, 'bottomSections'> & {
     bottomSections: SectionsProps[];
 };
 
@@ -29,9 +29,7 @@ export const PostLayout: React.FC<Props> = (page) => {
                         {page.title && <h1 {...toFieldPath('title')}>{page.title}</h1>}
                         <PostAttribution post={page} />
                     </header>
-                    {page.markdown_content && (
-                        <Markdown className="max-w-screen-md mx-auto sb-markdown" {...toFieldPath('markdown_content')} text={page.markdown_content} />
-                    )}
+                    {page.body && <Markdown className="max-w-screen-md mx-auto sb-markdown" {...toFieldPath('markdown_content')} text={page.body} />}
                 </div>
             </article>
             {page.bottomSections && page.bottomSections.length > 0 && (
@@ -67,7 +65,7 @@ const PostAttribution: React.FC<{ post: Props }> = ({ post }) => {
     );
 };
 
-const PostAuthor: React.FC<{ author: types.PersonProps }> = ({ author }) => {
+const PostAuthor: React.FC<{ author: PersonProps }> = ({ author }) => {
     const children = (
         <>
             {author.firstName && <span {...toFieldPath('.firstName')}>{author.firstName}</span>}{' '}
@@ -83,7 +81,7 @@ const PostAuthor: React.FC<{ author: types.PersonProps }> = ({ author }) => {
     );
 };
 
-const PostCategory: React.FC<{ category: types.CategoryProps }> = ({ category }) => {
+const PostCategory: React.FC<{ category: CategoryProps }> = ({ category }) => {
     return category.pageUrl ? (
         <Link {...toFieldPath('category')} href={category.pageUrl}>
             {category.title}

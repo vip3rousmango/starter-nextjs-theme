@@ -79,7 +79,7 @@ export const TestimonialsSection: React.FC<Props> = (props) => {
 };
 
 const TestimonialVariantA: React.FC<types.Testimonial & { index: number }> = ({ index, ...testimonial }) => {
-    const styles = testimonial.styles ?? ({} as types.Styles);
+    const styles = testimonial.styles ?? {};
     return (
         <blockquote key={index} className="flex flex-col md:items-center md:flex-row" {...toFieldPath(`.${index}`)}>
             {testimonial.image && (
@@ -120,7 +120,7 @@ const TestimonialVariantA: React.FC<types.Testimonial & { index: number }> = ({ 
 };
 
 const TestimonialVariantB: React.FC<types.Testimonial & { index: number }> = ({ index, ...testimonial }) => {
-    const styles = testimonial.styles ?? ({} as types.Styles);
+    const styles = testimonial.styles ?? {};
     return (
         <blockquote key={index} {...toFieldPath(`.${index}`)}>
             {testimonial.quote && (
@@ -163,7 +163,7 @@ const TestimonialVariantB: React.FC<types.Testimonial & { index: number }> = ({ 
 };
 
 const TestimonialVariantC: React.FC<types.Testimonial & { index: number }> = ({ index, ...testimonial }) => {
-    const styles = testimonial.styles ?? ({} as types.Styles);
+    const styles = testimonial.styles ?? {};
     return (
         <blockquote key={index} className="text-center" {...toFieldPath(`.${index}`)}>
             {testimonial.quote && (

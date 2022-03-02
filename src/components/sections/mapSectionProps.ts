@@ -7,14 +7,15 @@ import { mapProps as mapFeaturedPeopleSectionProps } from './FeaturedPeopleSecti
 import { mapProps as mapFeaturedPostsSectionProps } from './FeaturedPostsSection/mapProps';
 import { mapProps as mapRecentPostsSectionProps } from './RecentPostsSection/mapProps';
 import { mapProps as mapFormBlockProps } from '../blocks/FormBlock/mapProps';
+import { Sections } from '../../types';
 
 export type SectionsProps =
-    | Exclude<types.Sections, types.RecentPostsSection | types.FeaturedPostsSection | types.FeaturedPeopleSection>
+    | Exclude<Sections, types.RecentPostsSection | types.FeaturedPostsSection | types.FeaturedPeopleSection>
     | RecentPostsSectionProps
     | FeaturedPostsSectionProps
     | FeaturedPeopleSectionProps;
 
-export const mapSectionProps = async (sections: types.Sections[] = [], allDocuments: types.DocumentTypes[]): Promise<SectionsProps[]> => {
+export const mapSectionProps = async (sections: Sections[] = [], allDocuments: types.DocumentTypes[]): Promise<SectionsProps[]> => {
     return Promise.all(
         (sections ?? []).map(async (section) => {
             switch (section.type) {

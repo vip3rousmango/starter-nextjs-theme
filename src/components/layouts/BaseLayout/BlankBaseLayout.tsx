@@ -7,10 +7,9 @@ import type { PageProps, AllPageLayoutProps } from '../index';
 
 export const BlankBaseLayout: React.FC<PageProps<AllPageLayoutProps>> = (props) => {
     const { page, site } = props;
-    const pageMeta = page?.__metadata;
 
     return (
-        <div className={classNames('sb-page', pageMeta?.pageCssClasses)} {...toObjectId(pageMeta?.id)}>
+        <div className={classNames('sb-page', page?.pageCssClasses)} {...toObjectId(page?._id)}>
             <Head>
                 <title>{page.title}</title>
                 <meta name="description" content="Stackbit Components Library" />

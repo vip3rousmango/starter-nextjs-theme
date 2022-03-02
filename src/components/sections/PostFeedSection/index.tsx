@@ -9,14 +9,20 @@ import { Link } from '../../atoms/Link';
 import { Action } from '../../atoms/Action';
 import { ImageBlock } from '../../blocks/ImageBlock';
 import ArrowRightIcon from '../../svgs/arrow-right';
+import type { PostLayoutResolvedWithoutSections, PersonProps, CategoryProps } from '../../../types';
 
-export type Props = types.PostFeedSection & {
+type Union = Partial<types.FeaturedPostsSection | types.RecentPostsSection | types.PagedPostsSection>;
+type PostFeedSectionProps = {
+    [k in keyof Union]: Union[k];
+};
+
+export type Props = PostFeedSectionProps & {
     pageLinks?: React.ReactNode;
     posts?: PostFeedSectionPostsProps[];
     annotatePosts?: boolean;
 };
 
-export type PostFeedSectionPostsProps = types.PostLayoutResolvedWithoutSections;
+export type PostFeedSectionPostsProps = PostLayoutResolvedWithoutSections;
 
 export const PostFeedSection: React.FC<Props> = (props) => {
     const colors = props.colors ?? 'colors-a';
@@ -91,7 +97,7 @@ const PostFeedActions: React.FC<Props> = (props) => {
     if (actions.length === 0) {
         return null;
     }
-    const styles = props.styles ?? ({} as types.Styles);
+    const styles = props.styles ?? {};
     return (
         <div className="mt-12 overflow-x-hidden">
             <div
@@ -134,8 +140,8 @@ const PostsVariantA: React.FC<Props> = (props) => {
             {...(props.annotatePosts ? toFieldPath('.posts') : null)}
         >
             {posts.map((post, index) => (
-                <article key={index} {...toObjectId(post.__metadata.id)}>
-                    <Link href={post.__metadata.urlPath} className="block">
+                <article key={index} {...toObjectId(post._id)}>
+                    <Link href={post.urlPath} className="block">
                         {post.featuredImage && (
                             <div className="rounded-2xl mb-6 h-0 w-full pt-1/1 relative overflow-hidden lg:mb-10">
                                 <ImageBlock
@@ -185,9 +191,9 @@ const PostsVariantB: React.FC<Props> = (props) => {
                 <article
                     key={index}
                     className={classNames(index % 4 === 0 || (index + 1) % 4 === 0 ? 'md:col-span-3' : 'md:col-span-2')}
-                    {...toObjectId(post.__metadata.id)}
+                    {...toObjectId(post._id)}
                 >
-                    <Link href={post.__metadata.urlPath} className="block">
+                    <Link href={post.urlPath} className="block">
                         {post.featuredImage && (
                             <div
                                 className="rounded-2xl mb-6 h-0 w-full pt-9/16 relative overflow-hidden md:pt-0 md:h-64 lg:h-96 lg:mb-10"
@@ -236,8 +242,8 @@ const PostsVariantC: React.FC<Props> = (props) => {
         >
             {posts.map((post, index) => {
                 return (
-                    <article key={index} className="sb-card rounded-2xl overflow-hidden" {...toObjectId(post.__metadata.id)}>
-                        <Link href={post.__metadata.urlPath} className="block">
+                    <article key={index} className="sb-card rounded-2xl overflow-hidden" {...toObjectId(post._id)}>
+                        <Link href={post.urlPath} className="block">
                             <div className="flex flex-col min-h-full">
                                 {post.featuredImage && (
                                     <div className="h-0 w-full pt-9/16 relative overflow-hidden" {...toFieldPath('featuredImage')}>
@@ -314,7 +320,7 @@ const PostAttribution: React.FC<{ showAuthor?: boolean; post: PostFeedSectionPos
     );
 };
 
-const PostAuthor: React.FC<{ author: types.PersonProps }> = ({ author }) => {
+const PostAuthor: React.FC<{ author: PersonProps }> = ({ author }) => {
     if (!author) {
         return null;
     }
@@ -335,7 +341,7 @@ const PostAuthor: React.FC<{ author: types.PersonProps }> = ({ author }) => {
     }
 };
 
-const PostCategory: React.FC<{ category: types.CategoryProps }> = ({ category }) => {
+const PostCategory: React.FC<{ category: CategoryProps }> = ({ category }) => {
     if (!category) {
         return null;
     }
