@@ -11,9 +11,9 @@ import { FeaturedItem } from './FeaturedItem';
 export type Props = types.FeaturedItemsSection;
 
 export const FeaturedItemsSection: React.FC<Props> = (props) => {
-    const { type, elementId, colors, title, subtitle, actions = [], items = [], columns = 3, enableHover, styles = {} } = props;
+    const { elementId, colors, title, subtitle, actions = [], items = [], columns = 3, enableHover, styles = {} } = props;
     return (
-        <Section type={type} elementId={elementId} colors={colors} styles={styles.self} {...pickDataAttrs(props)}>
+        <Section elementId={elementId} className="sb-component-featured-items-section" colors={colors} styles={styles.self} {...pickDataAttrs(props)}>
             {title && (
                 <h2 className={classNames(styles.title ? mapStyles(styles.title) : null)} {...toFieldPath('.title')}>
                     {title}

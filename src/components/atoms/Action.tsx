@@ -9,12 +9,14 @@ import { iconMap } from '../svgs';
 export type Props = (types.Link | types.Button) & StackbitFieldPath & { className?: string };
 
 export const Action: React.FC<Props> = (props) => {
-    const { type, elementId, className, label, altText, url, showIcon, icon, iconPosition = 'right', style = 'primary' } = props;
+    const { type, elementId, className, label, altText, url, showIcon, icon, iconPosition = 'right' } = props;
     const IconComponent = icon ? iconMap[icon] : null;
     const annotationPrefix = getFieldPath(props);
     const annotations = annotationPrefix
         ? [annotationPrefix, `${annotationPrefix}.url#@href`, `${annotationPrefix}.altText#@aria-label`, `${annotationPrefix}.elementId#@id`]
         : [];
+    const style = type === 'Button' ? props.style ?? 'primary' : undefined;
+
     return (
         <Link
             href={url}
@@ -25,8 +27,8 @@ export const Action: React.FC<Props> = (props) => {
                 'sb-component-block',
                 type === 'Link' ? 'sb-component-link' : 'sb-component-button',
                 {
-                    'sb-component-button-primary': type === 'Button' && style === 'primary',
-                    'sb-component-button-secondary': type === 'Button' && style === 'secondary'
+                    'sb-component-button-primary': style === 'primary',
+                    'sb-component-button-secondary': style === 'secondary'
                 },
                 className
             )}

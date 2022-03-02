@@ -13,6 +13,7 @@ export type Props = React.PropsWithChildren<{
     backgroundSize?: 'full' | 'inset';
     backgroundImage?: types.BackgroundImage;
     styles?: types.Styles;
+    className?: string;
 }>;
 
 export const Section: React.FC<Props> = (props) => {
@@ -25,8 +26,7 @@ export const Section: React.FC<Props> = (props) => {
 };
 
 export const SectionInset: React.FC<Props> = (props) => {
-    const { type, elementId, colors = 'colors-a', backgroundImage, styles = {}, children } = props;
-    const classSuffix = type && type.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+    const { elementId, className, colors = 'colors-a', backgroundImage, styles = {}, children } = props;
     return (
         <div
             id={elementId || undefined}
@@ -34,7 +34,7 @@ export const SectionInset: React.FC<Props> = (props) => {
             className={classNames(
                 'sb-component',
                 'sb-component-section',
-                classSuffix && `sb-component-${classSuffix}`,
+                className,
                 'flex',
                 mapStyles({ justifyContent: styles.justifyContent ?? 'center' }),
                 styles.margin
@@ -68,8 +68,7 @@ export const SectionInset: React.FC<Props> = (props) => {
 };
 
 export const SectionFullWidth: React.FC<Props> = (props) => {
-    const { type, elementId, colors = 'colors-a', backgroundImage, styles = {}, children } = props;
-    const classSuffix = type && type.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+    const { elementId, className, colors = 'colors-a', backgroundImage, styles = {}, children } = props;
     return (
         <div
             id={elementId || undefined}
@@ -77,7 +76,7 @@ export const SectionFullWidth: React.FC<Props> = (props) => {
             className={classNames(
                 'sb-component',
                 'sb-component-section',
-                classSuffix && `sb-component-${classSuffix}`,
+                className,
                 colors,
                 'flex',
                 'flex-col',

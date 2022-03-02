@@ -10,9 +10,16 @@ import { Markdown } from '../../atoms/Markdown';
 export type Props = types.QuoteSection;
 
 export const QuoteSection: React.FC<Props> = (props) => {
-    const { type, elementId, colors, quote, name, title, backgroundImage, styles = {} } = props;
+    const { elementId, colors, quote, name, title, backgroundImage, styles = {} } = props;
     return (
-        <Section type={type} elementId={elementId} colors={colors} backgroundImage={backgroundImage} styles={styles.self} {...pickDataAttrs(props)}>
+        <Section
+            elementId={elementId}
+            className="sb-component-quote-section"
+            colors={colors}
+            backgroundImage={backgroundImage}
+            styles={styles.self}
+            {...pickDataAttrs(props)}
+        >
             <blockquote>
                 {quote && (
                     <Markdown

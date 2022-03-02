@@ -13,9 +13,9 @@ import { Markdown } from '../../atoms/Markdown';
 export type Props = types.FaqSection & StackbitFieldPath;
 
 export const FaqSection: React.FC<Props> = (props) => {
-    const { type, elementId, colors, title, subtitle, actions = [], items = [], styles = {} } = props;
+    const { elementId, colors, title, subtitle, actions = [], items = [], styles = {} } = props;
     return (
-        <Section type={type} elementId={elementId} colors={colors} styles={styles.self} {...pickDataAttrs(props)}>
+        <Section elementId={elementId} className="sb-component-faq-section" colors={colors} styles={styles.self} {...pickDataAttrs(props)}>
             <div className="flex flex-wrap">
                 {(title || subtitle || actions.length > 0) && (
                     <div className={classNames('w-full', { 'lg:w-1/3 lg:pr-3': items.length > 0 })}>

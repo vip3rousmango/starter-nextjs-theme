@@ -12,11 +12,18 @@ import { Markdown } from '../../atoms/Markdown';
 export type Props = types.ContactSection;
 
 export const ContactSection: React.FC<Props> = (props) => {
-    const { type, elementId, colors, backgroundSize, title, text, form, media, styles = {} } = props;
+    const { elementId, colors, backgroundSize, title, text, form, media, styles = {} } = props;
     const sectionFlexDirection = styles.self?.flexDirection ?? 'row';
     const sectionAlignItems = styles.self?.alignItems ?? 'center';
     return (
-        <Section type={type} elementId={elementId} colors={colors} backgroundSize={backgroundSize} styles={styles.self} {...pickDataAttrs(props)}>
+        <Section
+            elementId={elementId}
+            className="sb-component-contact-section"
+            colors={colors}
+            backgroundSize={backgroundSize}
+            styles={styles.self}
+            {...pickDataAttrs(props)}
+        >
             <div
                 className={classNames('flex', mapFlexDirectionStyles(sectionFlexDirection), mapStyles({ alignItems: sectionAlignItems }), 'space-y-8', {
                     'lg:space-y-0 lg:space-x-8': sectionFlexDirection === 'row',

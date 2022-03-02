@@ -5,6 +5,7 @@ import { toFieldPath, toObjectId, pickDataAttrs } from '@stackbit/annotations';
 import type * as types from 'types';
 
 import { mapStylesToClassNames as mapStyles } from '../../../utils/map-styles-to-class-names';
+import { Section } from '../Section';
 import { Link } from '../../atoms/Link';
 import { Action } from '../../atoms/Action';
 import { ImageBlock } from '../../blocks/ImageBlock';
@@ -25,86 +26,67 @@ export type PersonProps = types.Person & { pageUrl?: string };
 export type CategoryProps = types.BlogCategory & { pageUrl?: string };
 
 export const PostFeedSection: React.FC<Props> = (props) => {
-    const colors = props.colors ?? 'colors-a';
-    const sectionStyles = props.styles?.self ?? {};
-    const sectionWidth = sectionStyles.width ?? 'wide';
-    const sectionHeight = sectionStyles.height ?? 'auto';
-    const sectionJustifyContent = sectionStyles.justifyContent ?? 'center';
+    const {
+        elementId,
+        colors,
+        variant,
+        title,
+        subtitle,
+        actions = [],
+        posts = [],
+        showDate,
+        showAuthor,
+        showExcerpt,
+        pageLinks,
+        annotatePosts,
+        styles = {}
+    } = props;
     return (
-        <div
-            id={props.elementId}
-            {...pickDataAttrs(props)}
-            className={classNames(
-                'sb-component',
-                'sb-component-section',
-                'sb-component-post-feed-section',
-                colors,
-                'flex',
-                'flex-col',
-                'justify-center',
-                'relative',
-                mapMinHeightStyles(sectionHeight),
-                sectionStyles.margin,
-                sectionStyles.padding ?? 'py-12 px-4',
-                sectionStyles.borderColor,
-                sectionStyles.borderRadius ? mapStyles({ borderRadius: sectionStyles.borderRadius }) : null,
-                sectionStyles.borderStyle ? mapStyles({ borderStyle: sectionStyles.borderStyle }) : 'border-none'
-            )}
-            style={{
-                borderWidth: sectionStyles.borderWidth ? `${sectionStyles.borderWidth}px` : undefined
-            }}
-        >
-            <div className={classNames('flex', 'w-full', mapStyles({ justifyContent: sectionJustifyContent }))}>
-                <div className={classNames('w-full', mapMaxWidthStyles(sectionWidth))}>
-                    <PostFeedHeader {...props} />
-                    <PostFeedVariants {...props} />
-                    <PostFeedActions {...props} />
-                    {props.pageLinks}
-                </div>
-            </div>
-        </div>
-    );
-};
-
-const PostFeedHeader: React.FC<Props> = (props) => {
-    if (!props.title && !props.subtitle) {
-        return null;
-    }
-    const styles = props.styles ?? {};
-    return (
-        <div>
-            {props.title && (
+        <Section elementId={elementId} className="sb-component-post-feed-section" colors={colors} styles={styles.self} {...pickDataAttrs(props)}>
+            {title && (
                 <h2 className={classNames(styles.title ? mapStyles(styles.title) : null)} {...toFieldPath('.title')}>
-                    {props.title}
+                    {title}
                 </h2>
             )}
-            {props.subtitle && (
+            {subtitle && (
                 <p
                     className={classNames('text-lg', 'sm:text-xl', styles.subtitle ? mapStyles(styles.subtitle) : null, {
-                        'mt-6': props.title
+                        'mt-6': title
                     })}
                     {...toFieldPath('.subtitle')}
                 >
-                    {props.subtitle}
+                    {subtitle}
                 </p>
             )}
-        </div>
+            <PostFeedVariants
+                variant={variant}
+                posts={posts}
+                showDate={showDate}
+                showAuthor={showAuthor}
+                showExcerpt={showExcerpt}
+                hasTopMargin={!!(title || subtitle)}
+                annotatePosts={annotatePosts}
+            />
+            <PostFeedActions actions={actions} styles={styles.actions} />
+            {pageLinks}
+        </Section>
     );
 };
 
-const PostFeedActions: React.FC<Props> = (props) => {
-    const actions = props.actions ?? [];
+type PostFeedActionsProps = {
+    actions?: types.Action[];
+    styles?: types.Styles;
+};
+
+const PostFeedActions: React.FC<PostFeedActionsProps> = (props) => {
+    const { actions = [], styles = {} } = props;
     if (actions.length === 0) {
         return null;
     }
-    const styles = props.styles ?? ({} as types.Styles);
     return (
         <div className="mt-12 overflow-x-hidden">
-            <div
-                className={classNames('flex', 'flex-wrap', 'items-center', '-mx-2', styles.actions ? mapStyles(styles.actions) : null)}
-                {...toFieldPath('.actions')}
-            >
-                {props.actions?.map((action, index) => (
+            <div className={classNames('flex', 'flex-wrap', 'items-center', '-mx-2', mapStyles(styles))} {...toFieldPath('.actions')}>
+                {actions.map((action, index) => (
                     <Action key={index} {...action} className="mx-2 mb-3 lg:whitespace-nowrap" {...toFieldPath(`.${index}`)} />
                 ))}
             </div>
@@ -112,32 +94,41 @@ const PostFeedActions: React.FC<Props> = (props) => {
     );
 };
 
-const PostFeedVariants: React.FC<Props> = (props) => {
-    const variant = props.variant ?? 'variant-a';
+type PostFeedVariantProps = {
+    variant?: Props['variant'];
+    posts?: Props['posts'];
+    showDate?: boolean;
+    showAuthor?: boolean;
+    showExcerpt?: boolean;
+    hasTopMargin?: boolean;
+    annotatePosts?: boolean;
+};
+
+const PostFeedVariants: React.FC<PostFeedVariantProps> = (props) => {
+    const { variant = 'variant-a', ...rest } = props;
     switch (variant) {
         case 'variant-a':
-            return <PostsVariantA {...props} />;
+            return <PostsVariantA {...rest} />;
         case 'variant-b':
-            return <PostsVariantB {...props} />;
+            return <PostsVariantB {...rest} />;
         case 'variant-c':
-            return <PostsVariantC {...props} />;
+            return <PostsVariantC {...rest} />;
         default:
             return null;
     }
 };
 
-const PostsVariantA: React.FC<Props> = (props) => {
-    const posts = props.posts ?? [];
+const PostsVariantA: React.FC<PostFeedVariantProps> = (props) => {
+    const { posts = [], showDate, showAuthor, showExcerpt, hasTopMargin, annotatePosts } = props;
     if (posts.length === 0) {
         return null;
     }
-
     return (
         <div
             className={classNames('grid', 'gap-x-6', 'gap-y-12', 'md:grid-cols-3', 'lg:gap-x-8', {
-                'mt-12': props.title || props.subtitle
+                'mt-12': hasTopMargin
             })}
-            {...(props.annotatePosts ? toFieldPath('.posts') : null)}
+            {...(annotatePosts ? toFieldPath('.posts') : null)}
         >
             {posts.map((post, index) => (
                 <article key={index} {...toObjectId(post.__metadata.id)}>
@@ -155,17 +146,13 @@ const PostsVariantA: React.FC<Props> = (props) => {
                             <h3 className="text-2xl" {...toFieldPath('title')}>
                                 {post.title}
                             </h3>
-                            {props.showDate && <PostDate post={post} className="mt-2" />}
-                            {props.showExcerpt && post.excerpt && (
+                            {showDate && <PostDate post={post} className="mt-2" />}
+                            {showExcerpt && post.excerpt && (
                                 <p className="mt-6" {...toFieldPath('excerpt')}>
                                     {post.excerpt}
                                 </p>
                             )}
-                            <PostAttribution
-                                showAuthor={props.showAuthor}
-                                post={post}
-                                className={classNames(props.showExcerpt && post.excerpt ? 'mt-6' : 'mt-2')}
-                            />
+                            <PostAttribution showAuthor={showAuthor} post={post} className={classNames(showExcerpt && post.excerpt ? 'mt-6' : 'mt-2')} />
                         </div>
                     </Link>
                 </article>
@@ -174,18 +161,17 @@ const PostsVariantA: React.FC<Props> = (props) => {
     );
 };
 
-const PostsVariantB: React.FC<Props> = (props) => {
-    const posts = props.posts ?? [];
+const PostsVariantB: React.FC<PostFeedVariantProps> = (props) => {
+    const { posts = [], showDate, showAuthor, showExcerpt, hasTopMargin, annotatePosts } = props;
     if (posts.length === 0) {
         return null;
     }
-
     return (
         <div
             className={classNames('grid', 'gap-x-6', 'gap-y-12', 'md:grid-cols-5', 'lg:gap-x-8', {
-                'mt-12': props.title || props.subtitle
+                'mt-12': hasTopMargin
             })}
-            {...(props.annotatePosts ? toFieldPath('.posts') : null)}
+            {...(annotatePosts ? toFieldPath('.posts') : null)}
         >
             {posts.map((post, index) => (
                 <article
@@ -209,17 +195,13 @@ const PostsVariantB: React.FC<Props> = (props) => {
                             <h3 className="text-2xl" {...toFieldPath('title')}>
                                 {post.title}
                             </h3>
-                            {props.showDate && <PostDate post={post} className="mt-2" />}
-                            {props.showExcerpt && post.excerpt && (
+                            {showDate && <PostDate post={post} className="mt-2" />}
+                            {showExcerpt && post.excerpt && (
                                 <p className="mt-6" {...toFieldPath('excerpt')}>
                                     {post.excerpt}
                                 </p>
                             )}
-                            <PostAttribution
-                                showAuthor={props.showAuthor}
-                                post={post}
-                                className={classNames(props.showExcerpt && post.excerpt ? 'mt-6' : 'mt-2')}
-                            />
+                            <PostAttribution showAuthor={showAuthor} post={post} className={classNames(showExcerpt && post.excerpt ? 'mt-6' : 'mt-2')} />
                         </div>
                     </Link>
                 </article>
@@ -228,17 +210,17 @@ const PostsVariantB: React.FC<Props> = (props) => {
     );
 };
 
-const PostsVariantC: React.FC<Props> = (props) => {
-    const posts = props.posts ?? [];
+const PostsVariantC: React.FC<PostFeedVariantProps> = (props) => {
+    const { posts = [], showDate, showAuthor, showExcerpt, hasTopMargin, annotatePosts } = props;
     if (posts.length === 0) {
         return null;
     }
     return (
         <div
             className={classNames('grid', 'gap-6', 'md:grid-cols-3', 'lg:gap-8', {
-                'mt-12': props.title || props.subtitle
+                'mt-12': hasTopMargin
             })}
-            {...(props.annotatePosts ? toFieldPath('.posts') : null)}
+            {...(annotatePosts ? toFieldPath('.posts') : null)}
         >
             {posts.map((post, index) => {
                 return (
@@ -255,12 +237,12 @@ const PostsVariantC: React.FC<Props> = (props) => {
                                 )}
                                 <div className="flex flex-col flex-grow px-4 pt-6 pb-8 sm:px-6">
                                     <div className="flex-grow">
-                                        {props.showDate && <PostDate post={post} className="mb-2" />}
+                                        {showDate && <PostDate post={post} className="mb-2" />}
                                         <h3 className="text-2xl" {...toFieldPath('title')}>
                                             {post.title}
                                         </h3>
-                                        <PostAttribution showAuthor={props.showAuthor} post={post} className="mt-2" />
-                                        {props.showExcerpt && post.excerpt && (
+                                        <PostAttribution showAuthor={showAuthor} post={post} className="mt-2" />
+                                        {showExcerpt && post.excerpt && (
                                             <p className="mt-3" {...toFieldPath('excerpt')}>
                                                 {post.excerpt}
                                             </p>
@@ -338,27 +320,3 @@ const PostCategory: React.FC<{ category: CategoryProps }> = ({ category }) => {
     }
     return <span {...toFieldPath('category')}>{category.title}</span>;
 };
-
-function mapMinHeightStyles(height: string) {
-    switch (height) {
-        case 'auto':
-            return 'min-h-0';
-        case 'screen':
-            return 'min-h-screen';
-        default:
-            return null;
-    }
-}
-
-function mapMaxWidthStyles(width: string) {
-    switch (width) {
-        case 'narrow':
-            return 'max-w-screen-md';
-        case 'wide':
-            return 'max-w-screen-xl';
-        case 'full':
-            return 'max-w-full';
-        default:
-            return null;
-    }
-}

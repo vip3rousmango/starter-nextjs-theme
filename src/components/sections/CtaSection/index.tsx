@@ -11,13 +11,13 @@ import { Markdown } from '../../atoms/Markdown';
 export type Props = types.CtaSection;
 
 export const CtaSection: React.FC<Props> = (props) => {
-    const { type, elementId, colors, backgroundSize, backgroundImage, title, text, actions = [], styles = {} } = props;
+    const { elementId, colors, backgroundSize, backgroundImage, title, text, actions = [], styles = {} } = props;
     const sectionFlexDirection = styles.self?.flexDirection ?? 'row';
     const sectionAlignItems = styles.self?.alignItems ?? 'center';
     return (
         <Section
-            type={type}
             elementId={elementId}
+            className="sb-component-cta-section"
             colors={colors}
             backgroundSize={backgroundSize}
             backgroundImage={backgroundImage}
