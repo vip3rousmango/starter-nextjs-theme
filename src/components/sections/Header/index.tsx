@@ -14,50 +14,47 @@ import MenuIcon from '../../svgs/menu';
 export type Props = types.Header & StackbitObjectId;
 
 export const Header: React.FC<Props> = (props) => {
-    const primaryColors = props.primaryColors ?? 'colors-a';
-    const headerStyles = props.styles?.self ?? {};
-    const headerWidth = headerStyles.width ?? 'narrow';
+    const { primaryColors = 'colors-a', styles = {}, ...rest } = props;
     const objectId = getObjectId(props);
     const fieldPath = objectId ? `${objectId}:header` : null;
     return (
         <header
-            className={classNames('sb-component', 'sb-component-header', primaryColors, 'relative', headerStyles.padding ?? 'py-5 px-4')}
+            className={classNames('sb-component', 'sb-component-header', primaryColors, 'relative', styles.self?.padding ?? 'py-5 px-4')}
             {...toFieldPath(fieldPath)}
         >
-            <div className={classNames('mx-auto', mapMaxWidthStyles(headerWidth))}>
+            <div className={classNames('mx-auto', mapMaxWidthStyles(styles.self?.width ?? 'narrow'))}>
                 <Link href="#main" className="sr-only">
                     Skip to main content
                 </Link>
-                <HeaderVariants {...props} />
+                <HeaderVariants {...rest} />
             </div>
         </header>
     );
 };
 
 const HeaderVariants: React.FC<Props> = (props) => {
-    const headerVariant = props.headerVariant ?? 'variant-a';
+    const { headerVariant = 'variant-a', ...rest } = props;
     switch (headerVariant) {
         case 'variant-a':
-            return <HeaderVariantA {...props} />;
+            return <HeaderVariantA {...rest} />;
         case 'variant-b':
-            return <HeaderVariantB {...props} />;
+            return <HeaderVariantB {...rest} />;
         case 'variant-c':
-            return <HeaderVariantC {...props} />;
+            return <HeaderVariantC {...rest} />;
         case 'variant-d':
-            return <HeaderVariantD {...props} />;
+            return <HeaderVariantD {...rest} />;
         case 'variant-e':
-            return <HeaderVariantE {...props} />;
+            return <HeaderVariantE {...rest} />;
     }
 };
 
 const HeaderVariantA: React.FC<Props> = (props) => {
-    const primaryLinks = props.primaryLinks ?? [];
-    const secondaryLinks = props.secondaryLinks ?? [];
+    const { title, isTitleVisible, logo, primaryLinks = [], secondaryLinks = [] } = props;
     return (
         <div className="relative flex items-center">
-            {(props.logo || (props.title && props.isTitleVisible)) && (
+            {(logo || (title && isTitleVisible)) && (
                 <div className="mr-8">
-                    <SiteLogoLink {...props} />
+                    <SiteLogoLink title={title} isTitleVisible={isTitleVisible} logo={logo} />
                 </div>
             )}
             {primaryLinks.length > 0 && (
@@ -76,11 +73,14 @@ const HeaderVariantA: React.FC<Props> = (props) => {
 };
 
 const HeaderVariantB: React.FC<Props> = (props) => {
-    const primaryLinks = props.primaryLinks ?? [];
-    const secondaryLinks = props.secondaryLinks ?? [];
+    const { title, isTitleVisible, logo, primaryLinks = [], secondaryLinks = [] } = props;
     return (
         <div className="relative flex items-center">
-            {(props.logo || (props.title && props.isTitleVisible)) && <div className="mr-8">{SiteLogoLink(props)}</div>}
+            {(logo || (title && isTitleVisible)) && (
+                <div className="mr-8">
+                    <SiteLogoLink title={title} isTitleVisible={isTitleVisible} logo={logo} />
+                </div>
+            )}
             {primaryLinks.length > 0 && (
                 <ul
                     className="absolute hidden w-auto space-x-8 transform -translate-x-1/2 -translate-y-1/2 lg:flex lg:items-center left-1/2 top-1/2"
@@ -100,11 +100,14 @@ const HeaderVariantB: React.FC<Props> = (props) => {
 };
 
 const HeaderVariantC: React.FC<Props> = (props) => {
-    const primaryLinks = props.primaryLinks ?? [];
-    const secondaryLinks = props.secondaryLinks ?? [];
+    const { title, isTitleVisible, logo, primaryLinks = [], secondaryLinks = [] } = props;
     return (
         <div className="relative flex items-center">
-            {(props.logo || (props.title && props.isTitleVisible)) && <div className="mr-8">{SiteLogoLink(props)}</div>}
+            {(logo || (title && isTitleVisible)) && (
+                <div className="mr-8">
+                    <SiteLogoLink title={title} isTitleVisible={isTitleVisible} logo={logo} />
+                </div>
+            )}
             {primaryLinks.length > 0 && (
                 <ul className="hidden ml-auto space-x-8 lg:flex lg:items-center" {...toFieldPath('.primaryLinks')}>
                     <ListOfLinks links={primaryLinks} />
@@ -124,13 +127,12 @@ const HeaderVariantC: React.FC<Props> = (props) => {
 };
 
 const HeaderVariantD: React.FC<Props> = (props) => {
-    const primaryLinks = props.primaryLinks ?? [];
-    const secondaryLinks = props.secondaryLinks ?? [];
+    const { title, isTitleVisible, logo, primaryLinks = [], secondaryLinks = [] } = props;
     return (
         <div className="relative flex items-center">
-            {(props.logo || (props.title && props.isTitleVisible)) && (
+            {(logo || (title && isTitleVisible)) && (
                 <div className="mr-8 lg:mr-0 lg:absolute lg:top-1/2 lg:left-1/2 lg:transform lg:-translate-y-1/2 lg:-translate-x-1/2">
-                    {SiteLogoLink(props)}
+                    <SiteLogoLink title={title} isTitleVisible={isTitleVisible} logo={logo} />
                 </div>
             )}
             {primaryLinks.length > 0 && (
@@ -149,14 +151,13 @@ const HeaderVariantD: React.FC<Props> = (props) => {
 };
 
 const HeaderVariantE: React.FC<Props> = (props) => {
-    const primaryLinks = props.primaryLinks ?? [];
-    const secondaryLinks = props.secondaryLinks ?? [];
+    const { title, isTitleVisible, logo, primaryLinks = [], secondaryLinks = [] } = props;
     return (
         <>
             <div className="relative flex items-center">
-                {(props.logo || (props.title && props.isTitleVisible)) && (
+                {(logo || (title && isTitleVisible)) && (
                     <div className="mr-8 lg:mr-0 lg:absolute lg:top-1/2 lg:left-1/2 lg:transform lg:-translate-y-1/2 lg:-translate-x-1/2">
-                        {SiteLogoLink(props)}
+                        <SiteLogoLink title={title} isTitleVisible={isTitleVisible} logo={logo} />
                     </div>
                 )}
                 {secondaryLinks.length > 0 && (
@@ -176,9 +177,7 @@ const HeaderVariantE: React.FC<Props> = (props) => {
 };
 
 const MobileMenu: React.FC<Props> = (props) => {
-    const secondaryColors = props.secondaryColors ?? 'colors-a';
-    const primaryLinks = props.primaryLinks ?? [];
-    const secondaryLinks = props.secondaryLinks ?? [];
+    const { secondaryColors = 'colors-a', title, isTitleVisible, logo, primaryLinks = [], secondaryLinks = [] } = props;
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const router = useRouter();
 
@@ -195,7 +194,7 @@ const MobileMenu: React.FC<Props> = (props) => {
 
     return (
         <div className="ml-auto lg:hidden">
-            <button aria-label="Open Menu" title="Open Menu" className="p-2 -mr-1 focus:outline-none" onClick={() => setIsMenuOpen(true)}>
+            <button aria-label="Open Menu" className="p-2 -mr-1 focus:outline-none" onClick={() => setIsMenuOpen(true)}>
                 <span className="sr-only">Open Menu</span>
                 <MenuIcon className="w-6 h-6 fill-current" />
             </button>
@@ -214,8 +213,8 @@ const MobileMenu: React.FC<Props> = (props) => {
             >
                 <div className="flex flex-col min-h-full">
                     <div className="flex items-center justify-between mb-10">
-                        {(props.logo || (props.title && props.isTitleVisible)) && SiteLogoLink(props)}
-                        <button aria-label="Close Menu" title="Close Menu" className="p-2 -mr-1 focus:outline-none" onClick={() => setIsMenuOpen(false)}>
+                        {(logo || (title && isTitleVisible)) && <SiteLogoLink title={title} isTitleVisible={isTitleVisible} logo={logo} />}
+                        <button aria-label="Close Menu" className="p-2 -mr-1 focus:outline-none" onClick={() => setIsMenuOpen(false)}>
                             <CloseIcon className="w-6 h-6 fill-current" />
                         </button>
                     </div>
@@ -235,11 +234,15 @@ const MobileMenu: React.FC<Props> = (props) => {
     );
 };
 
-const SiteLogoLink: React.FC<types.Header> = (props) => {
+const SiteLogoLink: React.FC<{ title?: string; isTitleVisible?: boolean; logo?: types.ImageBlock }> = ({ title, isTitleVisible, logo }) => {
     return (
-        <Link href="/" aria-label={props.title} className="flex items-center sb-header-logo" {...toFieldPath('.title#span[1]', '.logo#img[1]')}>
-            {props.logo && <ImageBlock {...props.logo} className={classNames('max-h-12', { 'mr-2': props.isTitleVisible })} />}
-            {props.title && props.isTitleVisible && <span className="text-2xl tracking-wide">{props.title}</span>}
+        <Link href="/" aria-label={title} className="flex items-center sb-header-logo">
+            {logo && <ImageBlock {...logo} className={classNames('max-h-12', { 'mr-2': isTitleVisible })} {...toFieldPath('.logo')} />}
+            {title && isTitleVisible && (
+                <span className="text-2xl tracking-wide" {...toFieldPath('.title')}>
+                    {title}
+                </span>
+            )}
         </Link>
     );
 };
