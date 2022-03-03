@@ -138,7 +138,7 @@ sections:
         url: /images/zcool.svg
         altText: ZCOOL
         caption: ZCOOL
-    spacing: 3
+    spacing: 40
     columns: 7
     aspectRatio: 'auto'
     showCaption: false
@@ -164,7 +164,6 @@ sections:
         textAlign: center
       subtitle:
         textAlign: center
-    imageSizePx: 240
     type: MediaGallerySection
   - colors: colors-a
     elementId: ''
