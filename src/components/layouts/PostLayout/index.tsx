@@ -8,14 +8,9 @@ import { DynamicComponent } from '../../DynamicComponent';
 import { Markdown } from '../../atoms/Markdown';
 import type { SectionsProps } from '../../sections/mapSectionProps';
 
-export type Props = Omit<types.PostLayout, 'author' | 'category' | 'bottomSections'> & {
-    author?: PersonProps;
-    category?: CategoryProps;
+export type Props = Omit<types.PostLayoutResolvedWithoutSections, 'bottomSections'> & {
     bottomSections: SectionsProps[];
 };
-
-export type PersonProps = types.Person & { pageUrl?: string };
-export type CategoryProps = types.BlogCategory & { pageUrl?: string };
 
 export const PostLayout: React.FC<Props> = (page) => {
     const dateTimeAttr = dayjs(page.date).format('YYYY-MM-DD HH:mm:ss');
@@ -72,7 +67,7 @@ const PostAttribution: React.FC<{ post: Props }> = ({ post }) => {
     );
 };
 
-const PostAuthor: React.FC<{ author: PersonProps }> = ({ author }) => {
+const PostAuthor: React.FC<{ author: types.PersonProps }> = ({ author }) => {
     const children = (
         <>
             {author.firstName && <span {...toFieldPath('.firstName')}>{author.firstName}</span>}{' '}
@@ -88,7 +83,7 @@ const PostAuthor: React.FC<{ author: PersonProps }> = ({ author }) => {
     );
 };
 
-const PostCategory: React.FC<{ category: CategoryProps }> = ({ category }) => {
+const PostCategory: React.FC<{ category: types.CategoryProps }> = ({ category }) => {
     return category.pageUrl ? (
         <Link {...toFieldPath('category')} href={category.pageUrl}>
             {category.title}

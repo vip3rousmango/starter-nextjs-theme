@@ -7,6 +7,10 @@ export const BLOG_URL = '/blog';
 export const BLOG_AUTHOR_URL = `${BLOG_URL}/author`;
 export const BLOG_CATEGORY_URL = `${BLOG_URL}/category`;
 
+export function isNotNullable<T>(value: T | undefined): value is NonNullable<T> {
+    return value !== undefined && value !== null;
+}
+
 export function findAndSortAllPost(documents: types.DocumentTypes[]) {
     return findPostLayouts(documents).sort(sortPostsByDateDesc);
 }
@@ -58,7 +62,6 @@ export function isPostLayout(document: types.DocumentTypes): document is types.P
 export function isPerson(document: types.DocumentTypes): document is types.Person {
     return document.type === 'Person';
 }
-
 
 export function isBlogCategory(document: types.DocumentTypes): document is types.BlogCategory {
     return document.type === 'BlogCategory';
@@ -116,15 +119,10 @@ export function splitUrl(urlPath: string) {
     return cleanUrlPath.split('/');
 }
 
-export type PostLayoutResolved = Omit<types.PostLayout, 'author' | 'category'> & {
-    author?: types.Person & { pageUrl?: string };
-    category?: types.BlogCategory & { pageUrl?: string };
-};
-
-export function resolvePostLayout(postLayout: types.PostLayout, allDocuments: types.DocumentTypes[]): PostLayoutResolved {
+export function resolvePostLayout(postLayout: types.PostLayout, allDocuments: types.DocumentTypes[]): types.PostLayoutResolvedWithoutSections {
     const allPeople = allDocuments.filter(isPerson);
     const allCategories = allDocuments.filter(isBlogCategory);
-    const { author: authorId, category: categoryId, __metadata, ...rest } = postLayout;
+    const { author: authorId, category: categoryId, __metadata, bottomSections, ...rest } = postLayout;
     const author = allPeople.find((doc) => doc.__metadata.id === authorId);
     const category = allCategories.find((doc) => doc.__metadata.id === categoryId);
     const authorPostFeedLayouts = allDocuments.filter(isAuthorFeedLayout);
