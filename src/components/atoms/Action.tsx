@@ -9,26 +9,29 @@ import { iconMap } from '../svgs';
 export type Props = (types.Link | types.Button) & StackbitFieldPath & { className?: string };
 
 export const Action: React.FC<Props> = (props) => {
-    const { elementId, className, type, label, altText, url, showIcon } = props;
-    const icon = props.icon ?? 'arrowLeft';
-    const iconPosition = props.iconPosition ?? 'right';
-    const IconComponent = iconMap[icon];
+    const { type, elementId, className, label, altText, url, showIcon, icon, iconPosition = 'right' } = props;
+    const IconComponent = icon ? iconMap[icon] : null;
     const annotationPrefix = getFieldPath(props);
     const annotations = annotationPrefix
-        ? [`${annotationPrefix}`, `${annotationPrefix}.url#@href`, `${annotationPrefix}.altText#@aria-label`, `${annotationPrefix}.elementId#@id`]
+        ? [annotationPrefix, `${annotationPrefix}.url#@href`, `${annotationPrefix}.altText#@aria-label`, `${annotationPrefix}.elementId#@id`]
         : [];
-    const defaultStyle = type === 'Link' ? 'link' : 'secondary';
-    const style = type === 'Button' ? props.style ?? defaultStyle : defaultStyle;
+    const style = type === 'Button' ? props.style ?? 'primary' : undefined;
 
     return (
         <Link
             href={url}
             aria-label={altText}
             id={elementId}
-            className={classNames('sb-component', 'sb-component-block', style === 'link' ? 'sb-component-link' : 'sb-component-button', className, {
-                'sb-component-button-primary': style === 'primary',
-                'sb-component-button-secondary': style === 'secondary'
-            })}
+            className={classNames(
+                'sb-component',
+                'sb-component-block',
+                type === 'Link' ? 'sb-component-link' : 'sb-component-button',
+                {
+                    'sb-component-button-primary': style === 'primary',
+                    'sb-component-button-secondary': style === 'secondary'
+                },
+                className
+            )}
             {...toFieldPath(...annotations)}
         >
             {label && <span {...toFieldPath('.label')}>{label}</span>}

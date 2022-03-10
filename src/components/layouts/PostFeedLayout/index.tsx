@@ -19,18 +19,28 @@ export type Props = Omit<types.PostFeedLayout, 'topSections' | 'bottomSections'>
 
 export const PostFeedLayout: React.FC<Props> = (page) => {
     const { title, topSections, bottomSections, pageIndex, baseUrlPath, numOfPages, postFeed, items } = page;
-    const postFeedColors = postFeed?.colors ?? 'colors-a';
-    const postFeedWidth = postFeed?.styles?.self?.width ?? 'wide';
-    const postFeedJustifyContent = postFeed?.styles?.self?.justifyContent ?? 'center';
     const pageLinks = <PageLinks {...{ pageIndex, baseUrlPath, numOfPages }} />;
 
     return (
         <main id="main" className="layout page-layout">
             {title && (
-                <div className={classNames('flex', 'py-12', 'lg:py-14', 'px-4', postFeedColors, mapStyles({ justifyContent: postFeedJustifyContent }))}>
+                <div
+                    className={classNames(
+                        'flex',
+                        'py-12',
+                        'lg:py-14',
+                        'px-4',
+                        postFeed?.colors ?? 'colors-a',
+                        mapStyles({ justifyContent: postFeed?.styles?.self?.justifyContent ?? 'center' })
+                    )}
+                >
                     <h1
-                        className={classNames('w-full', mapMaxWidthStyles(postFeedWidth), page?.styles?.title ? mapStyles(page?.styles?.title) : null)}
-                        {...toFieldPath('title')}
+                        className={classNames(
+                            'w-full',
+                            mapStyles({ width: postFeed?.styles?.self?.width ?? 'wide' }),
+                            page?.styles?.title ? mapStyles(page?.styles?.title) : null
+                        )}
+                        {...(page.annotateFields ? toFieldPath('title') : null)}
                     >
                         {title}
                     </h1>
@@ -133,16 +143,4 @@ const Ellipsis: React.FC = () => <span className="px-4 py-2 mx-2">…</span>;
 
 function urlPathForPageAtIndex(pageIndex: number, baseUrlPath: string) {
     return pageIndex === 0 ? baseUrlPath : `${baseUrlPath}/page/${pageIndex + 1}`;
-}
-
-function mapMaxWidthStyles(width: string) {
-    switch (width) {
-        case 'narrow':
-            return 'max-w-screen-md';
-        case 'wide':
-            return 'max-w-screen-xl';
-        case 'full':
-            return 'max-w-full';
-    }
-    return null;
 }

@@ -105,9 +105,6 @@ sections:
       altText: Where did everyone go?
       caption: Team meeting
       elementId: ''
-      styles:
-        self:
-          opacity: 100
       type: ImageBlock
   - colors: colors-h
     subtitle: Trusted by
@@ -141,7 +138,7 @@ sections:
         url: /images/zcool.svg
         altText: ZCOOL
         caption: ZCOOL
-    spacing: 3
+    spacing: 48
     columns: 7
     aspectRatio: 'auto'
     showCaption: false
@@ -167,7 +164,6 @@ sections:
         textAlign: center
       subtitle:
         textAlign: center
-    imageSizePx: 240
     type: MediaGallerySection
   - colors: colors-a
     elementId: ''
@@ -186,9 +182,6 @@ sections:
           altText: altText of the image
           caption: Caption of the image
           elementId: ''
-          styles:
-            self:
-              opacity: 100
           type: ImageBlock
         styles:
           self:
@@ -211,9 +204,6 @@ sections:
           altText: altText of the image
           caption: Caption of the image
           elementId: ''
-          styles:
-            self:
-              opacity: 100
           type: ImageBlock
         styles:
           self:
@@ -236,9 +226,6 @@ sections:
           altText: altText of the image
           caption: Caption of the image
           elementId: ''
-          styles:
-            self:
-              opacity: 100
           type: ImageBlock
         styles:
           self:
