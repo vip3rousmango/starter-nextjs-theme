@@ -11,7 +11,7 @@ fields:
   - type: markdown
     name: answer
     label: Answer
-    default: At the office, working together is often a distruction, on remote, it could be motivation. At the office, working together is often a distruction, on remote, it could be motivation. At the office, working together is often a distruction, on remote, it could be motivation.
+    default: At the office, working together is often a distraction, on remote, it could be motivation. At the office, working together is often a distraction, on remote, it could be motivation. At the office, working together is often a distraction, on remote, it could be motivation.
     required: true
   - type: style
     name: styles
