@@ -36,6 +36,9 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
+# stackbit
+.cache
+
 # IDE
 *.code-workspace
 .idea
