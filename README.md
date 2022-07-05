@@ -1,10 +1,10 @@
 # Full Stackbit Starter
 
+![Full Stackbit Starter](https://assets.stackbit.com/docs/full-starter-thumb.png)
+
 This is a production-ready project built with Next.js and Tailwind, equipped with visual editing capabilities using Stackbit.
 
 ⚡ Demo: [starter-nextjs.stackbit.app](https://starter-nextjs.stackbit.app/)
-
-![Full Stackbit Starter](https://assets.stackbit.com/docs/full-starter-thumb.png)
 
 ## Quickstart
 
