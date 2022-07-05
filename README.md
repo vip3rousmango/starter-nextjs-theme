@@ -6,13 +6,7 @@ This is a production-ready project built with Next.js and Tailwind, equipped wit
 
 ⚡ Demo: [starter-nextjs.stackbit.app](https://starter-nextjs.stackbit.app/)
 
-## Quickstart
-
-To create a new Stackbit project, visit [jamstack.new](https://jamstack.new/) and choose "Full Starter" as your project.
-
-Stackbit will clone the repository on your behalf (which you [can transfer to your account](https://docs.stackbit.com/how-to-guides/local-development/transfer-repo/)) and deploy the site to production.
-
-## Setup (Local Development)
+## Setup
 
 To work more immediately with the code, you can begin by working locally.
 
