@@ -1,24 +1,59 @@
-# A New Stackbit Project
+# Full Stackbit Starter
 
-Welcome to your new project created with Stackbit!
+This is a production-ready project built with Next.js and Tailwind, equipped with visual editing capabilities using Stackbit.
 
-Here are a few useful tips & links:
+⚡ Demo: [starter-nextjs.stackbit.app](https://starter-nextjs.stackbit.app/)
 
-## Set up
+![Full Stackbit Starter](https://assets.stackbit.com/docs/full-starter-thumb.png)
 
-1. If you haven't yet transferred this project to your GitHub account, click on the **Gear** icon in the visual editor to open **Project Settings** and start the transfer. [Learn More](https://docs.stackbit.com/how-to-guides/transfer-repo/).
-1. Once the repository is in your account, the Project Settings window will show you the commands to run for setting up your local environment. [Learn More](https://docs.stackbit.com/how-to-guides/local-development/).
+## Quickstart
 
-## Learn the basics
+To create a new Stackbit project, visit [jamstack.new](https://jamstack.new/) and choose "Full Starter" as your project.
 
-1. It's a good idea to go through our [Getting Started tutorial](https://docs.stackbit.com/getting-started/). It will give you a small taste of component development as well, and links for further reading.
-1. To go deeper into how things work, head to the [Conceptual Guides](https://docs.stackbit.com/conceptual-guides/).
-1. For more concise, practical information see the [How-to Guides](https://docs.stackbit.com/how-to-guides/).
+Stackbit will clone the repository on your behalf (which you [can transfer to your account](https://docs.stackbit.com/how-to-guides/local-development/transfer-repo/)) and deploy the site to production.
 
-## Get answers
+## Setup (Local Development)
 
-[Join us on Discord](https://discord.gg/HUNhjVkznH) for community support.
+To work more immediately with the code, you can begin by working locally.
 
-## Do your thing
+Clone the repository:
 
-Time for you to build your website the way you want it, including modifying this README 😉. 
+```txt
+git clone https://github.com/stackbit-themes/starter-nextjs-theme.git my-stackbit-site
+```
+
+Install the dependencies:
+
+```txt
+cd my-stackbit-site
+npm install
+```
+
+Run the Next.js development server:
+
+```txt
+npm run dev
+```
+
+Install the Stackbit CLI. Then open a new terminal window in the same project directory and run the Stackbit Dev server:
+
+```txt
+npm install -g @stackbit/cli
+stackbit dev
+```
+
+This outputs your own Stackbit URL. Open this, register or sign in, and you will be directed to Stackbit's visual editor for your new project.
+
+![Next.js Dev + Stackbit Dev](https://assets.stackbit.com/docs/next-dev-stackbit-dev.png)
+
+## Next Steps
+
+Here are a few suggestions on what to do next if you're new to Stackbit:
+
+- Learn [how Stackbit works](https://docs.stackbit.com/conceptual-guides/how-stackbit-works/)
+- Follow the [_Getting Started_ tutorial](https://docs.stackbit.com/getting-started/)
+- Explore the [how-to guides](https://docs.stackbit.com/how-to-guides/) for help while developing your site
+
+## Join the Community
+
+[Join us on Discord](https://discord.gg/HUNhjVkznH) for community support and to showcase what you build with this starter.
