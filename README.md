@@ -10,22 +10,16 @@ This is a multi-page, production-ready project built with Next.js and Tailwind, 
 
 The typical development process is to begin by working locally.
 
-Clone the repository:
+Create local Stackbit project from this repo:
 
 ```txt
-git clone https://github.com/stackbit-themes/starter-nextjs-theme.git my-stackbit-site
-```
-
-Install the dependencies:
-
-```txt
-cd my-stackbit-site
-npm install
+npx create-stackbit-app@latest --starter full-nextjs
 ```
 
 Run the Next.js development server:
 
 ```txt
+cd my-stackbit-site
 npm run dev
 ```
 
