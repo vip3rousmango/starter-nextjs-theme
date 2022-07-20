@@ -1,4 +1,4 @@
-# Full Stackbit Starter
+# Full Next.js Stackbit Starter
 
 ![Full Stackbit Starter](https://assets.stackbit.com/docs/full-starter-thumb.png)
 
