@@ -1,0 +1,31 @@
+name: Lighthouse CI for Netlify sites
+on: pull_request
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: Install & Build
+        run: |
+          npm install
+          npm run build
+      - name: Wait for the Netlify Preview
+        uses: jakepartusch/wait-for-netlify-action@v1
+        id: netlify
+        with:
+          site_name: sharp-hodgkin-22b4ec
+      - name: Audit URLs using Lighthouse
+        uses: treosh/lighthouse-ci-action@v8
+        with:
+          urls: |
+            ${{ steps.netlify.outputs.url }}
+            ${{ steps.netlify.outputs.url }}/careers/
+            ${{ steps.netlify.outputs.url }}/faq/
+            ${{ steps.netlify.outputs.url }}/blog/
+          configPath: '.github/lighthouse/lighthouserc-assertions.json'
+          uploadArtifacts: true
